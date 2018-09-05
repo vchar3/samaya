@@ -1,0 +1,3 @@
+rootProject.name = 'VCharKarma'
+
+include ':app'
