@@ -7,10 +7,9 @@ import rootReducers from './redux/reducers/index';
 import axios from 'axios';
 import axiosMiddleware from 'redux-axios-middleware';
 
-import LoginPage from './src/components/LoginPage'
-// import configureStore from './configureStore';
+import LoginPage from './src/components/LoginPage';
+import UserProfilePage from './src/components/UserProfilePage';
 
-//const store = configureStore();
 
 const client = axios.create({
   baseURL: 'http://localhost:3000/api',
@@ -23,7 +22,7 @@ class App extends Component {
   render() {
     return (  
       <Provider store = { this.store } >
-        <LoginPage /> 
+      <LoginPage />
       </Provider>  
     );
   }

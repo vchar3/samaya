@@ -23,9 +23,11 @@ class LoginPage extends Component {
 
     _creatAccountPress(event) {
         console.log('Creat Account Press');
+        
     }
    
     render() {
+        let { username, password } = this.state;
         return (
             <View> 
                 <Header  headerText="Vchar3"> </Header> 
@@ -36,6 +38,7 @@ class LoginPage extends Component {
                             value={this.state.userName}
                             placeholder="Username"
                             style={styles.inputStyle}
+                            onChangeText={ (username) => this.setState({ username })}
                         /> 
                     </CardSection>
                     <CardSection>
@@ -45,6 +48,7 @@ class LoginPage extends Component {
                             placeholder="Password"
                             password = {true}
                             style={styles.inputStyle}
+                            onChangeText={ (password) => this.setState({ password })}
                         />
                     </CardSection>
                     <CardSection>
