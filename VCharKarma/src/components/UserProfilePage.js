@@ -6,6 +6,10 @@ import { Button, Header, CardSection} from '../common/index';
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions';
 
 class UserProfilePage extends Component { 
+    static navigationOptions = {
+        title: 'Profile',
+      };
+
     state = { 
         firstName: '',
         lastName: '',
@@ -19,13 +23,14 @@ class UserProfilePage extends Component {
         console.log('Creat Account Press');
         console.log('Pressed!');
         console.log(this.state)
+        this.props.navigation.dispatch({type: 'Logout'});
     }
    
     render() {
         let { firstName, lastName, age, homePhone, mobilePhone, email } = this.state;
         return (
             <View > 
-                <Header  headerText="My Profile"> </Header> 
+                {/* <Header  headerText="My Profile"> </Header>  */}
                 <View style={styles.container}>
                 <TextField
                     label='First Name'

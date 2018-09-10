@@ -1,10 +1,15 @@
 import React, {Component}  from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
 import { Button, Card, CardSection, Header } from '../common/index';
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions';
 
 class LoginPage extends Component { 
+    static navigationOptions = {
+        title: 'VChar3',
+      };
+
     state = { 
         username: '',
         password: ''
@@ -12,13 +17,25 @@ class LoginPage extends Component {
 
     _loginPress(event) {
         console.log('Pressed!');
+        this.props.navigation.dispatch({type: 'Login'});
         
-         var username = this.state.username;
-         var password = this.state.password;
-         this.props.getUser(username, password);
+        // const navigateAction = NavigationActions.navigate({
+        //     routeName: 'Profile',
+          
+        //     params: {},
+          
+        //     action: NavigationActions.navigate({ routeName: 'Profile' }),
+        //   });
+          //this.props.navigation.dispatch(navigateAction);
+        //this.props.navigation.navigate('Profile')
         
-         console.log(username);
-         console.log(password);
+        
+        //  var username = this.state.username;
+        //  var password = this.state.password;
+        //  this.props.getUser(username, password);
+        
+        //  console.log(username);
+        //  console.log(password);
     }
 
     _creatAccountPress(event) {
@@ -30,7 +47,7 @@ class LoginPage extends Component {
         let { username, password } = this.state;
         return (
             <View> 
-                <Header  headerText="Vchar3"> </Header> 
+                {/* <Header  headerText="Vchar3"> </Header>  */}
                 <Card style={styles.container}>
                     <CardSection> 
                         <TextInput 
