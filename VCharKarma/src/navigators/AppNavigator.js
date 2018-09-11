@@ -6,7 +6,7 @@ import { reduxifyNavigator, createReactNavigationReduxMiddleware } from 'react-n
 
 import LoginPage from '../components/LoginPage';
 import UserProfilePage from '../components/UserProfilePage';
-// import ProfileScreen from '../components/ProfileScreen';
+import HomePage from '../components/HomePage';
 
 const middleware = createReactNavigationReduxMiddleware(
   'root',
@@ -16,7 +16,7 @@ const middleware = createReactNavigationReduxMiddleware(
 const RootNavigator = createStackNavigator(
     {
         Login: { screen: LoginPage },
-    //   Main: { screen: UserProfilePage },
+        Home: { screen: HomePage },
         Profile: { screen: UserProfilePage },
     },
     {
