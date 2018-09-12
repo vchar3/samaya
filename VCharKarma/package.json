@@ -10,6 +10,7 @@
     "axios": "^0.18.0",
     "react": "16.4.1",
     "react-native": "0.56.0",
+    "react-native-flip-toggle-button": "^1.0.5",
     "react-native-material-cards": "^1.0.9",
     "react-native-material-textfield": "^0.12.0",
     "react-native-navigation": "^1.1.485",
@@ -20,7 +21,8 @@
     "redux": "^4.0.0",
     "redux-axios-middleware": "^4.0.0",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "toggle-switch-react-native": "^1.0.0"
   },
   "devDependencies": {
     "babel-jest": "23.4.2",

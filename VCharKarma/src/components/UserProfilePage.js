@@ -7,7 +7,7 @@ import { fetchDataFromAPI, getUserLogin } from '../../redux/actions';
 
 class UserProfilePage extends Component { 
     static navigationOptions = {
-        title: 'Profile',
+        title: 'User Profile',
       };
 
     state = { 
