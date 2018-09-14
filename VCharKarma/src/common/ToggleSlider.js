@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import FlipToggle from 'react-native-flip-toggle-button'
 
-const ToggleSlider = ({ textLabel, isActive, _toggleSwitchHandler, _toggleLongPressHandler }) => {
+const ToggleSlider = ({ textLabel, isActive, toggleSwitchHandler, toggleLongPressHandler }) => {
     return (
         <View style={styles.container}>
                 <View  style={styles.textContainer}> 
@@ -11,11 +11,11 @@ const ToggleSlider = ({ textLabel, isActive, _toggleSwitchHandler, _toggleLongPr
                 <View style={styles.sliderContainer}>
                     <FlipToggle
                         value={isActive}
-                        buttonWidth={100}
-                        buttonHeight={33}
+                        buttonWidth={70}
+                        buttonHeight={23}
                         buttonRadius={30}
-                        sliderWidth={30}
-                        sliderHeight={30}
+                        sliderWidth={20}
+                        sliderHeight={20}
                         sliderRadius={50}
                         onLabel={'On'}
                         offLabel={'Off'}
@@ -24,8 +24,8 @@ const ToggleSlider = ({ textLabel, isActive, _toggleSwitchHandler, _toggleLongPr
                         buttonOffColor={'grey'}
                         sliderOnColor= {'white'}
                         sliderOffColor={ 'white'}
-                        onToggle={(newState) =>{ _toggleSwitchHandler(newState) }}
-                        onToggleLongPress={(newState) => { _toggleLongPressHandler(newState)}}
+                        onToggle={(newState) =>{ toggleSwitchHandler(newState) }}
+                        onToggleLongPress={(newState) => { toggleLongPressHandler(newState)}}
                     />
                 </View>
         </View>
@@ -33,21 +33,23 @@ const ToggleSlider = ({ textLabel, isActive, _toggleSwitchHandler, _toggleLongPr
 };
 const styles = {
     container: {     
-        flex: 1,
+        flex: 0.1,
         flexDirection: 'row', 
-        backgroundColor: 'green',
-        margin: 30
+        marginLeft: 15,
+        marginRight: 15,
+        marginBottom: 7.5, 
+        marginTop: 7.5 
     },
     textContainer: {
-        flex:1,
+        flex:0.5,
         justifyContent: 'center',
     },
     textStyle: {
-        fontSize: 14,
+        fontSize: 16,
 
     },
     sliderContainer: {
-        flex:1,  
+        flex:0.5,  
         justifyContent: 'center',
         alignItems: 'flex-end'
     }

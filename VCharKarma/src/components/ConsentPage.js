@@ -31,18 +31,101 @@ class ConsentPage extends Component {
         const information = [
             { name: 'Everyone in my care circle'  }, 
             { name: 'John Smith'  },
+            { name: 'Susan' },
+            { name: 'John Smith'  },
+            { name: 'Susan' },
+            { name: 'John Smith'  },
+            { name: 'Susan' },
+            { name: 'John Smith'  },
+            { name: 'Susan' },
+            { name: 'John Smith'  },
+            { name: 'Susan' },
+            { name: 'John Smith'  },
+            { name: 'Susan' },
+            { name: 'John Smith'  },
+            { name: 'Susan' },
+            { name: 'John Smith'  },
             { name: 'Susan' }
           ];
 
         return (
-            <View style={styles.container}>
-            { information.map((item, index) => (
+            <View>
+            <ScrollView contentContainerStyle={styles.container}>
+                <View style={styles.bodyContainer}>
+                <Text style={styles.textStyle}>All Health Information </Text>
+                <ScrollView contentContainerStyle={styles.contain}>
+                { information.map((item, index) => (
 
-                <ToggleSlider 
-                    textLabel = {item.name}
-                />
+                    <ToggleSlider 
+                        textLabel = {item.name}
+                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
+                        isActive = {this.state.isActive}
+                    />
 
-            ))}
+                ))}
+                </ScrollView>
+                </View>
+
+                <View style={styles.bodyContainer}>
+                <Text style={styles.textStyle}>Daily Vitals </Text>
+                <ScrollView contentContainerStyle={styles.contain}>
+                { information.map((item, index) => (
+
+                    <ToggleSlider 
+                        textLabel = {item.name}
+                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
+                        isActive = {this.state.isActive}
+                    />
+
+                ))}
+                 </ScrollView>
+                </View>
+
+                <View style={styles.bodyContainer}>
+                <Text style={styles.textStyle}>Home Care Notes</Text>
+                <ScrollView contentContainerStyle={styles.contain}>
+                { information.map((item, index) => (
+
+                    <ToggleSlider 
+                        textLabel = {item.name}
+                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
+                        isActive = {this.state.isActive}
+                    />
+
+                ))}
+                 </ScrollView>
+                </View>
+
+                <View style={styles.bodyContainer}>
+                <Text style={styles.textStyle}>Medical Records</Text>
+                <ScrollView contentContainerStyle={styles.contain}>
+                { information.map((item, index) => (
+
+                    <ToggleSlider 
+                        textLabel = {item.name}
+                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
+                        isActive = {this.state.isActive}
+                    />
+
+                ))}
+                 </ScrollView>
+                </View>
+
+                <View style={styles.bodyContainer}>
+                <Text style={styles.textStyle}>Medication </Text>
+                <ScrollView contentContainerStyle={styles.contain}>
+                { information.map((item, index) => (
+
+                    <ToggleSlider 
+                        textLabel = {item.name}
+                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
+                        isActive = {this.state.isActive}
+                    />
+
+                ))}
+                 </ScrollView>
+                </View>
+            </ScrollView>
             </View>
         );
     }
@@ -65,7 +148,26 @@ export default connect(mapStateToProps, mapDispatchToProps) (ConsentPage);
 
 const styles = {
     
-    container: {     
-        flex: 1
-      }
+    container: {   
+        marginTop: 15,  
+        flexGrow: 1,
+        justifyContent: 'space-between'
+    },
+    bodyContainer: {
+        height: 200,
+        marginRight: 15,
+        marginLeft: 15,
+        marginBottom: 7.5, 
+        marginTop: 7.5, 
+        // backgroundColor: 'green'
+    },
+    textStyle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        paddingBottom: 10
+
+    },
+    contain: {
+        
+    }
   };
