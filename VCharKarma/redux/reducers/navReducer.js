@@ -1,26 +1,26 @@
 import { NavigationActions } from 'react-navigation';
-import { RootNavigator } from '../../src/navigators/AppNavigator';
+import {SwitchNavigator } from '../../src/navigators/AppNavigator';
 
-const secondAction = RootNavigator.router.getActionForPathAndParams('Login');
-const initialNavState = RootNavigator.router.getStateForAction( secondAction );
+const secondAction = SwitchNavigator.router.getActionForPathAndParams('AuthLoading');
+const initialNavState = SwitchNavigator.router.getStateForAction( secondAction );
 
 export default function nav(state = initialNavState, action) {
   let nextState;
   switch (action.type) {
     case 'Login':
-      nextState = RootNavigator.router.getStateForAction(
+      nextState = SwitchNavigator.router.getStateForAction(
         NavigationActions.navigate({ routeName: 'Profile' }),
         state
       );
       break;
     case 'Logout':
-      nextState = RootNavigator.router.getStateForAction(
+      nextState = SwitchNavigator.router.getStateForAction(
         NavigationActions.navigate({ routeName: 'Login' }),
         state
       );
       break;
     default:
-      nextState = RootNavigator.router.getStateForAction(action, state);
+      nextState = SwitchNavigator.router.getStateForAction(action, state);
       break;
   }
 

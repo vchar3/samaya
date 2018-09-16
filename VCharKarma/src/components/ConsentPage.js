@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards'
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions';
 import { ToggleSlider } from '../common/index';
+import FooterBar from '../common/FooterBar';
 
 
 
@@ -49,7 +50,7 @@ class ConsentPage extends Component {
           ];
 
         return (
-            <View>
+            <View style= {styles.mainContainer}>
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.bodyContainer}>
                 <Text style={styles.textStyle}>All Health Information </Text>
@@ -125,7 +126,10 @@ class ConsentPage extends Component {
                 ))}
                  </ScrollView>
                 </View>
+                
             </ScrollView>
+           
+            {/* <FooterBar /> */}
             </View>
         );
     }
@@ -147,11 +151,14 @@ return {
 export default connect(mapStateToProps, mapDispatchToProps) (ConsentPage);
 
 const styles = {
-    
+    mainContainer: {
+        flex: 1
+    },
     container: {   
         marginTop: 15,  
         flexGrow: 1,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingBottom: 30
     },
     bodyContainer: {
         height: 200,

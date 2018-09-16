@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
 import { reduxifyNavigator, createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import AuthNavigation from './AuthNavigation';
 import LoginPage from '../components/LoginPage';
 import UserProfilePage from '../components/UserProfilePage';
 import HomePage from '../components/HomePage';
@@ -21,7 +23,6 @@ const middleware = createReactNavigationReduxMiddleware(
 
 const RootNavigator = createStackNavigator(
     {
-        Login: { screen: LoginPage },
         Home: { screen: HomePage },
         Profile: { screen: UserProfilePage },
         ProvideCare: {screen: ProvideCarePage},
@@ -31,13 +32,67 @@ const RootNavigator = createStackNavigator(
         Consent: {screen: ConsentPage},
         Legal: {screen: LegalPage},
 
-    },
-    {
-        initialRouteName: 'Login',
     }
 );
 
-const AppWithNavigationState = reduxifyNavigator(RootNavigator, 'root');
+const AuthNavigator = createStackNavigator(
+    {
+        Login: { screen: LoginPage }
+    }
+);
+
+const BottomBarStack = createStackNavigator(
+    {
+        Home: { screen: HomePage },
+        Profile: { screen: UserProfilePage },
+        ProvideCare: {screen: ProvideCarePage}
+
+    }
+);
+
+const BottomTabBar = createBottomTabNavigator(
+    {
+      Home: { screen: RootNavigator },
+      Profile: { screen: UserProfilePage },
+    },
+    {
+      navigationOptions: ({ navigation }) => ({
+        tabBarIcon: ({ focused, tintColor }) => {
+          const { routeName } = navigation.state;
+          let iconName;
+          if (routeName === 'Home') {
+            iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+          } else if (routeName === 'Profile') {
+            iconName = `ios-options${focused ? '' : '-outline'}`;
+          }
+  
+          // You can return any component that you like here! We usually use an
+          // icon component from react-native-vector-icons
+          return <Ionicons name={iconName} size={25} color={tintColor} />;
+        },
+      }),
+      tabBarOptions: {
+        activeTintColor: 'tomato',
+        inactiveTintColor: 'gray',
+      },
+    }
+  );
+
+
+const SwitchNavigator = createSwitchNavigator(
+    {
+        AuthLoading: AuthNavigation,
+        App: BottomTabBar,
+        Auth: AuthNavigator
+
+    },
+    {
+        initialRouteName: 'AuthLoading'
+    },
+    
+);
+
+const AppWithNavigationState = reduxifyNavigator(SwitchNavigator, 'root');
 
 const mapStateToProps = state => ({
   state: state.nav,
@@ -45,4 +100,4 @@ const mapStateToProps = state => ({
 
 const AppNavigator = connect(mapStateToProps)(AppWithNavigationState);
 
-export { RootNavigator, AppNavigator, middleware };
+export {SwitchNavigator, RootNavigator, AppNavigator, middleware , BottomTabBar};

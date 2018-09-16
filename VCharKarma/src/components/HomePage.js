@@ -5,6 +5,10 @@ import {connect} from 'react-redux';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards'
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions';
 import GridView from 'react-native-super-grid';
+import BottomNavigation, { FullTab } from 'react-native-material-bottom-navigation';
+import FooterBar from '../common/FooterBar';
+import { BottomNavBar } from '../common/index';
+import {BottomTabBar} from '../navigators/AppNavigator';
 
 class HomePage extends Component { 
     static navigationOptions = {
@@ -36,36 +40,22 @@ class HomePage extends Component {
           ];
 
         return (
-
-            <GridView
-                itemDimension={130}
-                items={items}
-                style={styles.gridView}
-                renderItem={item => (
-                <TouchableOpacity  onPress={() => this._buttonPressHandler(item.routeName)}>
-                <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
-                    <Text style={styles.itemName}>{item.name}</Text>
-                    {/* <Text style={styles.itemCode}>{item.code}</Text> */}
-                </View>
-                </TouchableOpacity>
-                )}
-            />
-
-            // <View style= {styles.container}> 
-            //     { this.state.cardList.map((item, index) => (
-            //     <TouchableOpacity  onPress={this._buttonPressHandler.bind(this)} style= {styles.press}>
-            //         <Card style= {styles.card}>
-            //             <CardImage 
-            //                 source={require('../../img/flower.jpeg')} 
-            //                 title={item.title}
-            //                 style={{width: 150}}
-            //                 resizeMode= "stretch"
-            //                 resizeMethod="resize"
-            //             />
-            //         </Card>
-            //     </TouchableOpacity>))
-            //     }
-            // </View>
+            <View style={{ flex: 1 }}>
+                <GridView
+                    itemDimension={130}
+                    items={items}
+                    style={styles.gridView}
+                    renderItem={item => (
+                    <TouchableOpacity  onPress={() => this._buttonPressHandler(item.routeName)}>
+                    <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
+                        <Text style={styles.itemName}>{item.name}</Text>
+                        {/* <Text style={styles.itemCode}>{item.code}</Text> */}
+                    </View>
+                    </TouchableOpacity>
+                    )}
+                />
+                {/* <FooterBar /> */}
+            </View>
         );
     }
 }
