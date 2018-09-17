@@ -28,7 +28,7 @@ class ConsentPage extends Component {
     }
    
     render() {
-        let { } = this.state;
+       // let { } = this.state;
         const information = [
             { name: 'Everyone in my care circle'  }, 
             { name: 'John Smith'  },

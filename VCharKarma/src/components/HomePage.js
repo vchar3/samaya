@@ -29,7 +29,7 @@ class HomePage extends Component {
     }
    
     render() {
-        let { } = this.state;
+        //let { } = this.state;
         const items = [
             { name: 'Provide Care', code: '#1abc9c', routeName:'ProvideCare' }, 
             { name: 'Medications', code: '#2ecc71', routeName:'Medications' },
