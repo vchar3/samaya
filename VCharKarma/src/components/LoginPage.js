@@ -18,7 +18,7 @@ class LoginPage extends Component {
     _loginPress(event) {
         console.log('Pressed!');
         //this.props.navigation.dispatch({type: 'Login'});
-        this.props.navigation.navigate('Home')
+        this.props.navigation.navigate('HomeStack')
 
         // const navigateAction = NavigationActions.navigate({
         //     routeName: 'Profile',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, StatusBar, View, StyleSheet } from 'react-native';
+import { SafeAreaView, ActivityIndicator, AsyncStorage, StatusBar, View, StyleSheet } from 'react-native';
 
 
 class AuthNavigation extends React.Component {
@@ -14,16 +14,16 @@ class AuthNavigation extends React.Component {
   
       // This will switch to the App screen or Auth screen and this loading
       // screen will be unmounted and thrown away.
-      this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+      this.props.navigation.navigate(userToken ? 'HomeStack' : 'Auth');
     };
   
     // Render any loading content that you like here
     render() {
       return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <ActivityIndicator />
           <StatusBar barStyle="default" />
-        </View>
+        </SafeAreaView>
       );
     }
   }
