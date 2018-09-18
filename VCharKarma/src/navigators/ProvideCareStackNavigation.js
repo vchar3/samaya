@@ -2,39 +2,23 @@ import React from 'react';
 import { PageLayout } from '../common/index';
 import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {ProvideCareStackRoute} from './ProvideCareStackNavigation';
 
-import HomePage from '../components/HomePage';
-import UserProfilePage from '../components/UserProfilePage';
-import ProvideCarePage from '../components/ProvideCarePage';
-import MedicationsPage from '../components/MedicationsPage';
-import HealthRecordsPage from '../components/HealthRecordsPage';
-import InsurancePage from '../components/InsurancePage';
-import ConsentPage from '../components/ConsentPage';
-import LegalPage from '../components/LegalPage';
-
+import ProvideCarePage from '../components/ProvideCarePage'
 import DailyVitalsPage from '../components/provideCare/dailyVitals/DailyVitalsPage';
 import HomeCarePage from '../components/provideCare/HomeCarePage';
 import MealPlanPage from '../components/provideCare/MealPlanPage';
 import MedicationPage from '../components/provideCare/MedicationPage';
 
 
-const HomeNavigator = createStackNavigator(
-    {
-        Home: { screen: HomePage },
-        ProvideCare: {screen: ProvideCarePage},
-        Medications: { screen: MedicationsPage },
-        HealthRecords: {screen: HealthRecordsPage},
-        Insurance: {screen: InsurancePage},
-        Consent: {screen: ConsentPage},
-        Legal: {screen: LegalPage},
 
+
+const ProvideCareStackRoute = createStackNavigator(
+    {
+        ProvideCare: {screen: ProvideCarePage},
         DailyVital: { screen: DailyVitalsPage },
         HomeCare: {screen: HomeCarePage},
         MealPlan: { screen: MealPlanPage },
         Medication: {screen: MedicationPage}
-        // ProvideCareStack: ProvideCareStackRoute
-        
 
     }
 );
@@ -42,18 +26,18 @@ const HomeNavigator = createStackNavigator(
 const TopTabBarNavigator = createMaterialTopTabNavigator(
     {
       Home: { 
-        screen: HomeNavigator,
+        screen: ProvideCareStackRoute,
         navigationOptions: {
-          tabBarLabel: 'Home',
+          tabBarLabel: 'ProvideCare',
           tabBarIcon: ({ tintColor }) => {
             <Ionicons name='ios-information-circle' size={25} color={tintColor} />
           }
         } 
       },
       Profile: { 
-        screen: UserProfilePage,
+        screen: HomeCarePage,
         navigationOptions: {
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'HomeCare',
           tabBarIcon: ({ tintColor }) => {
             <Ionicons name='ios-setting' size={25} color={tintColor} />
           }
@@ -61,7 +45,7 @@ const TopTabBarNavigator = createMaterialTopTabNavigator(
       },
     },
     {
-      initialRouteName: 'Home',
+    //   initialRouteName: 'DailyVital',
       tabBarPosition: 'bottom',
       tabBarOptions: {
         activeTintColor: 'orange',
@@ -79,7 +63,7 @@ const TopTabBarNavigator = createMaterialTopTabNavigator(
     }
   );
 
-class HomeStackNavigation extends React.Component {
+class ProvideCareStackNavigation extends React.Component {
     render() {
       return (
         <PageLayout>
@@ -89,4 +73,4 @@ class HomeStackNavigation extends React.Component {
     }
 }
 
-export default HomeStackNavigation ;
+export  { ProvideCareStackRoute, ProvideCareStackNavigation} ;

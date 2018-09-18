@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import AuthNavigation from './AuthNavigation';
 import HomeStackNavigation from './HomeStackNavigation';
+import {ProvideCareStackRoute, ProvideCareStackNavigation} from './ProvideCareStackNavigation';
 import LoginPage from '../components/LoginPage';
 
 
@@ -25,7 +26,8 @@ const SwitchNavigator = createSwitchNavigator(
     {
         AuthLoading: AuthNavigation,
         Auth: AuthNavigator,
-        HomeStack: HomeStackNavigation
+        HomeStack: HomeStackNavigation,
+        ProvideCareStack: ProvideCareStackNavigation
     },
     {
         initialRouteName: 'AuthLoading'
