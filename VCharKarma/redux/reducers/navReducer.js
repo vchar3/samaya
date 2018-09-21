@@ -9,7 +9,7 @@ export default function nav(state = initialNavState, action) {
   switch (action.type) {
     case 'Login':
       nextState = SwitchNavigator.router.getStateForAction(
-        NavigationActions.navigate({ routeName: 'Profile' }),
+        NavigationActions.navigate({ routeName: 'HomeStack' }),
         state
       );
       break;

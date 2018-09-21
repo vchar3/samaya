@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import {connect} from 'react-redux';
 import { Button, Header, CardSection} from '../common/index';
-import { fetchDataFromAPI, getUserLogin } from '../../redux/actions';
+import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 
 class HealthTrackingProfilePage extends Component { 
     state = { 
