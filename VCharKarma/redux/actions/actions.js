@@ -14,7 +14,11 @@ export function fetchDataFromAPI() {
 export function getUserLogin(username, password) {
     return (dispatch) => {
         dispatch(getData())
+<<<<<<< HEAD:VCharKarma/redux/actions/actions.js
         axios.post('http://35.237.110.220:3001/api/users/login', {
+=======
+        axios.post('http://localhost:3000/api/users/login', {
+>>>>>>> 7d7dbd27c10b185d5fecb96b5ade682db540fa77:VCharKarma/redux/actions/actions.js
             userId: username,
             password: password
           }).then(res => dispatch(getDataSuccess(res)))
