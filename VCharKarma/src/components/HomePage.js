@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-nativ
 import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards'
-import { fetchDataFromAPI, getUserLogin } from '../../redux/actions';
+import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 import GridView from 'react-native-super-grid';
 import BottomNavigation, { FullTab } from 'react-native-material-bottom-navigation';
 import FooterBar from '../common/FooterBar';

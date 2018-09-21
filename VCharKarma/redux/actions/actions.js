@@ -1,4 +1,4 @@
-import { DATA_FETCHING, DATA_FETCHING_SUCCESS, DATA_FETCHING_FAILURE} from './constants';
+import { DATA_FETCHING, DATA_FETCHING_SUCCESS, DATA_FETCHING_FAILURE} from '../constants';
 import axios from 'axios';
 
 export function fetchDataFromAPI() {
@@ -14,13 +14,10 @@ export function fetchDataFromAPI() {
 export function getUserLogin(username, password) {
     return (dispatch) => {
         dispatch(getData())
-        axios.post('http://localhost:3000/api/users/login', {
-            username: username,
+        axios.post('http://35.237.110.220:3001/api/users/login', {
+            userId: username,
             password: password
-          }).then(res => {res.json()
-                            console.log("Successful Response",res.json())
-                            })
-            .then(json => dispatch(getDataSuccess(json.results)))
+          }).then(res => dispatch(getDataSuccess(res)))
             .catch(err => {dispatch(getDataFailure(err))
                             console.log("API Failure",err)
                             })
@@ -40,8 +37,9 @@ function getDataSuccess(data) {
     }
 }
 
-function getDataFailure(data) {
+function getDataFailure(error) {
     return {
-        type: DATA_FETCHING_FAILURE
+        type: DATA_FETCHING_FAILURE,
+        error
     }
 }

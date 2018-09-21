@@ -2,7 +2,7 @@ import React, {Component}  from 'react';
 import { ScrollView, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
-import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions';
+import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
 import GridView from 'react-native-super-grid';
 import Modal from 'react-native-modal'; 
 

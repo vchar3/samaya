@@ -2,7 +2,7 @@ import React, {Component}  from 'react';
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
-import { fetchDataFromAPI, getUserLogin } from '../../redux/actions';
+import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 
 
 

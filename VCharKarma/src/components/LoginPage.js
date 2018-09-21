@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
 import { Button, Card, CardSection, Header } from '../common/index';
-import { fetchDataFromAPI, getUserLogin } from '../../redux/actions';
+import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 
 class LoginPage extends Component { 
     static navigationOptions = {
@@ -12,13 +12,30 @@ class LoginPage extends Component {
 
     state = { 
         username: '',
-        password: ''
+        password: '',
+        errors: ''
+    }
+    componentDidUpdate(prevProps) {
+        const { user } = this.props
+        if(user) {
+            this.props.navigation.navigate('HomeStack'); 
+        } 
+        // else {
+        //     this.setState({
+        //         errors: 'Authentication failed. Please use valid username and password'
+        //     })
+        // }
     }
 
     _loginPress(event) {
-        console.log('Pressed!');
+        console.log('Pressed!', this.state);
+        this.props.getUser(this.state.username, this.state.password)
+        // .then(
+        //     (res) => this.props.navigation.navigate('HomeStack'),
+        //     (err) => this.setState({errors: err})
+        // );
         //this.props.navigation.dispatch({type: 'Login'});
-        this.props.navigation.navigate('HomeStack')
+        //this.props.navigation.navigate('HomeStack')
 
         // const navigateAction = NavigationActions.navigate({
         //     routeName: 'Profile',
@@ -40,7 +57,7 @@ class LoginPage extends Component {
     }
 
     _creatAccountPress(event) {
-        console.log('Creat Account Press');
+        console.log('Creat Account Press', this.state);
         
     }
    
@@ -49,12 +66,14 @@ class LoginPage extends Component {
         return (
             <View> 
                 {/* <Header  headerText="Vchar3"> </Header>  */}
+                <Text style={{fontSize:20, color: 'red'}}> {this.props.error}</Text>
                 <Card style={styles.container}>
                     <CardSection> 
                         <TextInput 
+                            keyboardType= 'email-address'
                             onChangeText={(value) => this.setState({username: value})}
                             value={this.state.userName}
-                            placeholder="Username"
+                            placeholder="Enter your username"
                             style={styles.inputStyle}
                             onChangeText={ (username) => this.setState({ username })}
                         /> 
@@ -63,9 +82,10 @@ class LoginPage extends Component {
                         <TextInput 
                             onChangeText={(value) => this.setState({password: value})}
                             value={this.state.password}
-                            placeholder="Password"
+                            placeholder="Enter your password"
                             password = {true}
                             style={styles.inputStyle}
+                            secureTextEntry= {true}
                             onChangeText={ (password) => this.setState({ password })}
                         />
                     </CardSection>
@@ -90,8 +110,8 @@ class LoginPage extends Component {
                     <CardSection>
                         <Text style={styles.textStyle}>{this.state.userName}</Text>
                     </CardSection>
-
-
+                    <Text> {this.props.user}</Text>
+                    
                 </Card>
             </View>
         );
@@ -99,8 +119,20 @@ class LoginPage extends Component {
 }
 
 function mapStateToProps(state) {
+    console.log("state from login", state.userReducer.error.response);
+    let data ;
+    let error;
+    if(state.userReducer.data.data) {
+        data = state.userReducer.data.data.userid
+    }
+    
+    if(state.userReducer.error.response) {
+        error = state.userReducer.error.response.data.message
+    }
+
     return {
-      user: state.userReducer
+      user: data,
+      error: error
     }
   }
   
@@ -132,6 +164,7 @@ const styles = {
         borderWidth: 1, 
         borderRadius: 5,
         marginLeft: 5,
-        marginRight: 5
+        marginRight: 5,
+        padding: 10
     }
   };
