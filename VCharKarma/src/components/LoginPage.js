@@ -1,5 +1,5 @@
 import React, {Component}  from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, AsyncStorage } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
 import { Button, Card, CardSection, Header } from '../common/index';
@@ -16,15 +16,11 @@ class LoginPage extends Component {
         errors: ''
     }
     componentDidUpdate(prevProps) {
-        const { user } = this.props
-        if(user) {
+        const { authenticationToken } = this.props;
+        if(authenticationToken) {
+            AsyncStorage.setItem('userToken', authenticationToken);
             this.props.navigation.navigate('HomeStack'); 
         } 
-        // else {
-        //     this.setState({
-        //         errors: 'Authentication failed. Please use valid username and password'
-        //     })
-        // }
     }
 
     _loginPress(event) {
@@ -120,18 +116,18 @@ class LoginPage extends Component {
 
 function mapStateToProps(state) {
     console.log("state from login", state.userReducer.error.response);
-    let data ;
+    let token ;
     let error;
     if(state.userReducer.data.data) {
-        data = state.userReducer.data.data.userid
+        token = state.userReducer.data.data.token
     }
-    
+
     if(state.userReducer.error.response) {
         error = state.userReducer.error.response.data.message
     }
 
     return {
-      user: data,
+      authenticationToken: token,
       error: error
     }
   }
