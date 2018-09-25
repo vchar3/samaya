@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageLayout } from '../common/index';
-import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
+import { createStackNavigator, createMaterialTopTabNavigator, createDrawerNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ProvideCareStackRoute} from './ProvideCareStackNavigation';
 
@@ -39,6 +39,20 @@ const HomeNavigator = createStackNavigator(
     }
 );
 
+const DrawNavigator = createDrawerNavigator(
+  {
+    Home: { 
+      screen: HomeNavigator,
+      navigationOptions: {
+        tabBarLabel: 'Home',
+        tabBarIcon: ({ tintColor }) => {
+          return <Ionicons name='ios-home' size={25} color={tintColor} />
+        }
+      } 
+    }
+  }
+);
+
 const TopTabBarNavigator = createMaterialTopTabNavigator(
     {
       Home: { 
@@ -46,7 +60,7 @@ const TopTabBarNavigator = createMaterialTopTabNavigator(
         navigationOptions: {
           tabBarLabel: 'Home',
           tabBarIcon: ({ tintColor }) => {
-            <Ionicons name='ios-information-circle' size={25} color={tintColor} />
+            return <Ionicons name='ios-home' size={25} color={tintColor} />
           }
         } 
       },
@@ -55,7 +69,16 @@ const TopTabBarNavigator = createMaterialTopTabNavigator(
         navigationOptions: {
           tabBarLabel: 'Profile',
           tabBarIcon: ({ tintColor }) => {
-            <Ionicons name='ios-setting' size={25} color={tintColor} />
+            return <Ionicons name='ios-add-circle' size={25} color={tintColor} />
+          }
+        }  
+      },
+      Setting: { 
+        screen: DrawNavigator,
+        navigationOptions: {
+          tabBarLabel: 'Setting',
+          tabBarIcon: ({ tintColor }) => {
+            return <Ionicons name='ios-list' size={25} color={tintColor} />
           }
         }  
       },
