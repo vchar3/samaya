@@ -36,7 +36,8 @@ class HomePage extends Component {
             { name: 'Health Records', code: '#34495e', routeName:'HealthRecords' }, 
             { name: 'Insurance', code: '#16a085', routeName:'Insurance' },
             { name: 'Consent', code: '#8e44ad', routeName:'Consent' }, 
-            { name: 'Legal', code: '#2c3e50', routeName:'Legal' }
+            { name: 'Legal', code: '#2c3e50', routeName:'Legal' },
+            { name: 'Care Note', code: '#2c3e50', routeName:'CareNote' }
           ];
 
         return (

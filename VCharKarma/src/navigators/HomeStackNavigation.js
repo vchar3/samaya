@@ -12,11 +12,13 @@ import HealthRecordsPage from '../components/HealthRecordsPage';
 import InsurancePage from '../components/InsurancePage';
 import ConsentPage from '../components/ConsentPage';
 import LegalPage from '../components/LegalPage';
+import CareNotesPage from '../components/CareNotesPage';
 
 import DailyVitalsPage from '../components/provideCare/dailyVitals/DailyVitalsPage';
 import HomeCarePage from '../components/provideCare/HomeCarePage';
 import MealPlanPage from '../components/provideCare/MealPlanPage';
 import MedicationPage from '../components/provideCare/MedicationPage';
+
 
 
 const HomeNavigator = createStackNavigator(
@@ -28,6 +30,7 @@ const HomeNavigator = createStackNavigator(
         Insurance: {screen: InsurancePage},
         Consent: {screen: ConsentPage},
         Legal: {screen: LegalPage},
+        CareNote: {screen: CareNotesPage},
 
         DailyVital: { screen: DailyVitalsPage },
         HomeCare: {screen: HomeCarePage},
