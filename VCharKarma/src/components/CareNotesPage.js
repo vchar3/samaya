@@ -1,6 +1,7 @@
 import React, {Component}  from 'react';
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity, TextInput, Platform, KeyboardAvoidingView } from 'react-native';
 import { Button, Card, CardSection, Header } from '../common/index';
+import { TextField } from 'react-native-material-textfield';
 window.navigator.userAgent = 'react-native';
 import io from 'socket.io-client/dist/socket.io';
 
@@ -16,7 +17,9 @@ class CareNotesPage extends Component {
         listmessage : [],
         userTypedText: '',
         userId: '',
-        Timestamp: ''
+        Timestamp: '',
+        addUser: false,
+        fullName: ''
     }
 
     constructor() {
@@ -25,14 +28,16 @@ class CareNotesPage extends Component {
         this.socket.emit('charStart', {
             'userID': '1234'
         })
-    }
 
-    componentDidUpdate(prevProps) {
+        this.socket.on('getChatData', (listOfChat)=> {
+            console.log('list of chat', listOfChat);
+            this.setState({listmessage: listOfChat});
+        });
+
         this.socket.on('response', (data)=>{ 
             console.log('response from server chat ', data);
             this.setState({listmessage: [...this.state.listmessage, data]});
         });
-    
     }
 
     _sendHandler() {
@@ -44,29 +49,75 @@ class CareNotesPage extends Component {
         })
     }
 
+    _searchUserHandler() {
+        this.setState({
+            addUser: true
+        }) 
+    }
+
+    _addUserHandler() {
+        this.setState({
+            addUser: false
+        })
+        this.socket.emit('addUser', {
+            firstName: this.state.fullName,
+            middleName: '',
+            lastName: '',
+            friendUserId: 'user75@gmail.com',
+            userId: 'user50@gmail.com'
+        })
+
+    }
+
 
 
     render() {
+        let { fullName } = this.state;
         return (
             <View style={styles.mainContainer}> 
-                <ScrollView contentContainerStyle={styles.scrollContainer}>
-                { 
-                    this.state.listmessage.map((items) => (
-                        
-                        <Card style={{backgroundColor: 'red'}}>
-                        <CardSection>
-                        <Text>{items.message}</Text>
-                        </CardSection>
-                        </Card>
-                    ))
-                   
-                }
-                {/* <Text>{this.state.userTypedText} </Text> */}
-                
+                <View style ={{marginTop: 10}}>
+                    <Card> 
+                    {
+                        this.state.addUser 
+                        ?
+                        <CardSection> 
+                        <View style={{flex: 1}}>     
+                        <TextField
+                            label='Full Name'
+                            value={fullName}
+                            onChangeText={ (fullName) => this.setState({ fullName }) }
+                        /> 
+                        </View>     
+                        <Button style={styles.userButton} 
+                            onPress={this._addUserHandler.bind(this)}>
+                            Add User
+                        </Button>  
+                        </CardSection> 
+                        : 
+                        <CardSection>            
+                        <Button style={styles.addButton} 
+                            onPress={this._searchUserHandler.bind(this)}>
+                            Add
+                        </Button> 
+                        </CardSection>   
+                    }
+                    </Card>
+                    <ScrollView contentContainerStyle={styles.scrollContainer}>
+                    { 
+                        this.state.listmessage.map((items, key) => (
 
-                </ScrollView>
-                
-                <KeyboardAvoidingView 
+                            <Card>
+                            <CardSection>
+                            <Text>{items.userName}: </Text>
+                            <Text >{items.message}</Text>
+                            </CardSection>
+                            </Card>
+                        ))
+                    
+                    }                
+                    </ScrollView>
+                </View>
+                <View 
                     style = {styles.textAreaContainer} 
                     enabled 
                     behavior="padding"
@@ -83,13 +134,13 @@ class CareNotesPage extends Component {
                  onChangeText={(value) => this.setState({userTypedText: value})}
                 /> 
                 
-                {/* <TouchableOpacity style={styles.buttonStyle}> */}
-                        <Button style={styles.buttonStyle} 
-                            onPress={this._sendHandler.bind(this)}>
-                            Send
-                        </Button>
-                {/* </TouchableOpacity> */}
-                </KeyboardAvoidingView>
+                
+                <Button style={styles.buttonStyle} 
+                    onPress={this._sendHandler.bind(this)}>
+                    Send
+                </Button>
+                
+                </View>
             </View>
         );
     }
@@ -138,15 +189,25 @@ const styles = {
         justifyContent: "flex-end",
         width: 50,
         alignItems: 'flex-end',
-        borderRadius: 25,
         backgroundColor: 'green'
+    },
+    addButton : {
+        justifyContent: "center",
+        alignItems: 'center',
+        backgroundColor: 'blue',
+        
+    },
+    userButton: {
+        backgroundColor: 'blue',
+        height: 40,
+        marginTop: 20
     },
     buttonText: {
         backgroundColor: 'green',
         padding:5
     },
     scrollContainer: {
-       height: 400
-      
+        flexGrow: 1,
+        paddingBottom: 20,
     }
 };
