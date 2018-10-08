@@ -16,10 +16,11 @@ class CareNotesPage extends Component {
     state = { 
         listmessage : [],
         userTypedText: '',
-        userId: '',
+        userId: 'user50@gmail.com',
         Timestamp: '',
         addUser: false,
-        fullName: ''
+        email: '',
+        addUserSuccess: ''
     }
 
     constructor() {
@@ -38,6 +39,15 @@ class CareNotesPage extends Component {
             console.log('response from server chat ', data);
             this.setState({listmessage: [...this.state.listmessage, data]});
         });
+
+        this.socket.on(this.state.userId, (data)=>{ 
+            console.log('response from server chat with userlist ', data);
+            this.setState({
+                addUserSuccess: data
+            });
+            this._sendHandler();
+        });
+
     }
 
     _sendHandler() {
@@ -45,7 +55,8 @@ class CareNotesPage extends Component {
         this.socket.emit('newMessage', {
             userName: 'John', 
             message: this.state.userTypedText,
-            userId: 'user50@gmail.com'
+            userId: this.state.userId,
+            addedNewUser: this.state.addUserSuccess
         })
     }
 
@@ -60,7 +71,7 @@ class CareNotesPage extends Component {
             addUser: false
         })
         this.socket.emit('addUser', {
-            firstName: this.state.fullName,
+            firstName: this.state.email,
             middleName: '',
             lastName: '',
             friendUserId: 'user75@gmail.com',
@@ -72,7 +83,7 @@ class CareNotesPage extends Component {
 
 
     render() {
-        let { fullName } = this.state;
+        let { email } = this.state;
         return (
             <View style={styles.mainContainer}> 
                 <View style ={{marginTop: 10}}>
@@ -83,9 +94,9 @@ class CareNotesPage extends Component {
                         <CardSection> 
                         <View style={{flex: 1}}>     
                         <TextField
-                            label='Full Name'
-                            value={fullName}
-                            onChangeText={ (fullName) => this.setState({ fullName }) }
+                            label='Email'
+                            value={email}
+                            onChangeText={ (email) => this.setState({ email }) }
                         /> 
                         </View>     
                         <Button style={styles.userButton} 
@@ -104,15 +115,22 @@ class CareNotesPage extends Component {
                     </Card>
                     <ScrollView contentContainerStyle={styles.scrollContainer}>
                     { 
-                        this.state.listmessage.map((items, key) => (
-
-                            <Card>
-                            <CardSection>
-                            <Text>{items.userName}: </Text>
-                            <Text >{items.message}</Text>
-                            </CardSection>
-                            </Card>
-                        ))
+                        this.state.listmessage.map((items, key) => {
+                           if(items.addedNewUser) { 
+                            return (
+                                <Text style={{textAlign: 'center'}}> {items.addedNewUser} </Text>     
+                            ) 
+                            } else {
+                            return ( 
+                                <Card>
+                                <CardSection key={key}>
+                                <Text>{items.userName}: </Text>
+                                <Text >{items.message}</Text>
+                                </CardSection>
+                                </Card>
+                            )  
+                            }
+                        })
                     
                     }                
                     </ScrollView>
@@ -209,5 +227,6 @@ const styles = {
     scrollContainer: {
         flexGrow: 1,
         paddingBottom: 20,
+        height: 490
     }
 };
