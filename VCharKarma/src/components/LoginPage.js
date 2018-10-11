@@ -19,37 +19,13 @@ class LoginPage extends Component {
         const { authenticationToken } = this.props;
         if(authenticationToken) {
             AsyncStorage.setItem('userToken', authenticationToken);
+            AsyncStorage.setItem('userName', this.state.username);
             this.props.navigation.navigate('HomeStack'); 
         } 
     }
 
     _loginPress(event) {
-        console.log('Pressed!', this.state);
-        this.props.getUser(this.state.username, this.state.password)
-        // .then(
-        //     (res) => this.props.navigation.navigate('HomeStack'),
-        //     (err) => this.setState({errors: err})
-        // );
-        //this.props.navigation.dispatch({type: 'Login'});
-        //this.props.navigation.navigate('HomeStack')
-
-        // const navigateAction = NavigationActions.navigate({
-        //     routeName: 'Profile',
-          
-        //     params: {},
-          
-        //     action: NavigationActions.navigate({ routeName: 'Profile' }),
-        //   });
-          //this.props.navigation.dispatch(navigateAction);
-        //this.props.navigation.navigate('Profile')
-        
-        
-        //  var username = this.state.username;
-        //  var password = this.state.password;
-        //  this.props.getUser(username, password);
-        
-        //  console.log(username);
-        //  console.log(password);
+        this.props.getUser(this.state.username, this.state.password);
     }
 
     _creatAccountPress(event) {
@@ -61,7 +37,6 @@ class LoginPage extends Component {
         let { username, password } = this.state;
         return (
             <View> 
-                {/* <Header  headerText="Vchar3"> </Header>  */}
                 <Text style={{fontSize:20, color: 'red'}}> {this.props.error}</Text>
                 <Card style={styles.container}>
                     <CardSection> 

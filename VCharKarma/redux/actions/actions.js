@@ -1,5 +1,5 @@
 import { DATA_FETCHING, DATA_FETCHING_SUCCESS, DATA_FETCHING_FAILURE} from '../constants';
-import baseURL from '../apiUrlConfig';
+import { baseURL } from '../apiUrlConfig';
 
 export function fetchDataFromAPI() {
     return (dispatch) => {
@@ -13,6 +13,7 @@ export function fetchDataFromAPI() {
 
 export function getUserLogin(username, password) {
     return (dispatch) => {
+        console.log('base url : ', baseURL)
         dispatch(getData())
         baseURL.post('users/login', {
             userId: username,

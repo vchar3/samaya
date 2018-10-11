@@ -1,9 +1,11 @@
 import React, {Component}  from 'react';
-import {ScrollView, StyleSheet, Text, View, TouchableOpacity, TextInput, Platform, KeyboardAvoidingView } from 'react-native';
+import {ScrollView, StyleSheet, Text, View, TouchableOpacity, TextInput, Platform, KeyboardAvoidingView, AsyncStorage } from 'react-native';
 import { Button, Card, CardSection, Header } from '../common/index';
 import { TextField } from 'react-native-material-textfield';
 window.navigator.userAgent = 'react-native';
 import io from 'socket.io-client/dist/socket.io';
+
+import {webSocketUrl} from '../../redux/apiUrlConfig'
 
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
@@ -16,7 +18,7 @@ class CareNotesPage extends Component {
     state = { 
         listmessage : [],
         userTypedText: '',
-        userId: 'user50@gmail.com',
+        userId: '',
         Timestamp: '',
         addUser: false,
         email: '',
@@ -25,21 +27,47 @@ class CareNotesPage extends Component {
 
     constructor() {
         super();
-        this.socket = io('localhost:4000');
-        this.socket.emit('charStart', {
-            'userID': '1234'
-        })
+        this._bootstrapAsync();
+        console.log("constructor ", this._bootstrapAsync());
 
+    }
+
+    componentDidMount() {
+
+        //connection to socket
+        this.socket = io(webSocketUrl);
+        
+
+        AsyncStorage.getItem('userName').then((value) => {
+            userid = value;
+            console.log("async value : ", userid);
+            this.setState({
+                userId: value
+            });
+            this.socket.emit('charStart', {
+                'userId': value
+            })
+
+        })
+        let userid = this.state.userId;
+        
+        console.log('set user id ', userid);
+        //send userId to socket server
+        
+
+        //getting chat data from socket
         this.socket.on('getChatData', (listOfChat)=> {
             console.log('list of chat', listOfChat);
             this.setState({listmessage: listOfChat});
         });
 
+        //getting response from socket
         this.socket.on('response', (data)=>{ 
             console.log('response from server chat ', data);
             this.setState({listmessage: [...this.state.listmessage, data]});
         });
 
+        //getting response from using user id
         this.socket.on(this.state.userId, (data)=>{ 
             console.log('response from server chat with userlist ', data);
             this.setState({
@@ -50,6 +78,30 @@ class CareNotesPage extends Component {
 
     }
 
+    // Fetch the token from storage then navigate to our appropriate place
+    _bootstrapAsync = async () => {
+        const userName = await AsyncStorage.getItem('userName');
+
+        if(userName) {
+            this.setState({
+                userId: userName
+            });
+            console.log("boot ", this.state.userId)
+            console.log("value change")
+    
+            return userName;
+        }
+
+
+       // this._getUserName(userName);
+      };
+
+      _getUserName(userName) {
+          console.log('user name ', userName)
+          return userName;
+      }
+
+    //Sending chat to socket server
     _sendHandler() {
         console.log('message send');
         this.socket.emit('newMessage', {
@@ -69,18 +121,15 @@ class CareNotesPage extends Component {
     _addUserHandler() {
         this.setState({
             addUser: false
-        })
+        });
+
+        //sending request to socket to add new user to chat group
         this.socket.emit('addUser', {
-            firstName: this.state.email,
-            middleName: '',
-            lastName: '',
-            friendUserId: 'user75@gmail.com',
-            userId: 'user50@gmail.com'
+            friendUserId: this.state.email,
+            userId: this.state.userId
         })
 
     }
-
-
 
     render() {
         let { email } = this.state;
