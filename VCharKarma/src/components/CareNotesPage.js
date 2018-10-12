@@ -2,13 +2,13 @@ import React, {Component}  from 'react';
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity, TextInput, Platform, KeyboardAvoidingView, AsyncStorage } from 'react-native';
 import { Button, Card, CardSection, Header } from '../common/index';
 import { TextField } from 'react-native-material-textfield';
-window.navigator.userAgent = 'react-native';
-import io from 'socket.io-client/dist/socket.io';
-
 import {webSocketUrl} from '../../redux/apiUrlConfig'
 
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
+
+window.navigator.userAgent = 'react-native';
+import io from 'socket.io-client/dist/socket.io';
 
 class CareNotesPage extends Component { 
     static navigationOptions = {
@@ -27,33 +27,25 @@ class CareNotesPage extends Component {
 
     constructor() {
         super();
-        this._bootstrapAsync();
-        console.log("constructor ", this._bootstrapAsync());
-
-    }
-
-    componentDidMount() {
-
-        //connection to socket
-        this.socket = io(webSocketUrl);
         
+        //connection to socket
+        this.socket = io(webSocketUrl,
+            {
+                jsonp: false
+            }
+        );
+        console.log("socket value", this.socket);
 
         AsyncStorage.getItem('userName').then((value) => {
-            userid = value;
-            console.log("async value : ", userid);
             this.setState({
                 userId: value
             });
+
+            //send userId to socket server
             this.socket.emit('charStart', {
                 'userId': value
             })
-
-        })
-        let userid = this.state.userId;
-        
-        console.log('set user id ', userid);
-        //send userId to socket server
-        
+        })        
 
         //getting chat data from socket
         this.socket.on('getChatData', (listOfChat)=> {
@@ -78,34 +70,11 @@ class CareNotesPage extends Component {
 
     }
 
-    // Fetch the token from storage then navigate to our appropriate place
-    _bootstrapAsync = async () => {
-        const userName = await AsyncStorage.getItem('userName');
-
-        if(userName) {
-            this.setState({
-                userId: userName
-            });
-            console.log("boot ", this.state.userId)
-            console.log("value change")
-    
-            return userName;
-        }
-
-
-       // this._getUserName(userName);
-      };
-
-      _getUserName(userName) {
-          console.log('user name ', userName)
-          return userName;
-      }
-
     //Sending chat to socket server
     _sendHandler() {
         console.log('message send');
         this.socket.emit('newMessage', {
-            userName: 'John', 
+            userName: this.state.userId, 
             message: this.state.userTypedText,
             userId: this.state.userId,
             addedNewUser: this.state.addUserSuccess
