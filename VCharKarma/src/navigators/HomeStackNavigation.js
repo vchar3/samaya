@@ -13,6 +13,7 @@ import InsurancePage from '../components/InsurancePage';
 import ConsentPage from '../components/ConsentPage';
 import LegalPage from '../components/LegalPage';
 import CareNotesPage from '../components/CareNotesPage';
+import SettingPage from '../components/SettingPage';
 
 import DailyVitalsPage from '../components/provideCare/dailyVitals/DailyVitalsPage';
 import HomeCarePage from '../components/provideCare/HomeCarePage';
@@ -35,11 +36,17 @@ const HomeNavigator = createStackNavigator(
         DailyVital: { screen: DailyVitalsPage },
         HomeCare: {screen: HomeCarePage},
         MealPlan: { screen: MealPlanPage },
-        Medication: {screen: MedicationPage}
+        Medication: {screen: MedicationPage},
         // ProvideCareStack: ProvideCareStackRoute
         
 
     }
+);
+
+const SettingNavigator = createStackNavigator(
+  {
+    SettingPage: { screen: SettingPage}
+  }
 );
 
 const DrawNavigator = createDrawerNavigator(
@@ -77,7 +84,7 @@ const TopTabBarNavigator = createMaterialTopTabNavigator(
         }  
       },
       Setting: { 
-        screen: DrawNavigator,
+        screen: SettingNavigator,
         navigationOptions: {
           tabBarLabel: 'Setting',
           tabBarIcon: ({ tintColor }) => {

@@ -6,7 +6,6 @@ import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 import GridView from 'react-native-super-grid';
 
 
-
 class ProvideCarePage extends Component { 
     static navigationOptions = {
         title: 'Provide Care',
@@ -26,7 +25,8 @@ class ProvideCarePage extends Component {
             { name: 'Daily Vitals', code: '#1abc9c', routeName:'DailyVital' }, 
             { name: 'Home Care', code: '#2ecc71', routeName:'HomeCare' },
             { name: 'Meal Plan', code: '#34495e', routeName:'MealPlan' }, 
-            { name: 'Medication', code: '#16a085', routeName:'Medication' }
+            { name: 'Medication', code: '#16a085', routeName:'Medication' },
+            { name: 'Care Note', code: '#2c3e50', routeName:'CareNote' }
           ];
 
         return (
@@ -74,7 +74,7 @@ const styles = {
         justifyContent: 'flex-end',
         borderRadius: 5,
         padding: 10,
-        height: 150,
+        height: 130,
     },
     itemName: {
         fontSize: 16,

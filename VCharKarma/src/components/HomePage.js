@@ -1,5 +1,5 @@
 import React, {Component}  from 'react';
-import {ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards'
@@ -9,6 +9,7 @@ import BottomNavigation, { FullTab } from 'react-native-material-bottom-navigati
 import FooterBar from '../common/FooterBar';
 import { BottomNavBar } from '../common/index';
 import {BottomTabBar} from '../navigators/AppNavigator';
+import moment from 'moment';
 
 class HomePage extends Component { 
     static navigationOptions = {
@@ -16,11 +17,22 @@ class HomePage extends Component {
       };
 
     state = { 
+        userName: '',
         cardList: [
             {'image': '../../img/flower.jpeg', 'title': 'Home', 'id': 1},
             {'image': '../../img/flower2.jpeg', 'title': 'Home', 'id': 2},
             {'image': '../../img/flower.jpeg', 'title': 'Home', 'id': 3},
          ]
+    }
+
+    constructor() {
+        super();
+
+        AsyncStorage.getItem('userName').then((value) => {
+            this.setState({
+                userName: value
+            });
+        })
     }
 
     _buttonPressHandler(event) {
@@ -36,12 +48,20 @@ class HomePage extends Component {
             { name: 'Health Records', code: '#34495e', routeName:'HealthRecords' }, 
             { name: 'Insurance', code: '#16a085', routeName:'Insurance' },
             { name: 'Consent', code: '#8e44ad', routeName:'Consent' }, 
-            { name: 'Legal', code: '#2c3e50', routeName:'Legal' },
-            { name: 'Care Note', code: '#2c3e50', routeName:'CareNote' }
+            { name: 'Legal', code: '#2c3e50', routeName:'Legal' }
           ];
 
         return (
             <View style={{ flex: 1 }}>
+                <View style={styles.imageContainerStyle}>
+                    <View style={{justifyContent:'flex-start', flexDirection:'row'}}>
+                    <Image style={styles.imageStyle}
+                        defaultSource={require('../../img/default.png')}/>
+                    <Text style={{marginLeft: 5, color: 'green', fontSize: 20,}}>
+                        {this.state.userName.split('@')[0]} </Text>
+                    </View>
+                    <Text style={{color: 'orange', fontSize: 16}}> Today is {moment(new Date()).format("MMMM Do, YYYY")}</Text>
+                </View>
                 <GridView
                     itemDimension={130}
                     items={items}
@@ -78,14 +98,13 @@ export default connect(mapStateToProps, mapDispatchToProps) (HomePage);
 
 const styles = {
     gridView: {
-        paddingTop: 25,
-        flex: 1,
+        flex: 1
       },
       itemContainer: {
         justifyContent: 'flex-end',
         borderRadius: 5,
         padding: 10,
-        height: 150,
+        height: 130,
       },
       itemName: {
         fontSize: 16,
@@ -133,5 +152,14 @@ const styles = {
         borderRadius: 5,
         marginLeft: 5,
         marginRight: 5
-    }
+    },
+    imageStyle: {
+        width: 25, 
+        height: 25     
+    },
+    imageContainerStyle: {
+        padding: 10,
+        flexDirection:'row',
+        backgroundColor: '#fff'
+    },
   };
