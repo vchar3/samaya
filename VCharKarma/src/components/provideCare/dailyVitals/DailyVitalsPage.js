@@ -16,7 +16,13 @@ class DailyVitalsPage extends Component {
 
     state = { 
         visibleModal: false,
-        pageName: ''
+        pageName: '',
+        feeling: {
+            isHappy: false,
+            isSad: false,
+            isTired: false,
+            isSick: false
+        }
     }
 
 
@@ -26,7 +32,12 @@ class DailyVitalsPage extends Component {
             this.state.pageName === 'FeelingPage' 
                 ? <Feeling 
                     text='Close'
-                    onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
+                    state= {this.state}
+                    _checkBoxChanges= {(id, value) => this._checkBoxChanges(id, value)}
+                    onPress= { () => {
+                        this._updateFeeling()
+                        this.setState({ visibleModal: false, pageName: ''})
+                    }}/>
                 : null 
         }
         {
@@ -50,6 +61,86 @@ class DailyVitalsPage extends Component {
                 visibleModal: true,
                 pageName: event})
         }
+    }
+
+    _checkBoxChanges(id, value) {
+        if(id === 'Happy') {
+            if(this.state.feeling.isHappy) {
+                this.setState({
+                    feeling: {
+                        ...this.state.feeling,
+                        isHappy: false
+                    }
+                })
+            } else {
+                this.setState({
+                    feeling: {
+                        isHappy: true,
+                        isSad: false,
+                        isTired: false,
+                        isSick: false
+                    }
+                })
+            }
+        } else if(id === 'Sad') {
+            if(this.state.feeling.isSad) {
+                this.setState({
+                    feeling: {
+                        ...this.state.feeling,
+                        isSad: false
+                    }
+                })
+            } else {
+                this.setState({
+                    feeling: {
+                        isSad: true,
+                        isHappy: false,
+                        isTired: false,
+                        isSick: false
+                    }
+                })
+            }
+        } else if(id === 'Tired') {
+            if(this.state.feeling.isTired) {
+                this.setState({
+                    feeling: {
+                        ...this.state.feeling,
+                        isTired: false
+                    }
+                })
+            } else {
+                this.setState({
+                    feeling: {
+                        isTired: true,
+                        isHappy: false,
+                        isSad: false,
+                        isSick: false
+                    }
+                })
+            }
+        } else if(id === 'Sick') {
+            if(this.state.feeling.isSick) {
+                this.setState({
+                    feeling: {
+                        ...this.state.feeling,
+                        isSick: false
+                    }
+                })
+            } else {
+                this.setState({
+                    feeling: {
+                        isSick: true,
+                        isHappy: false,
+                        isSad: false,
+                        isTired: false
+                    }
+                })
+            }
+        }
+    }
+
+    _updateFeeling(){
+        console.log('state', this.state)
     }
 
     render() {

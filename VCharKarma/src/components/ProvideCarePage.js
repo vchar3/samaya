@@ -22,7 +22,7 @@ class ProvideCarePage extends Component {
    
     render() {
         const items = [
-            { name: 'Daily Vitals', code: '#1abc9c', routeName:'DailyVital' }, 
+            { name: 'Daily Care', code: '#1abc9c', routeName:'DailyVital' }, 
             { name: 'Home Care', code: '#2ecc71', routeName:'HomeCare' },
             { name: 'Meal Plan', code: '#34495e', routeName:'MealPlan' }, 
             { name: 'Medication', code: '#16a085', routeName:'Medication' },

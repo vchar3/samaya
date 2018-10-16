@@ -7,7 +7,10 @@ import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 
 class LoginPage extends Component { 
     static navigationOptions = {
-        title: ''
+        title: '',
+        headerStyle: {
+            backgroundColor: '#fff'
+        }
       };
       
     state = { 

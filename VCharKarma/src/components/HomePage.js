@@ -14,6 +14,9 @@ import moment from 'moment';
 class HomePage extends Component { 
     static navigationOptions = {
         title: 'Home',
+        headerStyle: {
+            backgroundColor: '#fff'
+        }
       };
 
     state = { 

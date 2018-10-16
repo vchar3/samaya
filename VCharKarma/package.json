@@ -11,6 +11,7 @@
     "moment": "^2.22.2",
     "react": "16.4.1",
     "react-native": "0.56.0",
+    "react-native-elements": "^0.19.1",
     "react-native-flip-toggle-button": "^1.0.5",
     "react-native-material-bottom-navigation": "^1.0.0",
     "react-native-material-cards": "^1.0.9",
