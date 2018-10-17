@@ -22,6 +22,21 @@ class DailyVitalsPage extends Component {
             isSad: false,
             isTired: false,
             isSick: false
+        },
+        todayFeeling: '',
+        sysValue: 100,
+        diaValue: 70,
+        bloodPressure: {
+            sys:{ 
+                minimumValue: 90,
+                maximumValue: 160,
+                step: 1
+            },
+            dia: { 
+                diaMinimumValue: 60,
+                diaMaximumValue: 90,
+                diaStep: 1
+            }
         }
     }
 
@@ -42,8 +57,13 @@ class DailyVitalsPage extends Component {
         }
         {
             this.state.pageName === 'BloodPressure' 
-                ? <BloodPressure 
+                ? 
+                <BloodPressure 
                     text='Close'
+                    state = {this.state}
+                    self = {this}
+                    _changeSysBloodPressure = {(sysValue) => this._changeSysBloodPressure(sysValue)}
+                    _changeDiaBloodPressure = {(daiValue) => this._changeDiaBloodPressure(daiValue)}
                     onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
                 : null 
         }
@@ -79,7 +99,8 @@ class DailyVitalsPage extends Component {
                         isSad: false,
                         isTired: false,
                         isSick: false
-                    }
+                    },
+                    todayFeeling: id
                 })
             }
         } else if(id === 'Sad') {
@@ -97,7 +118,8 @@ class DailyVitalsPage extends Component {
                         isHappy: false,
                         isTired: false,
                         isSick: false
-                    }
+                    },
+                    todayFeeling: id
                 })
             }
         } else if(id === 'Tired') {
@@ -115,7 +137,8 @@ class DailyVitalsPage extends Component {
                         isHappy: false,
                         isSad: false,
                         isSick: false
-                    }
+                    },
+                    todayFeeling: id
                 })
             }
         } else if(id === 'Sick') {
@@ -133,7 +156,8 @@ class DailyVitalsPage extends Component {
                         isHappy: false,
                         isSad: false,
                         isTired: false
-                    }
+                    },
+                    todayFeeling: id
                 })
             }
         }
@@ -143,9 +167,25 @@ class DailyVitalsPage extends Component {
         console.log('state', this.state)
     }
 
+    _changeSysBloodPressure(sysValue) {
+        if(sysValue) {
+            this.setState({
+                sysValue: sysValue
+            })
+        }
+    }
+    _changeDiaBloodPressure(daiValue) {
+        if(daiValue) {
+            this.setState({
+                diaValue: daiValue
+            })
+        }
+        
+    }
+
     render() {
-        const items = [
-            { name: 'Feeling', code: '#1abc9c', routeName:'FeelingPage', value: 'Good' }, 
+        let items = [
+            { name: 'Feeling', code: '#1abc9c', routeName:'FeelingPage', value: this.state.todayFeeling }, 
             { name: 'Blood Pressure', code: '#2ecc71', routeName:'BloodPressure', value: '120' },
             { name: 'Body Temp', code: '#16a085', routeName:'BodyTemp', value: '98.2 F' },
             { name: 'Respiratory Rate', code: '#34495e', routeName:'Respiratory', value: '18' }, 

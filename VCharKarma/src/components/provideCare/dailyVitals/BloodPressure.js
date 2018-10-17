@@ -2,9 +2,10 @@ import React, {Component}  from 'react';
 import {Image, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
 import GridView from 'react-native-super-grid';
 import { TextField } from 'react-native-material-textfield';
+import { Slider } from 'react-native-elements'
 
 
-const BloodPressure = ({ onPress, text, _buttonPressHandler1, sys, dia , pulse}) => {
+const BloodPressure = ({ onPress, text, _buttonPressHandler1, _changeSysBloodPressure, _changeDiaBloodPressure, state}) => {
     return (
         <View style={styles.modalContent}> 
             <Text style={{fontSize: 22}}> Blood Pressure </Text> 
@@ -13,8 +14,23 @@ const BloodPressure = ({ onPress, text, _buttonPressHandler1, sys, dia , pulse})
                     <Image style={{width: 50, height: 50}} 
                             source={require('../../../../img/heart.png')}/>
                 </TouchableOpacity>
-                <View style={styles.textContainer}>  
-                <TextField
+                <View style={styles.textContainer}>
+                <Slider
+                    value={state.sysValue}
+                    minimumValue={state.bloodPressure.sys.minimumValue}
+                    maximumValue={state.bloodPressure.sys.maximumValue}
+                    step={state.bloodPressure.sys.step}
+                    onValueChange={(changeValue) => _changeSysBloodPressure(changeValue)} />
+                <Text>Value: {state.sysValue}</Text> 
+
+                <Slider
+                    value={state.diaValue}
+                    minimumValue={state.bloodPressure.dia.diaMinimumValue}
+                    maximumValue={state.bloodPressure.dia.diaMaximumValue}
+                    step={state.bloodPressure.dia.diaStep}
+                    onValueChange={(changeValue) => _changeDiaBloodPressure(changeValue)} />
+                <Text>Value1: {state.diaValue}</Text>   
+                {/* <TextField
                     label='SYS mmHg'
                     value={sys}
                     onChangeText={ (value) => {sys:value} }
@@ -30,7 +46,7 @@ const BloodPressure = ({ onPress, text, _buttonPressHandler1, sys, dia , pulse})
                     label='PULSE /min'
                     value={pulse}
                     onChangeText={ (value) => {pulse:value} }
-                />
+                /> */}
 
             </View>
 
