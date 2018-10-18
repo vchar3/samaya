@@ -1,5 +1,5 @@
 import React, {Component}  from 'react';
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight,Image } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
@@ -12,6 +12,12 @@ import {BloodPressure} from './BloodPressure';
 class DailyVitalsPage extends Component { 
     static navigationOptions = {
         title: 'Daily Vitals',
+        headerStyle: {
+            backgroundColor: '#7DBADF',
+            borderBottomColor: '#7DBADF'
+        },
+        headerTintColor: "#ffff",
+        headerRight: (<Image style={{marginRight: 15}} source={require('../../../../img/UserIcon.png')} />)
       };
 
     state = { 

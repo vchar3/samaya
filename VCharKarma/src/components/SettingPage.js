@@ -11,6 +11,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 class LegalPage extends Component { 
     static navigationOptions = {
         title: 'Setting',
+        headerStyle: {
+            backgroundColor: '#7DBADF',
+            borderBottomColor: '#7DBADF'
+        },
+        headerTintColor: "#ffff",
+        headerRight: (<Image style={{marginRight: 15}} source={require('../../img/UserIcon.png')} />)
       };
 
     state = { 

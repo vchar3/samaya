@@ -12,20 +12,22 @@ import {BottomTabBar} from '../navigators/AppNavigator';
 import moment from 'moment';
 
 class HomePage extends Component { 
-    static navigationOptions = {
-        title: 'Home',
+    static navigationOptions = ({navigation}) =>{
+        const {params = {}} = navigation.state;
+        console.log('navigation', navigation, params)
+        return {
+        title: 'Welcome',
         headerStyle: {
-            backgroundColor: '#fff'
+            backgroundColor: '#7DBADF',
+            borderBottomColor: '#fff'
+        },
+        headerTintColor: "#ffff",
+        headerRight: (<Image style={{marginRight: 15}} source={require('../../img/UserIcon.png')} />)
         }
       };
 
     state = { 
-        userName: '',
-        cardList: [
-            {'image': '../../img/flower.jpeg', 'title': 'Home', 'id': 1},
-            {'image': '../../img/flower2.jpeg', 'title': 'Home', 'id': 2},
-            {'image': '../../img/flower.jpeg', 'title': 'Home', 'id': 3},
-         ]
+        userName: ''
     }
 
     constructor() {
@@ -42,21 +44,41 @@ class HomePage extends Component {
         console.log('Home Pressed!', event);
         this.props.navigation.navigate(event);
     }
+    _headerImage =( ) => (
+        <View>
+            <Text>{this.state.userName.split('@')[0]}</Text>
+            <Image style={{marginRight: 15}} source={require('../../img/UserIcon.png')} />
+            </View>
+    )
    
     render() {
         //let { } = this.state;
         const items = [
-            { name: 'Provide Care', code: '#1abc9c', routeName:'ProvideCare' }, 
-            { name: 'Medications', code: '#2ecc71', routeName:'Medications' },
-            { name: 'Health Records', code: '#34495e', routeName:'HealthRecords' }, 
-            { name: 'Insurance', code: '#16a085', routeName:'Insurance' },
-            { name: 'Consent', code: '#8e44ad', routeName:'Consent' }, 
-            { name: 'Legal', code: '#2c3e50', routeName:'Legal' }
+            { name: 'Provide Care', code: '#2094DA', routeName:'ProvideCare' }, 
+            { name: 'Medications', code: '#2094DA', routeName:'Medications' },
+            { name: 'Health Records', code: '#2094DA', routeName:'HealthRecords' }, 
+            { name: 'Insurance', code: '#2094DA', routeName:'Insurance' },
+            { name: 'Consent', code: '#2094DA', routeName:'Consent' }, 
+            { name: 'Legal', code: '#2094DA', routeName:'Legal' }
           ];
 
         return (
             <View style={{ flex: 1 }}>
-                <View style={styles.imageContainerStyle}>
+                <View
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                    }} 
+                    >
+                    <Image
+                        source={require('../../img/BackgroundScreen.png')}
+                    />
+
+                </View>
+                {/* <View style={styles.imageContainerStyle}>
                     <View style={{justifyContent:'flex-start', flexDirection:'row'}}>
                     <Image style={styles.imageStyle}
                         defaultSource={require('../../img/default.png')}/>
@@ -64,7 +86,7 @@ class HomePage extends Component {
                         {this.state.userName.split('@')[0]} </Text>
                     </View>
                     <Text style={{color: 'orange', fontSize: 16}}> Today is {moment(new Date()).format("MMMM Do, YYYY")}</Text>
-                </View>
+                </View> */}
                 <GridView
                     itemDimension={130}
                     items={items}
@@ -73,12 +95,10 @@ class HomePage extends Component {
                     <TouchableOpacity  onPress={() => this._buttonPressHandler(item.routeName)}>
                     <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
                         <Text style={styles.itemName}>{item.name}</Text>
-                        {/* <Text style={styles.itemCode}>{item.code}</Text> */}
                     </View>
                     </TouchableOpacity>
                     )}
                 />
-                {/* <FooterBar /> */}
             </View>
         );
     }

@@ -1,5 +1,5 @@
 import React, {Component}  from 'react';
-import {ScrollView, StyleSheet, Text, View, TouchableOpacity, TextInput, Platform, KeyboardAvoidingView, AsyncStorage } from 'react-native';
+import {ScrollView, StyleSheet, Text, View, TouchableOpacity, TextInput, Platform, KeyboardAvoidingView, AsyncStorage, Image } from 'react-native';
 import { Button, Card, CardSection, Header } from '../common/index';
 import { TextField } from 'react-native-material-textfield';
 import {webSocketUrl} from '../../redux/apiUrlConfig'
@@ -13,6 +13,12 @@ import io from 'socket.io-client/dist/socket.io';
 class CareNotesPage extends Component { 
     static navigationOptions = {
         title: 'Care Notes',
+        headerStyle: {
+            backgroundColor: '#7DBADF',
+            borderBottomColor: '#7DBADF'
+        },
+        headerTintColor: "#ffff",
+        headerRight: (<Image style={{marginRight: 15}} source={require('../../img/UserIcon.png')} />)
       };
 
     state = { 

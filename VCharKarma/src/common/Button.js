@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const Button = ({ onPress, children, style}) => {
     const { buttonStyle, textStyle } = defaultStyle;
-    const combineStyles = StyleSheet.flatten([buttonStyle, style]); 
+    const combineStyles = StyleSheet.flatten([buttonStyle, textStyle, style]); 
     return (
         <TouchableOpacity onPress={onPress} style={combineStyles}>
             <Text style={textStyle}>
@@ -18,14 +18,13 @@ const defaultStyle = StyleSheet.create({
         flex: 1,
         alignSelf: 'stretch',
         backgroundColor: '#fff',
-        borderWidth: 1,
         borderRadius: 5,
         marginLeft: 5,
         marginRight: 5
     },
     textStyle: {
         alignSelf: 'center',
-        color: 'white',
+        color: '#16A7F0',
         fontSize: 16,
         fontWeight: '600',
         paddingTop: 10,

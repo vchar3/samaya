@@ -9,7 +9,8 @@ class LoginPage extends Component {
     static navigationOptions = {
         title: '',
         headerStyle: {
-            backgroundColor: '#fff'
+            backgroundColor: '#7DBADF',
+            borderBottomColor: '#7DBADF'
         }
       };
       
@@ -18,12 +19,15 @@ class LoginPage extends Component {
         password: '',
         errors: ''
     }
+    
     componentDidUpdate(prevProps) {
         const { authenticationToken } = this.props;
         if(authenticationToken) {
             AsyncStorage.setItem('userToken', authenticationToken);
             AsyncStorage.setItem('userName', this.state.username);
-            this.props.navigation.navigate('HomeStack'); 
+            this.props.navigation.navigate('HomeStack',{
+                userName: this.state.username
+            }); 
         } 
     }
 
@@ -38,8 +42,23 @@ class LoginPage extends Component {
    
     render() {
         let { username, password } = this.state;
+        const resizeMode = 'center';
         return (
             <View style={styles.container}> 
+                <View
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                    }} 
+                    >
+                    <Image
+                        source={require('../../img/BackgroundScreen.png')}
+                    />
+
+                </View>
                 <View style={styles.imageContainerStyle}>
                     <Image style={styles.imageStyle}
                         source={require('../../img/CareVen.png')}/>
@@ -47,53 +66,63 @@ class LoginPage extends Component {
                 <Text style={styles.errorTextStyle}> 
                     {this.props.error}
                 </Text>
- 
-                <CardSection> 
-                    <TextInput 
-                        keyboardType= 'email-address'
-                        onChangeText={(value) => this.setState({username: value})}
-                        value={this.state.userName}
-                        placeholder="Enter your username"
-                        style={styles.inputStyle}
-                        onChangeText={ (username) => this.setState({ username })}
-                    /> 
+
+                <CardSection>
+                    <View style={{flex: 1,flexDirection: 'row',  borderBottomColor:'#fff', borderBottomWidth:1, padding: 15}}>
+                        <View style={{justifyContent: 'center'}}>
+                        <Image style={{paddingLeft: 15}} source={require('../../img/UserIcon.png')} />
+                        </View>
+                        <TextInput 
+                            keyboardType= 'email-address'
+                            onChangeText={(value) => this.setState({username: value})}
+                            value={this.state.userName}
+                            placeholder="username"
+                            placeholderTextColor="white"
+                            style={styles.inputStyle}
+                            onChangeText={ (username) => this.setState({ username })}
+                        /> 
+                    </View> 
                 </CardSection>
                 <CardSection>
-                    <TextInput 
-                        onChangeText={(value) => this.setState({password: value})}
-                        value={this.state.password}
-                        placeholder="Enter your password"
-                        password = {true}
-                        style={styles.inputStyle}
-                        secureTextEntry= {true}
-                        onChangeText={ (password) => this.setState({ password })}
-                    />
+                    <View style={{flex: 1,flexDirection: 'row', borderBottomColor:'#fff', borderBottomWidth:1, padding: 15 }}>
+                        <View style={{justifyContent: 'center'}}>
+                        <Image style={{paddingLeft: 15}} source={require('../../img/PasswordIcon.png')} />
+                        </View>
+                        <TextInput 
+                            onChangeText={(value) => this.setState({password: value})}
+                            value={this.state.password}
+                            placeholder="password"
+                            placeholderTextColor="white"
+                            password = {true}
+                            style={styles.inputStyle}
+                            secureTextEntry= {true}
+                            onChangeText={ (password) => this.setState({ password })}
+                        />
+                    </View>
+                
                 </CardSection>
+                
                 <CardSection>
+                <View style={{ flex:1, flexDirection:'row'}}>
                     <Button style={styles.loginButtonStyle} 
                         onPress={this._loginPress.bind(this)}>
-                        Login
+                        sign in
                     </Button>
+                    <Button style={styles.createAccountStyle}
+                        onPress={this._creatAccountPress.bind(this)}>
+                        sign up
+                    </Button>
+                </View>
                 </CardSection>   
+
+               
                 <CardSection>
                     <Text style={styles.textStyle}>Forgot your password?</Text>
                 </CardSection>
 
-                <View style={styles.lineStyle}>       
-                    <Text style={styles.textStyle}>
-                        --------------  OR  --------------
-                    </Text>
-                </View>
-
-                <CardSection>
-                    <Button style={styles.createAccountStyle}
-                        onPress={this._creatAccountPress.bind(this)}>
-                        Create New Account
-                    </Button>
-                </CardSection>
-                <CardSection>
+                {/* <CardSection>
                     <Text style={styles.textStyle}>{this.state.userName}</Text>
-                </CardSection>
+                </CardSection> */}
                 <Text> {this.props.user}</Text>
             </View>
         );
@@ -136,18 +165,22 @@ const styles = {
         fontSize: 20,
         textAlign: 'center',
         textAlignVertical: 'center',
-        flex: 1
+        flex: 1,
+        color: '#fff',
+        fontWeight: 'bold',
+        fontStyle: 'italic'
 
     },
-    inputStyle: {
-        height:40, 
-        flex: 1,  
-        fontSize: 18, 
-        borderWidth: 1, 
-        borderRadius: 5,
-        marginLeft: 5,
-        marginRight: 5,
-        padding: 10
+    inputStyle: { 
+        paddingLeft: 5,
+        paddingRight: 15,
+        fontSize:24, 
+        marginLeft: 15,
+        marginRight: 15,
+        width:300,
+        maxWidth: 300,
+        height:30,
+        color: '#fff'
     },
     imageStyle: {
         width: 220, 
@@ -163,10 +196,10 @@ const styles = {
         color: 'red' 
     },
     loginButtonStyle: {
-        backgroundColor:'#32CD32'
+        backgroundColor:'white'
     },
     createAccountStyle: {
-        backgroundColor:'#A9A9A9'
+        backgroundColor:'#025282'
     },
     lineStyle: {
         flexDirection:'row', 
