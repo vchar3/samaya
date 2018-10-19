@@ -7,14 +7,16 @@ import GridView from 'react-native-super-grid';
 import Modal from 'react-native-modal'; 
 
 import {Feeling} from './Feeling';
+import feelingChanges from './FeelingChanges';
 import {BloodPressure} from './BloodPressure';
+
 
 class DailyVitalsPage extends Component { 
     static navigationOptions = {
-        title: 'Daily Vitals',
+        title: 'Daily Care',
         headerStyle: {
             backgroundColor: '#7DBADF',
-            borderBottomColor: '#7DBADF'
+            borderBottomColor: '#fff'
         },
         headerTintColor: "#ffff",
         headerRight: (<Image style={{marginRight: 15}} source={require('../../../../img/UserIcon.png')} />)
@@ -46,168 +48,26 @@ class DailyVitalsPage extends Component {
         }
     }
 
-
-    _renderModalContent = () => (
-        <View>
-        {
-            this.state.pageName === 'FeelingPage' 
-                ? <Feeling 
-                    text='Close'
-                    state= {this.state}
-                    _checkBoxChanges= {(id, value) => this._checkBoxChanges(id, value)}
-                    onPress= { () => {
-                        this._updateFeeling()
-                        this.setState({ visibleModal: false, pageName: ''})
-                    }}/>
-                : null 
-        }
-        {
-            this.state.pageName === 'BloodPressure' 
-                ? 
-                <BloodPressure 
-                    text='Close'
-                    state = {this.state}
-                    self = {this}
-                    _changeSysBloodPressure = {(sysValue) => this._changeSysBloodPressure(sysValue)}
-                    _changeDiaBloodPressure = {(daiValue) => this._changeDiaBloodPressure(daiValue)}
-                    onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
-                : null 
-        }
-        </View>
-    );
-
-    _buttonPressHandler(event) {
-        console.log('Feeling Pressed!', this.setState );
-        if(event === 'FeelingPage') {
-            this.setState({ 
-                visibleModal: true,
-                pageName: event})
-        } else if(event === 'BloodPressure'){
-            this.setState({ 
-                visibleModal: true,
-                pageName: event})
-        }
-    }
-
-    _checkBoxChanges(id, value) {
-        if(id === 'Happy') {
-            if(this.state.feeling.isHappy) {
-                this.setState({
-                    feeling: {
-                        ...this.state.feeling,
-                        isHappy: false
-                    }
-                })
-            } else {
-                this.setState({
-                    feeling: {
-                        isHappy: true,
-                        isSad: false,
-                        isTired: false,
-                        isSick: false
-                    },
-                    todayFeeling: id
-                })
-            }
-        } else if(id === 'Sad') {
-            if(this.state.feeling.isSad) {
-                this.setState({
-                    feeling: {
-                        ...this.state.feeling,
-                        isSad: false
-                    }
-                })
-            } else {
-                this.setState({
-                    feeling: {
-                        isSad: true,
-                        isHappy: false,
-                        isTired: false,
-                        isSick: false
-                    },
-                    todayFeeling: id
-                })
-            }
-        } else if(id === 'Tired') {
-            if(this.state.feeling.isTired) {
-                this.setState({
-                    feeling: {
-                        ...this.state.feeling,
-                        isTired: false
-                    }
-                })
-            } else {
-                this.setState({
-                    feeling: {
-                        isTired: true,
-                        isHappy: false,
-                        isSad: false,
-                        isSick: false
-                    },
-                    todayFeeling: id
-                })
-            }
-        } else if(id === 'Sick') {
-            if(this.state.feeling.isSick) {
-                this.setState({
-                    feeling: {
-                        ...this.state.feeling,
-                        isSick: false
-                    }
-                })
-            } else {
-                this.setState({
-                    feeling: {
-                        isSick: true,
-                        isHappy: false,
-                        isSad: false,
-                        isTired: false
-                    },
-                    todayFeeling: id
-                })
-            }
-        }
-    }
-
-    _updateFeeling(){
-        console.log('state', this.state)
-    }
-
-    _changeSysBloodPressure(sysValue) {
-        if(sysValue) {
-            this.setState({
-                sysValue: sysValue
-            })
-        }
-    }
-    _changeDiaBloodPressure(daiValue) {
-        if(daiValue) {
-            this.setState({
-                diaValue: daiValue
-            })
-        }
-        
-    }
-
     render() {
+        let bloodPressureValue = `Sys/mmHg`+': '+this.state.sysValue+`\n`+`Dia/mmHg`+ ': '+ this.state.diaValue
         let items = [
-            { name: 'Feeling', code: '#1abc9c', routeName:'FeelingPage', value: this.state.todayFeeling }, 
-            { name: 'Blood Pressure', code: '#2ecc71', routeName:'BloodPressure', value: '120' },
-            { name: 'Body Temp', code: '#16a085', routeName:'BodyTemp', value: '98.2 F' },
-            { name: 'Respiratory Rate', code: '#34495e', routeName:'Respiratory', value: '18' }, 
-            { name: 'Pulse Oxygen', code: '#16a085', routeName:'PulseOxygen', value: '95' },
-            { name: 'Num time today', code: '#16a085', routeName:'NumTime', value: '0' }
+            { name: 'Feeling', routeName:'FeelingPage', value: this.state.todayFeeling }, 
+            { name: 'Blood Pressure', routeName:'BloodPressure', value: bloodPressureValue },
+            { name: 'Body Temp', routeName:'BodyTemp', value: '98.2 F' },
+            { name: 'Respiratory Rate', routeName:'Respiratory', value: '18' }, 
+            { name: 'Pulse Oxygen', routeName:'PulseOxygen', value: '95' },
+            { name: 'Num time today', routeName:'NumTime', value: '0' }
           ];
 
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: '#4B91CD' }}>
                 <GridView
                     itemDimension={130}
                     items={items}
                     style={styles.gridView}
                     renderItem={item => (
                     <TouchableOpacity  onPress={() => this._buttonPressHandler(item.routeName)}>
-                    <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
+                    <View style={[styles.itemContainer, { backgroundColor: '#78B6DD' }]}>
                         <Text style={styles.itemCode}>{item.value}</Text>
                         <Text style={styles.itemName}>{item.name}</Text>
                         
@@ -231,6 +91,63 @@ class DailyVitalsPage extends Component {
                
             </View>
         );
+    }
+
+    _renderModalContent = () => (
+        <View>
+        {
+            this.state.pageName === 'FeelingPage' 
+                ? <Feeling 
+                    text='Close'
+                    state= {this.state}
+                    _checkBoxChanges= {(id, value) => feelingChanges(id, value, this)}
+                    onPress= { () => {
+                        this.setState({ visibleModal: false, pageName: ''})
+                    }}/>
+                : null 
+        }
+        {
+            this.state.pageName === 'BloodPressure' 
+                ? 
+                <BloodPressure 
+                    text='Save'
+                    state = {this.state}
+                    self = {this}
+                    _changeSysBloodPressure = {(sysValue) => this._changeSysBloodPressure(sysValue)}
+                    _changeDiaBloodPressure = {(daiValue) => this._changeDiaBloodPressure(daiValue)}
+                    onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
+                : null 
+        }
+        </View>
+    );
+
+    _buttonPressHandler(event) {
+        console.log('Feeling Pressed!', this.setState );
+        if(event === 'FeelingPage') {
+            this.setState({ 
+                visibleModal: true,
+                pageName: event})
+        } else if(event === 'BloodPressure'){
+            this.setState({ 
+                visibleModal: true,
+                pageName: event})
+        }
+    }
+
+    _changeSysBloodPressure(sysValue) {
+        if(sysValue) {
+            this.setState({
+                sysValue: sysValue
+            })
+        }
+    }
+    _changeDiaBloodPressure(daiValue) {
+        if(daiValue) {
+            this.setState({
+                diaValue: daiValue
+            })
+        }
+        
     }
 }
 

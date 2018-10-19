@@ -74,6 +74,7 @@ class LoginPage extends Component {
                         </View>
                         <TextInput 
                             keyboardType= 'email-address'
+                            autoCapitalize = {false}
                             onChangeText={(value) => this.setState({username: value})}
                             value={this.state.userName}
                             placeholder="username"
@@ -183,13 +184,13 @@ const styles = {
         color: '#fff'
     },
     imageStyle: {
-        width: 220, 
-        height: 120
+        width: 312, 
+        height: 230,
+        padding:15
     },
     imageContainerStyle: {
         justifyContent: 'center', 
-        alignItems: 'center', 
-        marginTop: 20
+        alignItems: 'center'
     },
     errorTextStyle: {
         fontSize:20, 
@@ -199,7 +200,7 @@ const styles = {
         backgroundColor:'white'
     },
     createAccountStyle: {
-        backgroundColor:'#025282'
+        backgroundColor:'#D0DFF1'
     },
     lineStyle: {
         flexDirection:'row', 

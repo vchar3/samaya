@@ -11,7 +11,7 @@ class ProvideCarePage extends Component {
         title: 'Provide Care',
         headerStyle: {
             backgroundColor: '#7DBADF',
-            borderBottomColor: '#7DBADF'
+            borderBottomColor: '#fff'
         },
         headerTintColor: "#ffff",
         headerRight: (<Image style={{marginRight: 15}} source={require('../../img/UserIcon.png')} />)
@@ -28,36 +28,22 @@ class ProvideCarePage extends Component {
    
     render() {
         const items = [
-            { name: 'Daily Care', code: '#1abc9c', routeName:'DailyVital' }, 
-            { name: 'Home Care', code: '#2ecc71', routeName:'HomeCare' },
-            { name: 'Meal Plan', code: '#34495e', routeName:'MealPlan' }, 
-            { name: 'Medication', code: '#16a085', routeName:'Medication' },
-            { name: 'Care Note', code: '#2c3e50', routeName:'CareNote' }
+            { name: 'Daily Care', routeName:'DailyVital' }, 
+            { name: 'Home Care',  routeName:'HomeCare' },
+            { name: 'Meal Plan',  routeName:'MealPlan' }, 
+            { name: 'Medication', routeName:'Medication' },
+            { name: 'Care Note',  routeName:'CareNote' }
           ];
 
         return (
-            <View style={{ flex: 1 }}>
-                <View
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                    }} 
-                    >
-                    <Image
-                        source={require('../../img/BackgroundScreen.png')}
-                    />
-
-                </View>
+            <View style={{ flex: 1, backgroundColor: '#4B91CD' }}>
                 <GridView
                     itemDimension={130}
                     items={items}
                     style={styles.gridView}
                     renderItem={item => (
                     <TouchableOpacity  onPress={() => this._buttonPressHandler(item.routeName)}>
-                    <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
+                    <View style={[styles.itemContainer, { backgroundColor: '#78B6DD' }]}>
                         <Text style={styles.itemName}>{item.name}</Text>
                         {/* <Text style={styles.itemCode}>{item.code}</Text> */}
                     </View>

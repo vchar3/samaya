@@ -7,18 +7,17 @@ import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 import GridView from 'react-native-super-grid';
 import BottomNavigation, { FullTab } from 'react-native-material-bottom-navigation';
 import FooterBar from '../common/FooterBar';
-import { BottomNavBar } from '../common/index';
+import { BottomNavBar, AppHeader } from '../common/index';
 import {BottomTabBar} from '../navigators/AppNavigator';
 import moment from 'moment';
 
 class HomePage extends Component { 
     static navigationOptions = ({navigation}) =>{
         const {params = {}} = navigation.state;
-        console.log('navigation', navigation, params)
         return {
         title: 'Welcome',
         headerStyle: {
-            backgroundColor: '#7DBADF',
+            backgroundColor: '#78B6DD',
             borderBottomColor: '#fff'
         },
         headerTintColor: "#ffff",
@@ -52,53 +51,30 @@ class HomePage extends Component {
     )
    
     render() {
-        //let { } = this.state;
         const items = [
-            { name: 'Provide Care', code: '#2094DA', routeName:'ProvideCare' }, 
-            { name: 'Medications', code: '#2094DA', routeName:'Medications' },
-            { name: 'Health Records', code: '#2094DA', routeName:'HealthRecords' }, 
-            { name: 'Insurance', code: '#2094DA', routeName:'Insurance' },
-            { name: 'Consent', code: '#2094DA', routeName:'Consent' }, 
-            { name: 'Legal', code: '#2094DA', routeName:'Legal' }
+            { name: 'Provide Care', routeName:'ProvideCare' }, 
+            { name: 'Medications', routeName:'Medications' },
+            { name: 'Health Records', routeName:'HealthRecords' }, 
+            { name: 'Insurance', routeName:'Insurance' },
+            { name: 'Consent', routeName:'Consent' }, 
+            { name: 'Legal', routeName:'Legal' }
           ];
 
         return (
-            <View style={{ flex: 1 }}>
-                <View
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                    }} 
-                    >
-                    <Image
-                        source={require('../../img/BackgroundScreen.png')}
-                    />
-
-                </View>
-                {/* <View style={styles.imageContainerStyle}>
-                    <View style={{justifyContent:'flex-start', flexDirection:'row'}}>
-                    <Image style={styles.imageStyle}
-                        defaultSource={require('../../img/default.png')}/>
-                    <Text style={{marginLeft: 5, color: 'green', fontSize: 20,}}>
-                        {this.state.userName.split('@')[0]} </Text>
-                    </View>
-                    <Text style={{color: 'orange', fontSize: 16}}> Today is {moment(new Date()).format("MMMM Do, YYYY")}</Text>
-                </View> */}
+            <View style={{ flex: 1, backgroundColor: '#4B91CD' }}>
                 <GridView
                     itemDimension={130}
                     items={items}
                     style={styles.gridView}
                     renderItem={item => (
                     <TouchableOpacity  onPress={() => this._buttonPressHandler(item.routeName)}>
-                    <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
+                    <View style={[styles.itemContainer, { backgroundColor: '#78B6DD' }]}>
                         <Text style={styles.itemName}>{item.name}</Text>
                     </View>
                     </TouchableOpacity>
                     )}
                 />
+                {/* <Text style={{color: 'orange', fontSize: 16}}> Today is {moment(new Date()).format("MMMM Do, YYYY")}</Text> */}
             </View>
         );
     }
@@ -125,8 +101,9 @@ const styles = {
       },
       itemContainer: {
         justifyContent: 'flex-end',
+        alignItems: 'center',
         borderRadius: 5,
-        padding: 10,
+        paddingBottom: 10,
         height: 130,
       },
       itemName: {

@@ -5,57 +5,43 @@ import { TextField } from 'react-native-material-textfield';
 import { Slider } from 'react-native-elements'
 
 
-const BloodPressure = ({ onPress, text, _buttonPressHandler1, _changeSysBloodPressure, _changeDiaBloodPressure, state}) => {
+const BloodPressure = ({ onPress, text, _changeSysBloodPressure, _changeDiaBloodPressure, state}) => {
     return (
         <View style={styles.modalContent}> 
-            <Text style={{fontSize: 22}}> Blood Pressure </Text> 
-            
-                <TouchableOpacity onPress={onPress}>
-                    <Image style={{width: 50, height: 50}} 
-                            source={require('../../../../img/heart.png')}/>
-                </TouchableOpacity>
-                <View style={styles.textContainer}>
-                <Slider
-                    value={state.sysValue}
-                    minimumValue={state.bloodPressure.sys.minimumValue}
-                    maximumValue={state.bloodPressure.sys.maximumValue}
-                    step={state.bloodPressure.sys.step}
-                    onValueChange={(changeValue) => _changeSysBloodPressure(changeValue)} />
-                <Text>Value: {state.sysValue}</Text> 
+            <Text style={{fontSize: 24}}> Blood Pressure </Text> 
 
-                <Slider
-                    value={state.diaValue}
-                    minimumValue={state.bloodPressure.dia.diaMinimumValue}
-                    maximumValue={state.bloodPressure.dia.diaMaximumValue}
-                    step={state.bloodPressure.dia.diaStep}
-                    onValueChange={(changeValue) => _changeDiaBloodPressure(changeValue)} />
-                <Text>Value1: {state.diaValue}</Text>   
-                {/* <TextField
-                    label='SYS mmHg'
-                    value={sys}
-                    onChangeText={ (value) => {sys:value} }
+                <Image 
+                    style={{width: 50, height: 50}} 
+                    source={require('../../../../img/heart.png')}
                 />
 
-                <TextField
-                    label='DIA mmHg'
-                    value={dia}
-                    onChangeText={ (value) => {dia:value} }
-                />
+                <View style={styles.sliderContainer}>
+                    <View style={styles.sliderContain}>
+                        <Text style={{justifyContent:'flex-start'}}>{`SYS \nmmHg`} </Text>
+                        <View style={styles.sliderStyle}>
+                        <Slider
+                            value={state.sysValue}
+                            minimumValue={state.bloodPressure.sys.minimumValue}
+                            maximumValue={state.bloodPressure.sys.maximumValue}
+                            step={state.bloodPressure.sys.step}
+                            onValueChange={(changeValue) => _changeSysBloodPressure(changeValue)} />
+                        </View>
+                        <Text style={{fontSize: 24}}>{state.sysValue}</Text>
+                    </View>
 
-                <TextField
-                    label='PULSE /min'
-                    value={pulse}
-                    onChangeText={ (value) => {pulse:value} }
-                /> */}
-
-            </View>
-
-
-            <TouchableOpacity onPress={onPress}>
-            <View style={styles.button}>
-                <Text>Add</Text>
-            </View>
-            </TouchableOpacity>
+                    <View style={styles.sliderContain}>
+                        <Text>{`PULSE \nmin`} </Text>
+                        <View style={styles.sliderStyle}>
+                            <Slider
+                                value={state.diaValue}
+                                minimumValue={state.bloodPressure.dia.diaMinimumValue}
+                                maximumValue={state.bloodPressure.dia.diaMaximumValue}
+                                step={state.bloodPressure.dia.diaStep}
+                                onValueChange={(changeValue) => _changeDiaBloodPressure(changeValue)} />
+                        </View>
+                        <Text style={{fontSize: 24}}>{state.diaValue}</Text>
+                    </View>
+                </View>
 
             <TouchableOpacity onPress={onPress}>
             <View style={styles.button}>
@@ -68,30 +54,9 @@ const BloodPressure = ({ onPress, text, _buttonPressHandler1, _changeSysBloodPre
 };
 
 const styles = {
-    gridView: {
-        paddingTop: 25,
-        flex: 1,
-    },
-    itemContainer: {
-        justifyContent: 'flex-end',
-        borderRadius: 5,
-        padding: 10,
-        height: 150,
-    },
-    itemName: {
-        fontSize: 12,
-        color: '#fff',
-        fontWeight: '600',
-    },
-    itemCode: {
-        fontWeight: '600',
-        fontSize: 20,
-        color: '#fff',
-    },
     modalContent: {
         backgroundColor: 'white',
-        padding: 22,
-        justifyContent: 'space-between',
+        paddingTop: 30,
         alignItems: 'center',
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
@@ -105,12 +70,17 @@ const styles = {
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
       },
-      textContainer: {     
-        width: 200
+      sliderContainer: {     
+        alignItems: 'stretch'
       },
-      touchable: {
-        padding: 0,
-         marginLeft: 0
+      sliderContain: {
+        flexDirection:'row', 
+        paddingTop: 20 
+      },
+      sliderStyle: {
+        width: 200, 
+        paddingLeft: 15, 
+        paddingRight: 15
       }
 };
 
