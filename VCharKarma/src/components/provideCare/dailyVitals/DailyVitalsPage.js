@@ -5,10 +5,15 @@ import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
 import GridView from 'react-native-super-grid';
 import Modal from 'react-native-modal'; 
+import moment from 'moment';
 
 import {Feeling} from './Feeling';
 import feelingChanges from './FeelingChanges';
 import {BloodPressure} from './BloodPressure';
+import {Nutrition} from './Nutrition';
+import {BathPage} from './BathPage';
+import {FallsPage} from './FallsPage';
+import {OtherVitalsPage} from './OtherVitalsPage';
 
 
 class DailyVitalsPage extends Component { 
@@ -25,15 +30,20 @@ class DailyVitalsPage extends Component {
     state = { 
         visibleModal: false,
         pageName: '',
+        isBreakfastTaken: false,
+        isLunchTaken: false,
+        isDinnerTaken: false,
+        isAssistanceNeeded: false,
+        foodToday:'',
+        todayFeeling: '',
+        sysValue: 100,
+        diaValue: 70,
         feeling: {
             isHappy: false,
             isSad: false,
             isTired: false,
             isSick: false
         },
-        todayFeeling: '',
-        sysValue: 100,
-        diaValue: 70,
         bloodPressure: {
             sys:{ 
                 minimumValue: 90,
@@ -45,22 +55,51 @@ class DailyVitalsPage extends Component {
                 diaMaximumValue: 90,
                 diaStep: 1
             }
+        },
+        bath: {
+            isBathTaken: false,
+            isAssistanceNeeded: false
+        },
+        falls: {
+            isFalls: false,
+            number: 0
+        },
+        otherVitals: {
+            temp: 0,
+            respiratory: 0,
+            pulse: 0
         }
+
     }
 
     render() {
         let bloodPressureValue = `Sys/mmHg`+': '+this.state.sysValue+`\n`+`Dia/mmHg`+ ': '+ this.state.diaValue
+
+        let breakfast= this.state.isBreakfastTaken ? <Text style={{color:'green'}}>Breakfast </Text> :  <Text style={{color:'grey'}}>Breakfast </Text> ;
+        let lunch= this.state.isLunchTaken ? <Text style={{color:'green'}}>Lunch </Text> :  <Text style={{color:'grey'}}>Lunch </Text> ;
+        let dinner= this.state.isDinnerTaken ? <Text style={{color:'green'}}>Dinner </Text> :  <Text style={{color:'grey'}}>Dinner </Text> ;
+
+        let nutritionTitle = <Text>{breakfast }{`\n`}{lunch} {`\n`}{dinner}</Text>;
+
+        let bath =this.state.bath.isBathTaken ? <Text style={{color:'green'}}>Bath </Text> :  <Text style={{color:'grey'}}>Bath </Text> ;
+
+        let otherVital = `Body Temp`+': '+this.state.otherVitals.temp +`\n`+`Resp Rate`+ ': '+ this.state.otherVitals.respiratory +`\n`+`Pluse`+': '+this.state.otherVitals.pulse
+
         let items = [
             { name: 'Feeling', routeName:'FeelingPage', value: this.state.todayFeeling }, 
             { name: 'Blood Pressure', routeName:'BloodPressure', value: bloodPressureValue },
-            { name: 'Body Temp', routeName:'BodyTemp', value: '98.2 F' },
-            { name: 'Respiratory Rate', routeName:'Respiratory', value: '18' }, 
-            { name: 'Pulse Oxygen', routeName:'PulseOxygen', value: '95' },
-            { name: 'Num time today', routeName:'NumTime', value: '0' }
+            { name: 'Nutrition Intake', routeName:'Nutrition', value: nutritionTitle },
+            { name: 'Bath', routeName:'Bath', value: bath }, 
+            { name: 'Num of Falls', routeName:'Falls', value: this.state.falls.number },
+            { name: 'Other Vitals', routeName:'OtherVitals', value: otherVital }
           ];
 
         return (
             <View style={{ flex: 1, backgroundColor: '#4B91CD' }}>
+                <Text style={{color: 'orange', fontSize: 16, textAlign:'center', padding:20}}> 
+                    Today is {moment(new Date()).format("MMMM Do, YYYY")}
+                </Text>
+
                 <GridView
                     itemDimension={130}
                     items={items}
@@ -98,7 +137,7 @@ class DailyVitalsPage extends Component {
         {
             this.state.pageName === 'FeelingPage' 
                 ? <Feeling 
-                    text='Close'
+                    text='Save'
                     state= {this.state}
                     _checkBoxChanges= {(id, value) => feelingChanges(id, value, this)}
                     onPress= { () => {
@@ -118,20 +157,45 @@ class DailyVitalsPage extends Component {
                     onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
                 : null 
         }
+        {
+            this.state.pageName === 'Nutrition' 
+                ? 
+                <Nutrition 
+                    self = {this}
+                    onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
+                : null 
+        }
+        {
+            this.state.pageName === 'Bath' 
+                ? 
+                <BathPage 
+                    self = {this}
+                    onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
+                : null 
+        }
+        {
+            this.state.pageName === 'Falls' 
+                ? 
+                <FallsPage 
+                    self = {this}
+                    onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
+                : null 
+        }
+         {
+            this.state.pageName === 'OtherVitals' 
+                ? 
+                <OtherVitalsPage 
+                    self = {this}
+                    onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
+                : null 
+        }
         </View>
     );
 
     _buttonPressHandler(event) {
-        console.log('Feeling Pressed!', this.setState );
-        if(event === 'FeelingPage') {
-            this.setState({ 
-                visibleModal: true,
-                pageName: event})
-        } else if(event === 'BloodPressure'){
-            this.setState({ 
-                visibleModal: true,
-                pageName: event})
-        }
+        this.setState({ 
+            visibleModal: true,
+            pageName: event});
     }
 
     _changeSysBloodPressure(sysValue) {
@@ -168,24 +232,25 @@ export default connect(mapStateToProps, mapDispatchToProps) (DailyVitalsPage);
 
 const styles = {
     gridView: {
-        paddingTop: 25,
         flex: 1,
     },
     itemContainer: {
         justifyContent: 'flex-end',
+        alignItems: 'center',
         borderRadius: 5,
         padding: 10,
         height: 150,
     },
     itemName: {
-        fontSize: 12,
+        fontSize: 16,
         color: '#fff',
         fontWeight: '600',
     },
-    itemCode: {
+    itemCode: {       
+        width: 150,
         fontWeight: '600',
         fontSize: 20,
-        color: '#fff',
+        color: '#fff'
     },
     bottomModal: {
         justifyContent: 'flex-end',

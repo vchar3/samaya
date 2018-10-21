@@ -1,7 +1,5 @@
-import React, {Component}  from 'react';
-import {Image, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
-import GridView from 'react-native-super-grid';
-import { TextField } from 'react-native-material-textfield';
+import React from 'react';
+import {Image, Text, View, TouchableOpacity } from 'react-native';
 import { Slider } from 'react-native-elements'
 
 

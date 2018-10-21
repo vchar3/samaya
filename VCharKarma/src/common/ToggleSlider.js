@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import FlipToggle from 'react-native-flip-toggle-button'
+import { material } from 'react-native-typography'
 
 const ToggleSlider = ({ textLabel, isActive, toggleSwitchHandler, toggleLongPressHandler }) => {
     return (
@@ -11,14 +12,14 @@ const ToggleSlider = ({ textLabel, isActive, toggleSwitchHandler, toggleLongPres
                 <View style={styles.sliderContainer}>
                     <FlipToggle
                         value={isActive}
-                        buttonWidth={70}
+                        buttonWidth={50}
                         buttonHeight={23}
                         buttonRadius={30}
                         sliderWidth={20}
                         sliderHeight={20}
                         sliderRadius={50}
-                        onLabel={'On'}
-                        offLabel={'Off'}
+                        // onLabel={'On'}
+                        // offLabel={'Off'}
                         labelStyle={{color: 'black' }}
                         buttonOnColor={'green'}
                         buttonOffColor={'grey'}
@@ -33,24 +34,25 @@ const ToggleSlider = ({ textLabel, isActive, toggleSwitchHandler, toggleLongPres
 };
 const styles = {
     container: {     
-        flex: 0.1,
         flexDirection: 'row', 
-        marginLeft: 15,
-        marginRight: 15,
+        // marginLeft: 15,
+        // marginRight: 15,
         marginBottom: 7.5, 
-        marginTop: 7.5 
+        marginTop: 7.5,
+
     },
     textContainer: {
-        flex:0.5,
-        justifyContent: 'center',
+        flex:1,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start'
     },
     textStyle: {
         fontSize: 16,
 
     },
-    sliderContainer: {
-        flex:0.5,  
-        justifyContent: 'center',
+    sliderContainer: { 
+        flex:1,
+        justifyContent: 'flex-end',
         alignItems: 'flex-end'
     }
   };

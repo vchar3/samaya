@@ -9,7 +9,7 @@ import BottomNavigation, { FullTab } from 'react-native-material-bottom-navigati
 import FooterBar from '../common/FooterBar';
 import { BottomNavBar, AppHeader } from '../common/index';
 import {BottomTabBar} from '../navigators/AppNavigator';
-import moment from 'moment';
+
 
 class HomePage extends Component { 
     static navigationOptions = ({navigation}) =>{
@@ -74,7 +74,7 @@ class HomePage extends Component {
                     </TouchableOpacity>
                     )}
                 />
-                {/* <Text style={{color: 'orange', fontSize: 16}}> Today is {moment(new Date()).format("MMMM Do, YYYY")}</Text> */}
+                
             </View>
         );
     }
