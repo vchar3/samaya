@@ -46,7 +46,7 @@ class LegalPage extends Component {
                 {
                     items.map((item) =>{
                         return(
-                        <TouchableOpacity  onPress={() => this._buttonPressHandler(item.routeName)}>
+                        <TouchableOpacity key={item} onPress={() => this._buttonPressHandler(item.routeName)}>
                         <View style= {{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', }}>
                         <Ionicons name={item.icon} size={30} color={'green'} />
                             <Text style={{padding: 10}}> {item.title}</Text>

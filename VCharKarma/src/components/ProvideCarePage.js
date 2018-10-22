@@ -32,7 +32,8 @@ class ProvideCarePage extends Component {
             { name: 'Home Care',  routeName:'HomeCare' },
             { name: 'Meal Plan',  routeName:'MealPlan' }, 
             { name: 'Medication', routeName:'Medication' },
-            { name: 'Care Note',  routeName:'CareNote' }
+            { name: 'Care Note',  routeName:'CareNote' },
+            { name: 'Care Circle', routeName:'CareCircle'}
           ];
 
         return (
