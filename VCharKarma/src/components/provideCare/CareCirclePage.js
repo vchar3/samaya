@@ -4,6 +4,7 @@ import Modal from 'react-native-modal';
 import {connect} from 'react-redux';
 
 import {CareCircleModel} from './CareCircleModel';
+import {addUser} from '../../../redux/actions/addUserAction';
 
 class CareCirclePage extends Component { 
     static navigationOptions = {
@@ -42,12 +43,15 @@ class CareCirclePage extends Component {
                 status: this.state.status,
                 email: this.state.email,
             }
+
+            this.props.addUserDetail(user);
             this.setState({
                 listOfUsers: [
                     ...this.state.listOfUsers,
                     user
                 ]
             })
+
         }
         
         this.setState({ visibleModal: false})
@@ -106,13 +110,13 @@ class CareCirclePage extends Component {
 
 function mapStateToProps(state) {
     return {
-     // user: state.userReducer
+     //addUserDetail : (userDetail) => dispatch(addUser(userDetail))
     }
   }
   
 function mapDispatchToProps(dispatch) {
 return {
-    //getUser: (username, password) => dispatch(getUserLogin(username, password))
+    addUserDetail : (userDetail) => dispatch(addUser(userDetail))
 }
 
 }
