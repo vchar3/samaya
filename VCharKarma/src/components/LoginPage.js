@@ -131,7 +131,6 @@ class LoginPage extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log("state from login", state.userReducer.error.response);
     let token ;
     let error;
     if(state.userReducer.data.data) {

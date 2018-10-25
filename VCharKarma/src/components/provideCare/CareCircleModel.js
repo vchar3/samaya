@@ -31,10 +31,10 @@ const CareCircleModel = ({self, onPress}) => {
             />
 
             <TextInput 
-                value={self.state.status}
-                placeholder='Status'
+                value={self.state.careLevel}
+                placeholder='Care Level'
                 style={styles.inputStyle}
-                onChangeText={ (status) => self.setState({ status: status })}
+                onChangeText={ (careLevel) => self.setState({ careLevel: careLevel })}
             />
 
             <TouchableOpacity onPress={onPress}>

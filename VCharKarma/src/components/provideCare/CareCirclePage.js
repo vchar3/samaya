@@ -23,6 +23,9 @@ class CareCirclePage extends Component {
         relation:'',
         status:'',
         email:'',
+        careLevel: '',
+        success:'',
+        error:'',
         listOfUsers:[]
     }
 
@@ -36,11 +39,11 @@ class CareCirclePage extends Component {
     )
 
     _closeModelPress() {
-        if(this.state.name && this.state.relation && this.state.status && this.state.email) {
+        if(this.state.name && this.state.relation && this.state.careLevel && this.state.email) {
             let user = {
                 name: this.state.name,
                 relation: this.state.relation,
-                status: this.state.status,
+                careLevel: this.state.careLevel,
                 email: this.state.email,
             }
 
@@ -62,7 +65,7 @@ class CareCirclePage extends Component {
             visibleModal: true,
             name:'',
             relation:'',
-            status:'',
+            careLevel:'',
             email: ''            
         });
     }
@@ -70,6 +73,7 @@ class CareCirclePage extends Component {
       render() {
         return (
             <View style={{flex:1, alignItems: 'center',paddingLeft:30, paddingRight:30}}>
+                {this.props.emailMessage ? <Text>{this.props.emailMessage}</Text> : null } 
 
                 <TouchableOpacity style={{backgroundColor:'green', width: 200, borderRadius:20, marginTop: 20}} onPress={() => this._buttonPressHandler()}>
                     <Text style={{fontSize: 24, textAlign: 'center'}}>Add People</Text>
@@ -95,7 +99,7 @@ class CareCirclePage extends Component {
                             <Text>{items.name}</Text>
                             <Text>{items.relation}</Text>
                         </View>
-                        <Text>{items.status}</Text>
+                        <Text>{items.careLevel}</Text>
                     </View>
                     ))
                 }
@@ -109,9 +113,18 @@ class CareCirclePage extends Component {
 }
 
 function mapStateToProps(state) {
-    return {
-     //addUserDetail : (userDetail) => dispatch(addUser(userDetail))
+    console.log("email: ",state);
+    let message = '';
+    if(state.addUserReducer.error){
+     message = "Email send failed!"
+    } else if(state.addUserReducer.message) {
+        message =  "Email has been successfully send!"
     }
+
+    return {
+        emailMessage: message
+    }
+    
   }
   
 function mapDispatchToProps(dispatch) {
