@@ -21,6 +21,10 @@ import HomeCarePage from '../components/provideCare/HomeCarePage';
 import MealPlanPage from '../components/provideCare/MealPlanPage';
 import MedicationPage from '../components/provideCare/MedicationPage';
 
+import AuthNavigation from './AuthNavigation';
+import LoginPage from '../components/LoginPage';
+
+
 
 
 const HomeNavigator = createStackNavigator(
@@ -65,7 +69,7 @@ const DrawNavigator = createDrawerNavigator(
   }
 );
 
-const TopTabBarNavigator = createMaterialTopTabNavigator(
+const HomeStackNavigation = createMaterialTopTabNavigator(
     {
       Home: { 
         screen: HomeNavigator,
@@ -86,7 +90,7 @@ const TopTabBarNavigator = createMaterialTopTabNavigator(
         }  
       },
       Setting: { 
-        screen: SettingNavigator,
+        screen: ({ navigation }) => <SettingPage navigation={navigation}/>,
         navigationOptions: {
           tabBarLabel: 'Setting',
           tabBarIcon: ({ tintColor }) => {
@@ -97,6 +101,7 @@ const TopTabBarNavigator = createMaterialTopTabNavigator(
     },
     {
       initialRouteName: 'Home',
+      lazy: true,
       tabBarPosition: 'bottom',
       tabBarOptions: {
         activeTintColor: 'orange',
@@ -114,14 +119,14 @@ const TopTabBarNavigator = createMaterialTopTabNavigator(
     }
   );
 
-class HomeStackNavigation extends React.Component {
-    render() {
-      return (
-        <PageLayout>
-            <TopTabBarNavigator />
-        </PageLayout>
-      );
-    }
-}
+// class HomeStackNavigation extends React.Component {
+//     render() {
+//       return (
+//         <PageLayout>
+//             <TopTabBarNavigator />
+//         </PageLayout>
+//       );
+//     }
+// }
 
-export default HomeStackNavigation ;
+export default HomeStackNavigation;

@@ -1,10 +1,13 @@
 import React, {Component}  from 'react';
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, SafeAreaView, AsyncStorage } from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions, StackActions } from 'react-navigation';
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 import {PageLayout} from '../common/index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+
+import { SwitchNavigator, AuthNavigator } from '../navigators/AppNavigator';
 
 
 
@@ -27,7 +30,7 @@ class LegalPage extends Component {
         console.log('Home Pressed!');
         AsyncStorage.removeItem('userToken');
         AsyncStorage.removeItem('userName');
-        this.props.navigation.navigate('Auth');
+        this.props.navigation.navigate('AuthLoading');
     }
    
     render() {
