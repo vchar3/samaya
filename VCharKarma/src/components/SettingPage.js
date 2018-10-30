@@ -1,17 +1,14 @@
 import React, {Component}  from 'react';
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, SafeAreaView, AsyncStorage } from 'react-native';
-import { NavigationActions, StackActions } from 'react-navigation';
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 import {PageLayout} from '../common/index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-
-import { SwitchNavigator, AuthNavigator } from '../navigators/AppNavigator';
+import { logout } from '../../redux/actions/actions';
 
 
 
-class LegalPage extends Component { 
+class SettingPage extends Component { 
     static navigationOptions = {
         title: 'Setting',
         headerStyle: {
@@ -27,9 +24,8 @@ class LegalPage extends Component {
     }
 
     _buttonPressHandler(event) {
-        console.log('Home Pressed!');
-        AsyncStorage.removeItem('userToken');
-        AsyncStorage.removeItem('userName');
+        AsyncStorage.clear();
+        this.props.getLogout();
         this.props.navigation.navigate('AuthLoading');
     }
    
@@ -72,12 +68,12 @@ function mapStateToProps(state) {
   
 function mapDispatchToProps(dispatch) {
 return {
-    getUser: (username, password) => dispatch(getUserLogin(username, password))
+    getLogout: () => dispatch(logout())
 }
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (LegalPage);
+export default connect(mapStateToProps, mapDispatchToProps) (SettingPage);
 
 const styles = {
     container: {     

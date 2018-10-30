@@ -4,7 +4,7 @@ import Modal from 'react-native-modal';
 import {connect} from 'react-redux';
 
 import {CareCircleModel} from './CareCircleModel';
-import {addUser} from '../../../redux/actions/addUserAction';
+import {addUser, getAccountList } from '../../../redux/actions/addUserAction';
 
 class CareCirclePage extends Component { 
     static navigationOptions = {
@@ -21,12 +21,28 @@ class CareCirclePage extends Component {
         visibleModal: false,
         name:'',
         relation:'',
-        status:'',
+        requestStatus:'Pending',
         email:'',
         careLevel: '',
         success:'',
         error:'',
+        userId: '',
         listOfUsers:[]
+    }
+
+    constructor() {
+        super();
+        AsyncStorage.getItem('userName').then((value) => {
+            this.setState({
+                userId: value
+            });
+        });
+
+       
+    }
+
+    componentDidMount() {
+       // this.props.getListOfAccounts(this.state.userId);
     }
 
     _renderModalContent = () => (
@@ -40,11 +56,14 @@ class CareCirclePage extends Component {
 
     _closeModelPress() {
         if(this.state.name && this.state.relation && this.state.careLevel && this.state.email) {
+
             let user = {
-                name: this.state.name,
+                fullName: this.state.name,
                 relation: this.state.relation,
-                careLevel: this.state.careLevel,
+                authorizedLevel: this.state.careLevel,
                 email: this.state.email,
+                requestStatus : this.state.requestStatus,
+                userId: this.state.userId
             }
 
             this.props.addUserDetail(user);
@@ -92,17 +111,21 @@ class CareCirclePage extends Component {
                     
                     {this._renderModalContent()}
                 </Modal>
+                
+                <ScrollView>
                 {
                     this.state.listOfUsers.map((items) =>  (
                     <View key={items} style={{width: 200, backgroundColor:'#fff', padding:10, margin: 20}} >
                         <View style={{flexDirection:'row', justifyContent:'space-between', paddingBottom:10}}>
-                            <Text>{items.name}</Text>
+                            <Text>{items.fullName}</Text>
                             <Text>{items.relation}</Text>
                         </View>
-                        <Text>{items.careLevel}</Text>
+                        <Text>{items.authorizedLevel}</Text>
+                        <Text>{items.requestStatus}</Text>
                     </View>
                     ))
                 }
+                </ScrollView>
 
             </View>
         );
@@ -128,10 +151,10 @@ function mapStateToProps(state) {
   }
   
 function mapDispatchToProps(dispatch) {
-return {
-    addUserDetail : (userDetail) => dispatch(addUser(userDetail))
-}
-
+    return {
+        addUserDetail : (userDetail) => dispatch(addUser(userDetail)),
+        getListOfAccounts : (userId) => dispatch(getAccountList(userId))
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (CareCirclePage);

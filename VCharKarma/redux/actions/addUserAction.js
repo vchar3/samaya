@@ -11,13 +11,12 @@ export function fetchDataFromAPI() {
     }
 };
 
-export function getUserLogin(username, password) {
+export function getAccountList(userId) {
     return (dispatch) => {
         console.log('base url : ', baseURL)
         dispatch(getData())
-        baseURL.post('users/login', {
-            userId: username,
-            password: password
+        baseURL.post('account', {
+            userId: userId
           }).then(res => dispatch(getDataSuccess(res)))
             .catch(err => {dispatch(getDataFailure(err))
                             console.log("API Failure",err)

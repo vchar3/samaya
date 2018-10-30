@@ -21,10 +21,6 @@ import HomeCarePage from '../components/provideCare/HomeCarePage';
 import MealPlanPage from '../components/provideCare/MealPlanPage';
 import MedicationPage from '../components/provideCare/MedicationPage';
 
-import AuthNavigation from './AuthNavigation';
-import LoginPage from '../components/LoginPage';
-
-
 
 
 const HomeNavigator = createStackNavigator(
@@ -90,7 +86,8 @@ const HomeStackNavigation = createMaterialTopTabNavigator(
         }  
       },
       Setting: { 
-        screen: ({ navigation }) => <SettingPage navigation={navigation}/>,
+       // screen: ({ navigation }) => <SettingPage navigation={navigation}/>,
+       screen: SettingNavigator,
         navigationOptions: {
           tabBarLabel: 'Setting',
           tabBarIcon: ({ tintColor }) => {
@@ -101,7 +98,6 @@ const HomeStackNavigation = createMaterialTopTabNavigator(
     },
     {
       initialRouteName: 'Home',
-      lazy: true,
       tabBarPosition: 'bottom',
       tabBarOptions: {
         activeTintColor: 'orange',

@@ -1,4 +1,4 @@
-import { DATA_FETCHING, DATA_FETCHING_SUCCESS, DATA_FETCHING_FAILURE} from '../constants';
+import { DATA_FETCHING, DATA_FETCHING_SUCCESS, DATA_FETCHING_FAILURE, USER_LOGOUT} from '../constants';
 import { baseURL } from '../apiUrlConfig';
 
 export function fetchDataFromAPI() {
@@ -25,6 +25,13 @@ export function getUserLogin(username, password) {
     }
 };
 
+export function logout() {
+    return (dispatch) => {
+        console.log("user logout")
+        dispatch(logout());
+    }
+}
+
 function getData() {
     return {
         type: DATA_FETCHING
@@ -44,3 +51,10 @@ function getDataFailure(error) {
         error
     }
 }
+
+function logout() {
+    return {
+        type: USER_LOGOUT 
+    }
+}
+
