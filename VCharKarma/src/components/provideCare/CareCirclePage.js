@@ -36,13 +36,9 @@ class CareCirclePage extends Component {
             this.setState({
                 userId: value
             });
+           // this.props.getListOfAccounts(value);
         });
-
        
-    }
-
-    componentDidMount() {
-       // this.props.getListOfAccounts(this.state.userId);
     }
 
     _renderModalContent = () => (
@@ -80,6 +76,7 @@ class CareCirclePage extends Component {
     }
 
     _buttonPressHandler() {
+        console.log('userID ', this.state.userId)
         this.setState({ 
             visibleModal: true,
             name:'',
