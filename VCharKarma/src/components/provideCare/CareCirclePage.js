@@ -36,10 +36,10 @@ class CareCirclePage extends Component {
             this.setState({
                 userId: value
             });
-           // this.props.getListOfAccounts(value);
+            this.props.getListOfAccounts(value);
         });
-       
     }
+
 
     _renderModalContent = () => (
         <View >
@@ -55,7 +55,7 @@ class CareCirclePage extends Component {
 
             let user = {
                 fullName: this.state.name,
-                relation: this.state.relation,
+                relationShip: this.state.relation,
                 authorizedLevel: this.state.careLevel,
                 email: this.state.email,
                 requestStatus : this.state.requestStatus,
@@ -111,11 +111,11 @@ class CareCirclePage extends Component {
                 
                 <ScrollView>
                 {
-                    this.state.listOfUsers.map((items) =>  (
+                    this.props.accountList.map((items) =>  (
                     <View key={items} style={{width: 200, backgroundColor:'#fff', padding:10, margin: 20}} >
                         <View style={{flexDirection:'row', justifyContent:'space-between', paddingBottom:10}}>
                             <Text>{items.fullName}</Text>
-                            <Text>{items.relation}</Text>
+                            <Text>{items.relationShip}</Text>
                         </View>
                         <Text>{items.authorizedLevel}</Text>
                         <Text>{items.requestStatus}</Text>
@@ -133,16 +133,21 @@ class CareCirclePage extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log("email: ",state);
+    //console.log("email: ",state.addUserReducer.data.data);
     let message = '';
+    let accounts = [];
     if(state.addUserReducer.error){
      message = "Email send failed!"
     } else if(state.addUserReducer.message) {
         message =  "Email has been successfully send!"
     }
 
+    if(state.addUserReducer.data.data){
+        accounts = state.addUserReducer.data.data.accountList
+    }
     return {
-        emailMessage: message
+        emailMessage: message,
+        accountList: accounts
     }
     
   }
