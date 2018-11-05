@@ -13,6 +13,9 @@ class ProvideCarePage extends Component {
             backgroundColor: '#7DBADF',
             borderBottomColor: '#fff'
         },
+        headerTitleStyle: {
+            fontSize: 24
+        },
         headerTintColor: "#ffff",
         headerRight: (<Image style={{marginRight: 15}} source={require('../../img/UserIcon.png')} />)
       };
@@ -37,21 +40,20 @@ class ProvideCarePage extends Component {
           ];
 
         return (
-            <View style={{ flex: 1, backgroundColor: '#4B91CD' }}>
-                <GridView
-                    itemDimension={130}
-                    items={items}
-                    style={styles.gridView}
-                    renderItem={item => (
-                    <TouchableOpacity  onPress={() => this._buttonPressHandler(item.routeName)}>
-                    <View style={[styles.itemContainer, { backgroundColor: '#78B6DD' }]}>
-                        <Text style={styles.itemName}>{item.name}</Text>
-                        {/* <Text style={styles.itemCode}>{item.code}</Text> */}
-                    </View>
-                    </TouchableOpacity>
-                    )}
-                />
-            </View>
+
+            <GridView
+                itemDimension={130}
+                items={items}
+                style={styles.gridView}
+                renderItem={item => (
+                <TouchableOpacity  onPress={() => this._buttonPressHandler(item.routeName)}>
+                <View style={[styles.itemContainer, { backgroundColor: '#78B6DD' }]}>
+                    <Text style={styles.itemName}>{item.name}</Text>
+                    {/* <Text style={styles.itemCode}>{item.code}</Text> */}
+                </View>
+                </TouchableOpacity>
+                )}
+            />
 
         );
     }
@@ -74,8 +76,10 @@ export default connect(mapStateToProps, mapDispatchToProps) (ProvideCarePage);
 
 const styles = {
     gridView: {
-        paddingTop: 25,
         flex: 1,
+        paddingTop: 60,
+        backgroundColor: 'white',
+
     },
     itemContainer: {
         justifyContent: 'flex-end',

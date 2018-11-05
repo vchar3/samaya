@@ -3,47 +3,64 @@ import {Image, Text, View, TouchableOpacity } from 'react-native';
 import { Slider } from 'react-native-elements'
 
 
-const BloodPressure = ({ onPress, text, _changeSysBloodPressure, _changeDiaBloodPressure, state}) => {
-    return (
+const BloodPressure = ({ self }) => {
+    return ( 
         <View style={styles.modalContent}> 
-            <Text style={{fontSize: 24}}> Blood Pressure </Text> 
-
-                <Image 
-                    style={{width: 50, height: 50}} 
-                    source={require('../../../../img/heart.png')}
-                />
+            <Text style={styles.titleStyle}> Blood Pressure </Text> 
 
                 <View style={styles.sliderContainer}>
                     <View style={styles.sliderContain}>
-                        <Text style={{justifyContent:'flex-start'}}>{`SYS \nmmHg`} </Text>
-                        <View style={styles.sliderStyle}>
+                        <Text style={styles.sliderChangeValue}>{self.state.sysValue}</Text>
+                       
                         <Slider
-                            value={state.sysValue}
-                            minimumValue={state.bloodPressure.sys.minimumValue}
-                            maximumValue={state.bloodPressure.sys.maximumValue}
-                            step={state.bloodPressure.sys.step}
-                            onValueChange={(changeValue) => _changeSysBloodPressure(changeValue)} />
-                        </View>
-                        <Text style={{fontSize: 24}}>{state.sysValue}</Text>
+                            style={styles.sliderStyle}
+                            thumbTintColor={'#7DBADF'}
+                            minimumTrackTintColor={'#7DBADF'}
+                            maximumTrackTintColor={'#d7e8ef'}
+                            value={self.state.sysValue}
+                            minimumValue={self.state.bloodPressure.sys.minimumValue}
+                            maximumValue={self.state.bloodPressure.sys.maximumValue}
+                            step={self.state.bloodPressure.sys.step}
+                            onValueChange={(changeValue) => { self.setState({ sysValue: changeValue})} } />
+                       
+                        <Text style={styles.sliderTitle}>{'SYS'} </Text>
+                        
                     </View>
 
                     <View style={styles.sliderContain}>
-                        <Text>{`PULSE \nmin`} </Text>
-                        <View style={styles.sliderStyle}>
-                            <Slider
-                                value={state.diaValue}
-                                minimumValue={state.bloodPressure.dia.diaMinimumValue}
-                                maximumValue={state.bloodPressure.dia.diaMaximumValue}
-                                step={state.bloodPressure.dia.diaStep}
-                                onValueChange={(changeValue) => _changeDiaBloodPressure(changeValue)} />
-                        </View>
-                        <Text style={{fontSize: 24}}>{state.diaValue}</Text>
+                        <Text style={styles.sliderChangeValue}>{self.state.diaValue}</Text>                    
+                        <Slider
+                            style={styles.sliderStyle}
+                            thumbTintColor={'#7DBADF'}
+                            minimumTrackTintColor={'#7DBADF'}
+                            maximumTrackTintColor={'#d7e8ef'}
+                            value={self.state.diaValue}
+                            minimumValue={self.state.bloodPressure.dia.diaMinimumValue}
+                            maximumValue={self.state.bloodPressure.dia.diaMaximumValue}
+                            step={self.state.bloodPressure.dia.diaStep}
+                            onValueChange={(changeValue) => {self.setState({diaValue: changeValue})}} />
+                        <Text style={styles.sliderTitle}>{'DIA'} </Text>
+                    </View>
+
+                    <View style={styles.sliderContain}>
+                    <Text style={styles.sliderChangeValue}>{self.state.bpmValue}</Text>                    
+                        <Slider
+                            style={styles.sliderStyle}
+                            thumbTintColor={'#7DBADF'}
+                            minimumTrackTintColor={'#7DBADF'}
+                            maximumTrackTintColor={'#d7e8ef'}
+                            value={self.state.bpmValue}
+                            minimumValue={self.state.bloodPressure.bpm.bpmMinimumValue}
+                            maximumValue={self.state.bloodPressure.bpm.bpmMaximumValue}
+                            step={self.state.bloodPressure.bpm.bpmStep}
+                            onValueChange={(changeValue) => {self.setState({bpmValue: changeValue})}} />
+                        <Text style={styles.sliderTitle}>{'BPM'} </Text>
                     </View>
                 </View>
 
-            <TouchableOpacity onPress={onPress}>
+            <TouchableOpacity onPress= { () => self.setState({ visibleModal: false, pageName: ''})}>
             <View style={styles.button}>
-                <Text>{text}</Text>
+                <Text style={styles.buttonTextStyle}>{'Save'}</Text>
             </View>
             </TouchableOpacity>
         </View>
@@ -55,12 +72,14 @@ const styles = {
     modalContent: {
         backgroundColor: 'white',
         paddingTop: 30,
+        paddingBottom: 30,
         alignItems: 'center',
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
       },
       button: {
         backgroundColor: 'lightblue',
+        width: 200,
         padding: 12,
         margin: 16,
         justifyContent: 'center',
@@ -68,17 +87,42 @@ const styles = {
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
       },
+      buttonTextStyle: {
+        fontWeight:'bold', 
+        color: 'white', 
+        fontSize: 24
+      },
       sliderContainer: {     
-        alignItems: 'stretch'
+        alignItems: 'stretch',
+
+        justifyContent: 'center',
+        textAlign: 'center',
       },
       sliderContain: {
-        flexDirection:'row', 
-        paddingTop: 20 
+        //flexDirection:'row', 
+        textAlign: 'center',
+        paddingTop: 20,
       },
       sliderStyle: {
-        width: 200, 
-        paddingLeft: 15, 
-        paddingRight: 15
+        width: 270
+      },
+      sliderTitleText: {
+          fontSize: 14
+      },
+      sliderChangeValue: {
+        fontSize: 24, 
+        textAlign: 'center',
+        fontWeight: 'bold',
+        color: '#7DBADF' 
+      },
+      titleStyle: {
+        fontSize: 24, 
+
+        color: '#0c9ef7' 
+      },
+      sliderTitle: {
+          fontSize: 14,
+          color: '#7DBADF'
       }
 };
 

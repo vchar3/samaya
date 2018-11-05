@@ -15,6 +15,9 @@ class SettingPage extends Component {
             backgroundColor: '#7DBADF',
             borderBottomColor: '#7DBADF'
         },
+        headerTitleStyle: {
+            fontSize: 24
+        },
         headerTintColor: "#ffff",
         headerRight: (<Image style={{marginRight: 15}} source={require('../../img/UserIcon.png')} />)
       };

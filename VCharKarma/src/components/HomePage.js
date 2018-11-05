@@ -10,6 +10,8 @@ import FooterBar from '../common/FooterBar';
 import { BottomNavBar, AppHeader } from '../common/index';
 import {BottomTabBar} from '../navigators/AppNavigator';
 
+import OtherAccountPage from './OtherAccountPage';
+
 
 class HomePage extends Component { 
     static navigationOptions = ({navigation}) =>{
@@ -18,17 +20,21 @@ class HomePage extends Component {
         title: 'Welcome',
         headerStyle: {
             backgroundColor: '#78B6DD',
-            borderBottomColor: '#fff'
+            borderBottomColor: '#fff',
+            
         },
         headerTintColor: "#ffff",
-        headerRight: (<Image style={{marginRight: 15}} source={require('../../img/UserIcon.png')} />)
+        headerTitleStyle: {
+            fontSize: 24
+        },
+        headerRight: (<OtherAccountPage />)
         }
       };
 
     state = { 
         userName: ''
     }
-
+            
     constructor() {
         super();
 
@@ -61,7 +67,6 @@ class HomePage extends Component {
           ];
 
         return (
-            <View style={{ flex: 1, backgroundColor: '#4B91CD' }}>
                 <GridView
                     itemDimension={130}
                     items={items}
@@ -74,8 +79,7 @@ class HomePage extends Component {
                     </TouchableOpacity>
                     )}
                 />
-                
-            </View>
+
         );
     }
 }
@@ -97,7 +101,9 @@ export default connect(mapStateToProps, mapDispatchToProps) (HomePage);
 
 const styles = {
     gridView: {
-        flex: 1
+        flex: 1,
+        paddingTop: 60,
+        backgroundColor: 'white'
       },
       itemContainer: {
         justifyContent: 'flex-end',
@@ -111,55 +117,4 @@ const styles = {
         color: '#fff',
         fontWeight: '600',
       },
-      itemCode: {
-        fontWeight: '600',
-        fontSize: 12,
-        color: '#fff',
-      },
-    container: {     
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-
-      },
-      card : {
-        flex: 1,
-      },
-      cardImage: {
-
-      },
-      press : {
-        flex: 1, 
-        backgroundColor: '#fff',
-        borderWidth: 1,
-        borderRadius: 5,
-        margin: 10, 
-        width: 150, 
-        height: 110
-      },
-    textStyle: {
-        fontSize: 20,
-        textAlign: 'center',
-        textAlignVertical: 'center',
-        flex: 1
-
-    },
-    inputStyle: {
-        height:40, 
-        flex: 1,  
-        fontSize: 18, 
-        borderWidth: 1, 
-        borderRadius: 5,
-        marginLeft: 5,
-        marginRight: 5
-    },
-    imageStyle: {
-        width: 25, 
-        height: 25     
-    },
-    imageContainerStyle: {
-        padding: 10,
-        flexDirection:'row',
-        backgroundColor: '#fff'
-    },
   };

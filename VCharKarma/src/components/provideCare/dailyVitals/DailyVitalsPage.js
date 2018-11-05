@@ -23,6 +23,9 @@ class DailyVitalsPage extends Component {
             backgroundColor: '#7DBADF',
             borderBottomColor: '#fff'
         },
+        headerTitleStyle: {
+            fontSize: 24
+        },
         headerTintColor: "#ffff",
         headerRight: (<Image style={{marginRight: 15}} source={require('../../../../img/UserIcon.png')} />)
       };
@@ -37,7 +40,8 @@ class DailyVitalsPage extends Component {
         foodToday:'',
         todayFeeling: '',
         sysValue: 100,
-        diaValue: 70,
+        diaValue: 80,
+        bpmValue:74,
         feeling: {
             isHappy: false,
             isSad: false,
@@ -54,6 +58,11 @@ class DailyVitalsPage extends Component {
                 diaMinimumValue: 60,
                 diaMaximumValue: 90,
                 diaStep: 1
+            },
+            bpm: { 
+                bpmMinimumValue: 40,
+                bpmMaximumValue: 240,
+                bpmStep: 1
             }
         },
         bath: {
@@ -73,7 +82,7 @@ class DailyVitalsPage extends Component {
     }
 
     render() {
-        let bloodPressureValue = `Sys/mmHg`+': '+this.state.sysValue+`\n`+`Dia/mmHg`+ ': '+ this.state.diaValue
+        let bloodPressureValue = `Sys`+': '+this.state.sysValue+`\n`+`Dia`+ ': '+ this.state.diaValue+`\n`+`Bpm`+ ': '+ this.state.bpmValue
 
         let breakfast= this.state.isBreakfastTaken ? <Text style={{color:'green'}}>Breakfast </Text> :  <Text style={{color:'grey'}}>Breakfast </Text> ;
         let lunch= this.state.isLunchTaken ? <Text style={{color:'green'}}>Lunch </Text> :  <Text style={{color:'grey'}}>Lunch </Text> ;
@@ -95,7 +104,7 @@ class DailyVitalsPage extends Component {
           ];
 
         return (
-            <View style={{ flex: 1, backgroundColor: '#4B91CD' }}>
+            <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <Text style={{color: 'orange', fontSize: 16, textAlign:'center', padding:20}}> 
                     Today is {moment(new Date()).format("MMMM Do, YYYY")}
                 </Text>
@@ -149,12 +158,8 @@ class DailyVitalsPage extends Component {
             this.state.pageName === 'BloodPressure' 
                 ? 
                 <BloodPressure 
-                    text='Save'
-                    state = {this.state}
                     self = {this}
-                    _changeSysBloodPressure = {(sysValue) => this._changeSysBloodPressure(sysValue)}
-                    _changeDiaBloodPressure = {(daiValue) => this._changeDiaBloodPressure(daiValue)}
-                    onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
+                />
                 : null 
         }
         {
@@ -197,22 +202,6 @@ class DailyVitalsPage extends Component {
             visibleModal: true,
             pageName: event});
     }
-
-    _changeSysBloodPressure(sysValue) {
-        if(sysValue) {
-            this.setState({
-                sysValue: sysValue
-            })
-        }
-    }
-    _changeDiaBloodPressure(daiValue) {
-        if(daiValue) {
-            this.setState({
-                diaValue: daiValue
-            })
-        }
-        
-    }
 }
 
 function mapStateToProps(state) {
@@ -233,6 +222,7 @@ export default connect(mapStateToProps, mapDispatchToProps) (DailyVitalsPage);
 const styles = {
     gridView: {
         flex: 1,
+        paddingTop: 0,
     },
     itemContainer: {
         justifyContent: 'flex-end',

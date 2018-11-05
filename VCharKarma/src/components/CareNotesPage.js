@@ -18,6 +18,9 @@ class CareNotesPage extends Component {
             borderBottomColor: '#7DBADF'
         },
         headerTintColor: "#ffff",
+        headerTitleStyle: {
+            fontSize: 24
+        },
         headerRight: (<Image style={{marginRight: 15}} source={require('../../img/UserIcon.png')} />)
       };
 
@@ -110,7 +113,6 @@ class CareNotesPage extends Component {
         let { email } = this.state;
         return (
             <View style={styles.mainContainer}> 
-                <View style ={{marginTop: 10}}>
                     <Card> 
                     {
                         this.state.addUser 
@@ -158,7 +160,6 @@ class CareNotesPage extends Component {
                     
                     }                
                     </ScrollView>
-                </View>
                 <View 
                     style = {styles.textAreaContainer} 
                     enabled 
@@ -173,6 +174,8 @@ class CareNotesPage extends Component {
                  underlineColorAndroid="transparent"
                  placeholder="Type something"
                  placeholderTextColor="grey"
+                 scrollEnabled={true}
+                 spellCheck={true}
                  onChangeText={(value) => this.setState({userTypedText: value})}
                 /> 
                 
@@ -206,13 +209,13 @@ export default connect(mapStateToProps, mapDispatchToProps) (CareNotesPage);
 const styles = {
     mainContainer: {
         flex: 1,
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'center',
         alignItems: 'stretch',
-        paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
+        backgroundColor: 'white'
+        // paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
     },
     textAreaContainer: {
-        position: 'absolute',
         borderColor: 'grey',
         padding: 5,
         flexDirection: 'row',
@@ -223,6 +226,7 @@ const styles = {
     textArea: {
         justifyContent: "flex-start",
         width: 300,
+        height: 70,        
         padding: 15,
         borderWidth: 1,
     },
@@ -249,8 +253,6 @@ const styles = {
         padding:5
     },
     scrollContainer: {
-        flexGrow: 1,
-        paddingBottom: 20,
-        height: 490
+        paddingBottom: 20
     }
 };
