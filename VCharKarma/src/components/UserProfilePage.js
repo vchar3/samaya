@@ -8,6 +8,14 @@ import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 class UserProfilePage extends Component { 
     static navigationOptions = {
         title: 'User Profile',
+        headerStyle: {
+            backgroundColor: '#7DBADF',
+            borderBottomColor: '#7DBADF'
+        },
+        headerTitleStyle: {
+            fontSize: 24
+        },
+        headerTintColor: "#ffff",
       };
 
     state = { 
