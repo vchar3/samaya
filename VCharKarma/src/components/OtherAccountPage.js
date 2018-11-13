@@ -1,12 +1,17 @@
 import React, {Component}  from 'react';
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import {connect} from 'react-redux';
+import Modal from 'react-native-modal';
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
+import {OtherAccountModel} from './OtherAccountModel';
 
 class OtherAccountPage extends Component { 
 
     state = { 
-        userName: ''
+        userName: '',
+        visibleModal: false,
+        data:[],
+        
     }
 
     constructor() {
@@ -21,6 +26,9 @@ class OtherAccountPage extends Component {
 
     buttonPress() {
         console.log("press");
+        this.setState({
+            visibleModal: true
+        })
     }
 
     render() {
@@ -30,6 +38,27 @@ class OtherAccountPage extends Component {
                 <Text>{this.state.userName}</Text>
                 <Image style={{marginRight: 15}} source={require('../../img/UserIcon.png')} />
                 </TouchableOpacity>
+
+                <Modal
+                    isVisible={this.state.visibleModal}
+                    backdropColor={'#2FAEE0'}
+                    backdropOpacity={1}
+                    animationIn={'zoomInDown'}
+                    animationOut={'zoomOutUp'}
+                    animationInTiming={1000}
+                    animationOutTiming={1000}
+                    backdropTransitionInTiming={1000}
+                    backdropTransitionOutTiming={1000}>
+                    
+                    {
+                        <View>
+                          <OtherAccountModel 
+                            self={this}
+                          />  
+                        </View>
+                    
+                    }
+                </Modal>
             </View>
         );
     }
