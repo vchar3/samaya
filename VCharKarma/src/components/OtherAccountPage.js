@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Modal from 'react-native-modal';
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 import {OtherAccountModel} from './OtherAccountModel';
+import {getListOfAccount}   from '../../redux/actions/addUserAction';
 
 class OtherAccountPage extends Component { 
 
@@ -19,9 +20,12 @@ class OtherAccountPage extends Component {
 
         AsyncStorage.getItem('userName').then((value) => {
             this.setState({
-                userName: 'John'
+                userName: value
             });
+            this.props.getAccountList(value);
         })
+
+       
     }
 
     buttonPress() {
@@ -75,7 +79,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getUser: (username, password) => dispatch(getUserLogin(username, password))
+        getAccountList: (userId) => dispatch(getListOfAccount(userId))
     }
     
 }

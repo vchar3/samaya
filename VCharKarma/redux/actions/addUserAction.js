@@ -1,16 +1,6 @@
 import { DATA_SENDING, DATA_SENDING_SUCCESS, DATA_SENDING_FAILURE} from '../constants';
 import { baseURL } from '../apiUrlConfig';
 
-// export function fetchDataFromAPI() {
-//     return (dispatch) => {
-//         dispatch(getData())
-//          fetch('')
-//             .then(res => res.json())
-//             .then(json => dispatch(getDataSuccess(json.results)))
-//             .catch(err => dispatch(getDataFailure(err)))
-//     }
-// };
-
 export function getAccountList(userId) {
     return (dispatch) => {
         dispatch(sendData(userId))
@@ -20,6 +10,22 @@ export function getAccountList(userId) {
             .catch(err => {dispatch(sendDataFailure(err))
                             console.log("API Failure",err)
                             })
+    }
+};
+
+export function getListOfAccount(userId) {
+    return (dispatch) => {
+        console.log('User id', userId)
+        dispatch(sendData(userId))
+        baseURL.get('accountList',{
+            params: {
+                userId: userId
+            }
+        }).then(res => dispatch(sendDataSuccess(res)))
+          .catch(err => {
+            dispatch(sendDataFailure(err))
+            console.log("API Failure",err)
+           });
     }
 };
 
