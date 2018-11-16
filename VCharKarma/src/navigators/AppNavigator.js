@@ -9,9 +9,9 @@ import AuthNavigation from './AuthNavigation';
 import HomeStackNavigation from './HomeStackNavigation';
 import {ProvideCareStackRoute, ProvideCareStackNavigation} from './ProvideCareStackNavigation';
 import LoginPage from '../components/LoginPage';
-import UserProfilePage from '../components/UserProfilePage';
 import EmailPage from '../components/newAccount/EmailPage';
-
+import HealthProfilePage from '../components/newAccount/HealthProfilePage';
+import ProfilePage from '../components/newAccount/ProfilePage';
 
 
 const middleware = createReactNavigationReduxMiddleware(
@@ -23,7 +23,8 @@ const AuthNavigator = createStackNavigator(
     {
         Login: { screen: LoginPage },
         Email: {screen: EmailPage},
-        Profile: {screen: UserProfilePage}
+        Profile: {screen: ProfilePage},
+        HealthProfile: {screen: HealthProfilePage}
     }
 );
 

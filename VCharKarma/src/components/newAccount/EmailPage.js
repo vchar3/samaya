@@ -35,7 +35,10 @@ class EmailPage extends Component {
             if(this.state.password) {
                 if(this.state.confirmPassword) {
                     if(this.state.password ===  this.state.confirmPassword) {
-                        this.props.navigation.navigate('Login');
+                        this.props.navigation.navigate('Profile', {
+                            userName: this.state.email,
+                            password: this.state.password
+                        });
                     } else {
                         this.setState({
                             error: 'Password did not match.',
@@ -73,6 +76,8 @@ class EmailPage extends Component {
                 <View style={{backgroundColor:'white', width: 300,}}>
                 <TextField
                     label='Email'
+                    keyboardType= 'email-address'
+                    autoCapitalize = {false}
                     value={email}
                     error={this.state.errorEmail}
                     errorColor={this.state.errorColor}
@@ -82,6 +87,8 @@ class EmailPage extends Component {
                 <TextField
                     label='Password'
                     value={password}
+                    password = {true}
+                    secureTextEntry= {true}
                     error={this.state.errorPassword}
                     errorColor={this.state.errorColor}
                     onChangeText={ (password) => this.setState({ 
@@ -94,6 +101,8 @@ class EmailPage extends Component {
                 <TextField
                     label='Confirm Password'
                     value={confirmPassword}
+                    password = {true}
+                    secureTextEntry= {true}
                     error={this.state.errorConfPassword}
                     errorColor={this.state.errorColor}
                     onChangeText={ (confirmPassword) => this.setState({ 

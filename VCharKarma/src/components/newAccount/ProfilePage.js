@@ -1,8 +1,8 @@
 import React, {Component}  from 'react';
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import {connect} from 'react-redux';
-import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
+import { TextField } from 'react-native-material-textfield';
+import { Button, CardSection} from '../../common/index';
 
 
 
@@ -12,45 +12,97 @@ class ProfilePage extends Component {
       };
 
     state = { 
-
+        firstName: '',
+        lastName:'',
+        dateOfBirth:'',
+        gender:'',
+        phone:'',
+        homePhone:'',
     }
 
     _buttonPressHandler(event) {
         console.log('Home Pressed!');
-        this.props.navigation.dispatch({type: 'Login'});
+        this.props.navigation.navigate('HealthProfile');
     }
    
     render() {
-
+        let { firstName, lastName, dateOfBirth, gender, phone, homePhone} = this.state;
         return (
             <View style={styles.container}>
-                <Text> Comming Soon</Text>
+                <Text> {this.props.navigation.getParam('userName')}</Text>
+                <Text> {this.state.error}</Text>
+                <View style={{backgroundColor:'white', width: 300,}}>
+                <TextField
+                    label='First Name'
+                    value={firstName}
+                    onChangeText={ (firstName) => this.setState({ 
+                        firstName:firstName,
+                      }) }
+                />
+
+                <TextField
+                    label='Last Name'
+                    value={lastName}
+                    onChangeText={ (lastName) => this.setState({ 
+                        lastName:lastName,
+                      }) }
+                />
+
+                <TextField
+                    label='Date of Birth'
+                    value={dateOfBirth}
+                    onChangeText={ (dateOfBirth) => this.setState({ 
+                        dateOfBirth:dateOfBirth,
+                      }) }
+                />
+                
+                <TextField
+                    label='Gender'
+                    value={gender}
+                    onChangeText={ (gender) => this.setState({ 
+                        gender:gender,
+                      }) }
+                />
+
+                 <TextField
+                    label='Mobile Phone'
+                    value={phone}
+                    onChangeText={ (phone) => this.setState({ 
+                        phone:phone,
+                      }) }
+                />
+
+                 <TextField
+                    label='Home Phone'
+                    value={homePhone}
+                    onChangeText={ (homePhone) => this.setState({ 
+                        homePhone:homePhone,
+                      }) }
+                />
+
+                </View>
+                <CardSection>
+                    <Button 
+                        style={{backgroundColor:'#32CD32'}} 
+                        onPress={this._buttonPressHandler.bind(this)}>
+                            Contiune
+                    </Button>
+                </CardSection>
             </View>
         );
     }
 }
 
-function mapStateToProps(state) {
-    return {
-      user: state.userReducer
-    }
-  }
-  
-function mapDispatchToProps(dispatch) {
-return {
-    getUser: (username, password) => dispatch(getUserLogin(username, password))
-}
 
-}
-
-export default connect(mapStateToProps, mapDispatchToProps) (ProfilePage);
+export default ProfilePage;
 
 const styles = {
     
     container: {     
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: 'white'
 
       }
   };
