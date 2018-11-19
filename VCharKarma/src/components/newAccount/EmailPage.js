@@ -36,7 +36,7 @@ class EmailPage extends Component {
                 if(this.state.confirmPassword) {
                     if(this.state.password ===  this.state.confirmPassword) {
                         this.props.navigation.navigate('Profile', {
-                            userName: this.state.email,
+                            email: this.state.email,
                             password: this.state.password
                         });
                     } else {
@@ -130,7 +130,7 @@ const styles = {
     
     container: {     
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: 'white'
 

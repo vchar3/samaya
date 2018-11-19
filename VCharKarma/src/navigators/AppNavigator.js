@@ -12,6 +12,7 @@ import LoginPage from '../components/LoginPage';
 import EmailPage from '../components/newAccount/EmailPage';
 import HealthProfilePage from '../components/newAccount/HealthProfilePage';
 import ProfilePage from '../components/newAccount/ProfilePage';
+import SuccessPage from '../components/newAccount/SuccessPage';
 
 
 const middleware = createReactNavigationReduxMiddleware(
@@ -24,7 +25,9 @@ const AuthNavigator = createStackNavigator(
         Login: { screen: LoginPage },
         Email: {screen: EmailPage},
         Profile: {screen: ProfilePage},
-        HealthProfile: {screen: HealthProfilePage}
+        HealthProfile: {screen: HealthProfilePage},
+        Success: {screen: SuccessPage},
+
     }
 );
 

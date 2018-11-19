@@ -22,14 +22,27 @@ class ProfilePage extends Component {
 
     _buttonPressHandler(event) {
         console.log('Home Pressed!');
-        this.props.navigation.navigate('HealthProfile');
+        let accountInfo = {
+            email: this.props.navigation.getParam('email'),
+            password: this.props.navigation.getParam('password'),
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            dateOfBirth: this.state.dateOfBirth,
+            gender: this.state.gender,
+            cellPhone: this.state.phone,
+            homePhone: this.state.homePhone,
+            user_id:this.props.navigation.getParam('email')
+        }
+        this.props.navigation.navigate('HealthProfile', {
+            accountDetail: accountInfo
+        });
     }
    
     render() {
         let { firstName, lastName, dateOfBirth, gender, phone, homePhone} = this.state;
         return (
             <View style={styles.container}>
-                <Text> {this.props.navigation.getParam('userName')}</Text>
+                {/* <Text> {this.props.navigation.getParam('userName')}</Text> */}
                 <Text> {this.state.error}</Text>
                 <View style={{backgroundColor:'white', width: 300,}}>
                 <TextField
@@ -100,7 +113,7 @@ const styles = {
     
     container: {     
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: 'white'
 
