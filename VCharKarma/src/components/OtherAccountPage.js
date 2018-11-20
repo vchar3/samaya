@@ -23,9 +23,16 @@ class OtherAccountPage extends Component {
                 userName: value
             });
             this.props.getAccountList(value);
-        })
+        })      
+    }
 
-       
+    componentDidUpdate(prevProps) {
+        
+        if(this.props.userList  && this.props.userList !== prevProps.userList) {
+            this.setState({
+                data: this.props.userList
+            });
+        }
     }
 
     buttonPress() {
@@ -35,11 +42,19 @@ class OtherAccountPage extends Component {
         })
     }
 
+    accountChange(accountId){
+        console.log(accountId);
+        this.setState({
+            visibleModal: false,
+            userName: accountId.fullName
+        })
+    }
+
     render() {
         return (
             <View>
                 <TouchableOpacity onPress={() => this.buttonPress()} style={{flexDirection:'row'}}>
-                <Text>{this.state.userName}</Text>
+                <Text style={styles.textStyle}>{this.state.userName}</Text>
                 <Image style={{marginRight: 15}} source={require('../../img/UserIcon.png')} />
                 </TouchableOpacity>
 
@@ -72,8 +87,12 @@ class OtherAccountPage extends Component {
 
 
 function mapStateToProps(state) {
+    let users;
+    if(state.addUserReducer.data.data) {
+        users = state.addUserReducer.data.data.accountList;
+    }
     return {
-      user: state
+      userList: users
     }
 }
 
@@ -85,3 +104,12 @@ function mapDispatchToProps(dispatch) {
 }
     
 export default connect(mapStateToProps, mapDispatchToProps) (OtherAccountPage);
+
+const styles = { 
+    textStyle : {
+        fontSize : 14,
+        color: 'white',
+        marginTop: 10
+    }
+
+}

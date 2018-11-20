@@ -117,7 +117,6 @@ const styles = {
       },
       titleStyle: {
         fontSize: 24, 
-
         color: '#0c9ef7' 
       },
       sliderTitle: {
