@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 import GridView from 'react-native-super-grid';
 
+import OtherAccountPage from './OtherAccountPage';
+
 
 class ProvideCarePage extends Component { 
     static navigationOptions = {
@@ -17,7 +19,7 @@ class ProvideCarePage extends Component {
             fontSize: 24
         },
         headerTintColor: "#ffff",
-        headerRight: (<Image style={{marginRight: 15}} source={require('../../img/UserIcon.png')} />)
+        headerRight: (<OtherAccountPage />)
       };
 
     state = { 

@@ -15,6 +15,8 @@ import {BathPage} from './BathPage';
 import {FallsPage} from './FallsPage';
 import {OtherVitalsPage} from './OtherVitalsPage';
 
+import OtherAccountPage from '../../OtherAccountPage';
+
 
 class DailyVitalsPage extends Component { 
     static navigationOptions = {
@@ -27,7 +29,7 @@ class DailyVitalsPage extends Component {
             fontSize: 24
         },
         headerTintColor: "#ffff",
-        headerRight: (<Image style={{marginRight: 15}} source={require('../../../../img/UserIcon.png')} />)
+        headerRight: (<OtherAccountPage />)
       };
 
     state = { 
