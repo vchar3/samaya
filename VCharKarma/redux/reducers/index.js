@@ -4,13 +4,15 @@ import { USER_LOGOUT} from '../constants';
 import nav from './navReducer';
 import auth from './authReducer';
 import userReducer from './userReducer';
-import addUserReducer from './addUserReducer'
+import addUserReducer from './addUserReducer';
+import consentsReducer from './consentsReducer';
 
 const appReducers = combineReducers({
     nav,
     auth,
     userReducer,
-    addUserReducer
+    addUserReducer,
+    consentsReducer
 });
 
 const rootReducers = (state, action) => {

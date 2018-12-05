@@ -2,7 +2,6 @@ import React, {Component}  from 'react';
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import {connect} from 'react-redux';
 import Modal from 'react-native-modal';
-import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 import {OtherAccountModel} from './OtherAccountModel';
 import {getListOfAccount}   from '../../redux/actions/addUserAction';
 

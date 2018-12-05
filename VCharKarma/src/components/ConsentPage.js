@@ -1,9 +1,8 @@
 import React, {Component}  from 'react';
-import {ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import {ScrollView, StyleSheet, Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import {connect} from 'react-redux';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards'
-import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
+import { getListOfConsent } from '../../redux/actions/consentsAction';
 import { ToggleSlider } from '../common/index';
 import FooterBar from '../common/FooterBar';
 
@@ -16,38 +15,111 @@ class ConsentPage extends Component {
 
     state = { 
          isActive: false,
+         userEmail: '',
+         allInformationList: [],
+         dailyVitalsList: [],
+         homeCareNotesList: [],
+         medicalRecordsList: [],
+         medicationList: []
+    }
+
+    constructor() {
+        super();
+        AsyncStorage.getItem('userName').then((value) => {
+            this.setState({
+                userEmail: value
+            });
+            this.props.getConsentList(value);
+        })      
+    }
+
+    componentDidUpdate(prevProps) {        
+        if(this.props.listOfConsent  && this.props.listOfConsent !== prevProps.listOfConsent) {
+            let consentDetails = this.props.listOfConsent ;
+            console.log("list of consent", this.props.listOfConsent);
+            if (consentDetails) {
+                consentDetails.forEach(function(element) {
+                    if(element.allInformation) {
+                        let listData = this.state.allInformationList;                    
+                        let information = {
+                            name: element.name,
+                            value: element.allInformation.value
+                        };
+                        listData.push(information);
+
+                        this.setState({
+                            allInformationList: listData
+                        })
+                    } 
+                  
+                    if(element.dailyVitals) {
+                        let listData = this.state.dailyVitalsList;                    
+                        let information = {
+                            name: element.name,
+                            value: element.dailyVitals.value
+                        };
+                        listData.push(information);
+
+                        this.setState({
+                            dailyVitalsList: listData
+                        })
+                    }
+
+                    if(element.homeCareNotes) {
+                        let listData = this.state.homeCareNotesList;                    
+                        let information = {
+                            name: element.name,
+                            value: element.homeCareNotes.value
+                        };
+                        listData.push(information);
+
+                        this.setState({
+                            homeCareNotesList: listData
+                        })
+                    }
+
+                    if(element.medicalRecords) {
+                        let listData = this.state.medicalRecordsList;                    
+                        let information = {
+                            name: element.name,
+                            value: element.medicalRecords.value
+                        };
+                        listData.push(information);
+
+                        this.setState({
+                            medicalRecordsList: listData
+                        })
+                    }
+
+                     if(element.medication) {
+                        let listData = this.state.medicationList;                    
+                        let information = {
+                            name: element.name,
+                            value: element.medication.value
+                        };
+                        listData.push(information);
+
+                        this.setState({
+                            medicationList: listData
+                        })
+                     }
+                  }, this);
+            } 
+        }
     }
 
     _buttonPressHandler(event) {
         console.log('Home Pressed!');
-        this.props.navigation.dispatch({type: 'Login'});
+        //this.props.navigation.dispatch({type: 'Login'});
     }
     _toggleSwitchHandler(value) {
         console.log(value);
        this.setState({isActive: value})
     }
+
+
    
     render() {
-       // let { } = this.state;
-        const information = [
-            { name: 'Everyone in my care circle'  }, 
-            { name: 'John Smith'  },
-            { name: 'Susan' },
-            { name: 'John Smith'  },
-            { name: 'Susan' },
-            { name: 'John Smith'  },
-            { name: 'Susan' },
-            { name: 'John Smith'  },
-            { name: 'Susan' },
-            { name: 'John Smith'  },
-            { name: 'Susan' },
-            { name: 'John Smith'  },
-            { name: 'Susan' },
-            { name: 'John Smith'  },
-            { name: 'Susan' },
-            { name: 'John Smith'  },
-            { name: 'Susan' }
-          ];
 
         return (
             <View style= {styles.mainContainer}>
@@ -55,12 +127,12 @@ class ConsentPage extends Component {
                 <View style={styles.bodyContainer}>
                 <Text style={styles.textStyle}>All Health Information </Text>
                 <ScrollView contentContainerStyle={styles.contain}>
-                { information.map((item, index) => (
+                { this.state.allInformationList.map((item, index) => (
 
                     <ToggleSlider 
                         textLabel = {item.name}
                         toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
-                        isActive = {this.state.isActive}
+                        isActive = {item.value}
                     />
 
                 ))}
@@ -70,12 +142,12 @@ class ConsentPage extends Component {
                 <View style={styles.bodyContainer}>
                 <Text style={styles.textStyle}>Daily Vitals </Text>
                 <ScrollView contentContainerStyle={styles.contain}>
-                { information.map((item, index) => (
+                { this.state.dailyVitalsList.map((item, index) => (
 
                     <ToggleSlider 
                         textLabel = {item.name}
                         toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
-                        isActive = {this.state.isActive}
+                        isActive = {item.value}
                     />
 
                 ))}
@@ -85,12 +157,12 @@ class ConsentPage extends Component {
                 <View style={styles.bodyContainer}>
                 <Text style={styles.textStyle}>Home Care Notes</Text>
                 <ScrollView contentContainerStyle={styles.contain}>
-                { information.map((item, index) => (
+                { this.state.homeCareNotesList.map((item, index) => (
 
                     <ToggleSlider 
                         textLabel = {item.name}
                         toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
-                        isActive = {this.state.isActive}
+                        isActive = {item.value}
                     />
 
                 ))}
@@ -100,12 +172,12 @@ class ConsentPage extends Component {
                 <View style={styles.bodyContainer}>
                 <Text style={styles.textStyle}>Medical Records</Text>
                 <ScrollView contentContainerStyle={styles.contain}>
-                { information.map((item, index) => (
+                { this.state.medicalRecordsList.map((item, index) => (
 
                     <ToggleSlider 
                         textLabel = {item.name}
                         toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
-                        isActive = {this.state.isActive}
+                        isActive = {item.value}
                     />
 
                 ))}
@@ -115,12 +187,12 @@ class ConsentPage extends Component {
                 <View style={styles.bodyContainer}>
                 <Text style={styles.textStyle}>Medication </Text>
                 <ScrollView contentContainerStyle={styles.contain}>
-                { information.map((item, index) => (
+                { this.state.medicationList.map((item, index) => (
 
                     <ToggleSlider 
                         textLabel = {item.name}
                         toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
-                        isActive = {this.state.isActive}
+                        isActive = {item.value}
                     />
 
                 ))}
@@ -136,14 +208,20 @@ class ConsentPage extends Component {
 }
 
 function mapStateToProps(state) {
-    return {
-      user: state.userReducer
+    console.log("state data", state)
+    let consent;
+    if(state.consentsReducer.consentData){
+        consent = state.consentsReducer.consentData.data.consentList
+        
     }
+    return {
+        listOfConsent :consent 
+    };
   }
   
 function mapDispatchToProps(dispatch) {
 return {
-    getUser: (username, password) => dispatch(getUserLogin(username, password))
+    getConsentList: (userId) => dispatch(getListOfConsent(userId))
 }
 
 }
