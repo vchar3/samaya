@@ -4,19 +4,36 @@ import { baseURL } from '../apiUrlConfig';
 
 export function getListOfConsent(userId) {
     return (dispatch) => {
-        console.log('User id', userId);
         dispatch(sendConsentData(userId));
+
         baseURL.get('consent',{
             params: {
                 userId: userId
             }
-        }).then(res => dispatch(sendConsentSuccess(res)))
-          .catch(err => {
+        })
+        .then(res => dispatch(sendConsentSuccess(res)))    
+        .catch(err => {
             dispatch(sendConsentFailure(err));
             console.log("API Failure",err);
-           });
+        });
     }
 };
+
+export function updateConsentRecord(recordData) {
+    return (dispatch) => {
+
+        baseURL.post('updateConsent', 
+            {
+                record: recordData
+            }
+        )
+        .then(res => dispatch(sendConsentSuccess(res)))    
+        .catch(err => {
+            dispatch(sendConsentFailure(err));
+            console.log("API Failure",err);
+        });
+    }
+}
 
 
 

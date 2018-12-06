@@ -2,7 +2,7 @@ import React, {Component}  from 'react';
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import {connect} from 'react-redux';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards'
-import { getListOfConsent } from '../../redux/actions/consentsAction';
+import { getListOfConsent, updateConsentRecord } from '../../redux/actions/consentsAction';
 import { ToggleSlider } from '../common/index';
 import FooterBar from '../common/FooterBar';
 
@@ -39,82 +39,75 @@ class ConsentPage extends Component {
             console.log("list of consent", this.props.listOfConsent);
             if (consentDetails) {
                 consentDetails.forEach(function(element) {
-                    if(element.allInformation) {
-                        let listData = this.state.allInformationList;                    
-                        let information = {
-                            name: element.name,
-                            value: element.allInformation.value
-                        };
-                        listData.push(information);
-
-                        this.setState({
-                            allInformationList: listData
-                        })
+                    if(element.allInformation) {                                          
+                        this.updateRecords(element, this.state.allInformationList, element.allInformation.value, 'allInformationList', 'allInformation');
                     } 
                   
-                    if(element.dailyVitals) {
-                        let listData = this.state.dailyVitalsList;                    
-                        let information = {
-                            name: element.name,
-                            value: element.dailyVitals.value
-                        };
-                        listData.push(information);
-
-                        this.setState({
-                            dailyVitalsList: listData
-                        })
+                    if(element.dailyVitals) {                                        
+                        this.updateRecords(element, this.state.dailyVitalsList, element.dailyVitals.value, 'dailyVitalsList', 'dailyVitals');
                     }
 
-                    if(element.homeCareNotes) {
-                        let listData = this.state.homeCareNotesList;                    
-                        let information = {
-                            name: element.name,
-                            value: element.homeCareNotes.value
-                        };
-                        listData.push(information);
-
-                        this.setState({
-                            homeCareNotesList: listData
-                        })
+                    if(element.homeCareNotes) {                    
+                        this.updateRecords(element, this.state.homeCareNotesList, element.homeCareNotes.value, 'homeCareNotesList', 'homeCareNotes');
                     }
 
-                    if(element.medicalRecords) {
-                        let listData = this.state.medicalRecordsList;                    
-                        let information = {
-                            name: element.name,
-                            value: element.medicalRecords.value
-                        };
-                        listData.push(information);
-
-                        this.setState({
-                            medicalRecordsList: listData
-                        })
+                    if(element.medicalRecords) {                    
+                        this.updateRecords(element, this.state.medicalRecordsList, element.medicalRecords.value, 'medicalRecordsList', 'medicalRecords');
                     }
 
-                     if(element.medication) {
-                        let listData = this.state.medicationList;                    
-                        let information = {
-                            name: element.name,
-                            value: element.medication.value
-                        };
-                        listData.push(information);
-
-                        this.setState({
-                            medicationList: listData
-                        })
-                     }
+                    if(element.medication) {                   
+                    this.updateRecords(element, this.state.medicationList, element.medication.value, 'medicationList', 'medication');
+                    }
                   }, this);
             } 
         }
     }
 
-    _buttonPressHandler(event) {
-        console.log('Home Pressed!');
-        //this.props.navigation.dispatch({type: 'Login'});
+    updateRecords(element, itemList, itemValue, listName, id) {
+        let detailInfo = {
+            id: element._id,
+            name: element.name,
+            value: itemValue,
+            recordName: id
+        };
+        let record = itemList; 
+        record.push(detailInfo);
+
+        this.setState({
+            listName: record
+        })
     }
-    _toggleSwitchHandler(value) {
-        console.log(value);
-       this.setState({isActive: value})
+
+    _toggleSwitchHandler(value, item, id) {
+        if(item.recordName === 'allInformation') {
+            this.updateList(this.state.allInformationList, item, value);
+        } else if( item.recordName === 'dailyVitals') {
+            this.updateList(this.state.dailyVitalsList, item, value);
+        } else if( item.recordName === 'homeCareNotes') {
+            this.updateList(this.state.homeCareNotesList, item, value);
+        } else if( item.recordName === 'medicalRecords') {
+            this.updateList(this.state.medicalRecordsList, item, value);
+        } else if( item.recordName === 'medication') {
+            this.updateList(this.state.medicationList, item, value);
+        }
+        this.setState({isActive: value})
+    }
+
+    updateList(lists, item, value) {
+        for (var i in lists) {
+            if(lists[i].id === item.id) {
+                let recordData = {
+                    userObjectId : this.props.userObjectId,
+                    recordId: lists[i].id,
+                    value: value,
+                    recordName: item.recordName
+                }
+                console.log('rcord: ', recordData)
+                this.props.updateRecord(recordData);
+                lists[i].value = value
+                break;
+            }
+        }
     }
 
 
@@ -131,7 +124,7 @@ class ConsentPage extends Component {
 
                     <ToggleSlider 
                         textLabel = {item.name}
-                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
+                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value, item)}
                         isActive = {item.value}
                     />
 
@@ -146,7 +139,7 @@ class ConsentPage extends Component {
 
                     <ToggleSlider 
                         textLabel = {item.name}
-                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
+                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value, item)}
                         isActive = {item.value}
                     />
 
@@ -161,7 +154,7 @@ class ConsentPage extends Component {
 
                     <ToggleSlider 
                         textLabel = {item.name}
-                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
+                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value, item)}
                         isActive = {item.value}
                     />
 
@@ -176,7 +169,7 @@ class ConsentPage extends Component {
 
                     <ToggleSlider 
                         textLabel = {item.name}
-                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
+                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value, item)}
                         isActive = {item.value}
                     />
 
@@ -191,7 +184,7 @@ class ConsentPage extends Component {
 
                     <ToggleSlider 
                         textLabel = {item.name}
-                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value)}
+                        toggleSwitchHandler= {(value) => this._toggleSwitchHandler(value, item, 'medication')}
                         isActive = {item.value}
                     />
 
@@ -209,19 +202,21 @@ class ConsentPage extends Component {
 
 function mapStateToProps(state) {
     console.log("state data", state)
-    let consent;
+    let consent, id;
     if(state.consentsReducer.consentData){
         consent = state.consentsReducer.consentData.data.consentList
-        
+        id = state.consentsReducer.consentData.data.userObjectId
     }
     return {
-        listOfConsent :consent 
+        listOfConsent :consent,
+        userObjectId: id 
     };
   }
   
 function mapDispatchToProps(dispatch) {
 return {
-    getConsentList: (userId) => dispatch(getListOfConsent(userId))
+    getConsentList: (userId) => dispatch(getListOfConsent(userId)),
+    updateRecord: (record) => dispatch(updateConsentRecord(record))
 }
 
 }
@@ -239,7 +234,7 @@ const styles = {
         paddingBottom: 30
     },
     bodyContainer: {
-        height: 200,
+        maxHeight: 200,
         marginRight: 15,
         marginLeft: 15,
         marginBottom: 7.5, 
