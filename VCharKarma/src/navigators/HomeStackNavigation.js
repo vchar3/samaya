@@ -20,6 +20,7 @@ import DailyVitalsPage from '../components/provideCare/dailyVitals/DailyVitalsPa
 import HomeCarePage from '../components/provideCare/HomeCarePage';
 import MealPlanPage from '../components/provideCare/MealPlanPage';
 import MedicationPage from '../components/provideCare/MedicationPage';
+import AddMedicationsPage from '../components/AddMedicationsPage';
 
 
 
@@ -39,6 +40,7 @@ const HomeNavigator = createStackNavigator(
         HomeCare: {screen: HomeCarePage},
         MealPlan: { screen: MealPlanPage },
         Medication: {screen: MedicationPage},
+        AddMedications: {screen: AddMedicationsPage}
         // ProvideCareStack: ProvideCareStackRoute
         
 
