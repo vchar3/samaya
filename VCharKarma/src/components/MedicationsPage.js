@@ -1,14 +1,14 @@
 import React, {Component}  from 'react';
-import {ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import {ScrollView, StyleSheet, Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import {connect} from 'react-redux';
-import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
-import { Button, Card, CardSection, Header } from '../common/index';
+import { Button } from '../common/index';
+import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards';
 
 import OtherAccountPage from './OtherAccountPage';
-
-
+import { getMedicationList } from '../../redux/actions/medicationAction';
+import { CalendarView } from './medication/CalendarView';
+import { ListView } from './medication/ListView';
 
 class MedicationsPage extends Component { 
       static navigationOptions = ({navigation}) =>{
@@ -29,89 +29,75 @@ class MedicationsPage extends Component {
       };
 
     state = { 
+        userId: ''
+    }
+
+
+    constructor() {
+        super();
+        AsyncStorage.getItem('userName').then((value) => {
+            this.setState({
+                userId: value,
+                showModel: false
+            });
+            this.props.getMedication(value);
+        }) 
 
     }
 
     _addUserHandler( ){
-        console.log("Welcome");
         this.props.navigation.navigate('AddMedications');
     }
+
+    _listViewHandler() {
+        this.setState({
+            showModel: true
+        })
+    }
    
+    _calendarViewHandler() {
+        this.setState({
+            showModel: false
+        })
+    }
     render() {
 
         return (
             <View style={styles.container}>
-                <Button style={styles.userButton}  onPress={this._addUserHandler.bind(this)}>
-                    Add Medication
-                </Button>
-                <Calendar
-                    style={styles.calendarStyle}
-                    // Initially visible month. Default = Date()
-                    current={'2018-12-09'}
-                    // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-                    // minDate={'2018-12-01'}
-                    // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-                    // maxDate={'2018-12-15'}
-                    // Handler which gets executed on day press. Default = undefined
-                    onDayPress={(day) => {console.log('selected day', day)}}
-                    // Handler which gets executed on day long press. Default = undefined
-                    onDayLongPress={(day) => {console.log('selected day', day)}}
-                    // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-                    monthFormat={'MMM d, yyyy'}
-                    // Handler which gets executed when visible month changes in calendar. Default = undefined
-                    onMonthChange={(month) => {console.log('month changed', month)}}
-                    // Hide month navigation arrows. Default = false
-                    // hideArrows={true}
-                    // Replace default arrows with custom ones (direction can be 'left' or 'right')
-                    // renderArrow={(direction) => (<Arrow />)}
-                    // Do not show days of other months in month page. Default = false
-                    hideExtraDays={true}
-                    // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
-                    // day from another month that is visible in calendar page. Default = false
-                    disableMonthChange={true}
-                    // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
-                    firstDay={1}
-                    // Hide day names. Default = false
-                    hideDayNames={true}
-                    // Show week numbers to the left. Default = false
-                    showWeekNumbers={true}
-                    // Handler which gets executed when press arrow icon left. It receive a callback can go back month
-                    onPressArrowLeft={substractMonth => substractMonth()}
-                    // Handler which gets executed when press arrow icon left. It receive a callback can go next month
-                    onPressArrowRight={addMonth => addMonth()}
-                    horizontal={true}
-                    theme={{
-                        backgroundColor: '#ffffff',
-                        calendarBackground: '#ffffff',
-                        textSectionTitleColor: '#b6c1cd',
-                        selectedDayBackgroundColor: '#00adf5',
-                        selectedDayTextColor: '#ffffff',
-                        todayTextColor: '#00adf5',
-                        dayTextColor: '#2d4150',
-                        textDisabledColor: '#d9e1e8',
-                        dotColor: '#00adf5',
-                        selectedDotColor: '#ffffff',
-                        arrowColor: 'orange',
-                        monthTextColor: 'blue',
-                        textMonthFontWeight: 'bold',
-                        textDayFontSize: 16,
-                        textMonthFontSize: 16,
-                        textDayHeaderFontSize: 16
-                      }}
-                />
-                <View style={styles.itemsStyle}> 
-                    <Text style={styles.headerStyle}> Today Medication </Text>
-
+                <View style={{flexDirection: 'row', paddingTop: 10}}> 
+                    <TouchableOpacity onPress={this._calendarViewHandler.bind(this)}>
+                        <View style={styles.rowButton}>
+                            <Text style={styles.rowButtonTextStyle}>Calendar View</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this._listViewHandler.bind(this)}>
+                        <View style={styles.rowButton}>
+                            <Text style={styles.rowButtonTextStyle}>List View</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this._addUserHandler.bind(this)}>
+                        <View style={styles.rowButton}>
+                            <Text style={styles.rowButtonTextStyle}>Add Medication</Text>
+                        </View>
+                    </TouchableOpacity>  
                 </View>
-                <View style={styles.itemsStyle}> 
-                    <Text style={styles.headerStyle}> Reminders </Text>
+                <View >
+                    {
+                        this.state.showModel ? <ListView /> : <CalendarView />
+                    }
                 </View>
+                
             </View>
         );
     }
 }
 
 function mapStateToProps(state) {
+    let medications;
+
+    if(state.medicationReducer.medicationData) {
+        medications = state.medicationReducer.medicationData.data
+    }
     return {
       user: state.userReducer
     }
@@ -119,7 +105,7 @@ function mapStateToProps(state) {
   
 function mapDispatchToProps(dispatch) {
 return {
-    getUser: (username, password) => dispatch(getUserLogin(username, password))
+    getMedication: (userId) => dispatch(getMedicationList(userId))
 }
 
 }
@@ -128,31 +114,62 @@ export default connect(mapStateToProps, mapDispatchToProps) (MedicationsPage);
 
 const styles = {
     container: {     
-        flex: 1,
+        flex:1,
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
     calendarStyle: {
         width: 300, 
-        margin: 30, 
         borderWidth: 1,
         borderColor: 'gray'
     },
     itemsStyle: {
-        justifyContent: 'flex-start',
-        alignItems:'flex-start'
+        width: 300,
+        height: 300,
+        marginTop: 15,
+    },
+    cardStyle: {
+        width: 300,
+        height: 170
     },
     headerStyle: {
        fontSize: 18
     },
     userButton: {
         backgroundColor: 'blue',
-        marginTop: 20,
+        marginTop: 15,
         width:300,
+        height: 50,
         justifyContent: 'center',
 
     },
-    scrollContainer: {
-        paddingBottom: 20
-    }
+    button: {
+        backgroundColor: 'lightblue',
+        width: 300,
+        padding: 12,
+        margin: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 4,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+      },
+      buttonTextStyle: {
+        fontWeight:'bold', 
+        color: 'white', 
+        fontSize: 18
+      },
+      rowButton: {
+        backgroundColor: 'lightblue',
+        width: 120,
+        padding: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 4,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+      },
+      rowButtonTextStyle: {
+        fontWeight:'bold', 
+        color: 'white', 
+        fontSize: 12
+      }
   };

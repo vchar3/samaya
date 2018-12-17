@@ -1,8 +1,9 @@
 import React, { Component }  from 'react';
-import {Text, View, TouchableOpacity,ScrollView } from 'react-native';
+import {Text, View, TouchableOpacity,ScrollView, AsyncStorage } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import {connect} from 'react-redux';
 import OtherAccountPage from './OtherAccountPage';
+import { addMedication } from '../../redux/actions/medicationAction';
 
 class AddMedicationsPage extends Component {
     static navigationOptions = ({navigation}) =>{
@@ -28,22 +29,48 @@ class AddMedicationsPage extends Component {
         rxNumber: '',
         quantity: '',
         prescDate: '',
-        refileLeft: '',
+        refillLeft: '',
         dateFilled: '',
         discardAfter: '',
         pharmacyName: '',
         storePhone: '',
         prescribedBy: '',
-        setDate: null
+        setDate: null,
+        userId: ''
+    }
+
+    constructor() {
+        super();
+        AsyncStorage.getItem('userName').then((value) => {
+            this.setState({
+                userId: value
+            });
+        })      
     }
 
     _addMedication(){
-        console.log("Add Medication")
+        console.log("Add Medication");
+        let medicationDetail = {
+            medicationName: this.state.medicationName,
+            quantity: this.state.quantity,
+            dosage: this.state.dosage,
+            RxNumber: this.state.rxNumber,
+            storePhone: this.state.storePhone,
+            refillNumLeft: this.state.refillLeft,
+            dateFilled: this.state.dateFilled,
+            discardAfterDate: this.state.discardAfter,
+            storeName: this.state.pharmacyName,
+            prescribedByDoctor: this.state.prescribedBy,
+            userId: this.state.userId
+        };
+
+        this.props.addMedicationDetail(medicationDetail);
+        this.props.navigation.navigate('Medications');
     }
 
     render() {
 
-        let { medicationName, dosage, rxNumber, quantity, prescDate, refileLeft, dateFilled, discardAfter, pharmacyName, storePhone, prescribedBy} = this.state;
+        let { medicationName, dosage, rxNumber, quantity, prescDate, refillLeft, dateFilled, discardAfter, pharmacyName, storePhone, prescribedBy} = this.state;
         return (
             <View style={styles.modalContent}>
                 <View style={styles.tapBar}>
@@ -58,7 +85,7 @@ class AddMedicationsPage extends Component {
                         onChangeText={ (medicationName) => this.setState({ medicationName }) }
                     />
                     <TextField
-                        label='Dosage (e.g. 10mg, 500 IU'
+                        label='Dosage (e.g. 10mg, 500 IU)'
                         value={dosage}
                         onChangeText={ (dosage) => this.setState({ dosage }) }
                     />
@@ -78,9 +105,9 @@ class AddMedicationsPage extends Component {
                         onChangeText={ (prescDate) => this.setState({ prescDate }) }
                     />
                     <TextField
-                        label='Number Refile Left'
-                        value={refileLeft}
-                        onChangeText={ (refileLeft) => this.setState({ refileLeft }) }
+                        label='Number Refill Left'
+                        value={refillLeft}
+                        onChangeText={ (refillLeft) => this.setState({ refillLeft }) }
                     />  
                     <TextField
                         label='Date Filled'
@@ -117,8 +144,29 @@ class AddMedicationsPage extends Component {
             </View>
         );
     }
+};
+
+function mapStateToProps(state) {
+    console.log("state data", state)
+    let consent, id;
+    if(state.consentsReducer.consentData){
+        consent = state.consentsReducer.consentData.data.consentList
+        id = state.consentsReducer.consentData.data.userObjectId
+    }
+    return {
+        listOfConsent :consent,
+        userObjectId: id 
+    };
+  }
+  
+function mapDispatchToProps(dispatch) {
+    return {
+        addMedicationDetail: (medicationDetail) => dispatch(addMedication(medicationDetail))
+    }
+
 }
-export default (AddMedicationsPage);
+
+export default connect(mapStateToProps, mapDispatchToProps) (AddMedicationsPage);
 
 const styles = { 
 
