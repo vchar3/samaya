@@ -16,6 +16,7 @@ import {FallsPage} from './FallsPage';
 import {OtherVitalsPage} from './OtherVitalsPage';
 
 import OtherAccountPage from '../../OtherAccountPage';
+import DropListCard from '../../../common/DropListCard';
 
 
 class DailyVitalsPage extends Component { 
@@ -107,10 +108,24 @@ class DailyVitalsPage extends Component {
 
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
-                <Text style={{color: 'orange', fontSize: 16, textAlign:'center', padding:20}}> 
+                {/* <Text style={{color: 'orange', fontSize: 16, textAlign:'center', padding:20}}> 
                     Today is {moment(new Date()).format("MMMM Do, YYYY")}
-                </Text>
-
+                </Text> */}
+              
+                <ScrollView contentContainerStyle={{margin:10}}>
+                    {   items.map((item)=> (      
+                        <DropListCard
+                            title={item.name}
+                            subTitle='140/82'
+                            time='03/30' 
+                        >
+                        <Text style={{color   :'#ffff',}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                        </DropListCard>
+                        
+                        ))
+                    }
+                </ScrollView>
+            
                 <GridView
                     itemDimension={130}
                     items={items}
