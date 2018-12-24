@@ -25,6 +25,18 @@ class ProvideCarePage extends Component {
     state = { 
 
     }
+    constructor() {
+        super();
+
+        this.icons = { 
+            'careNotes'    : require('../../img/careNotes.png'),
+            'dailyCare'  : require('../../img/dailyCare.png'),
+            'nutrition'    : require('../../img/nutrition.png'),
+            'shop'  : require('../../img/shop.png'),
+            'vaccinations'    : require('../../img/vaccinations.png'),
+            'medications'  : require('../../img/medications.png')
+        };
+    }
 
     _buttonPressHandler(event) {
         console.log('Provide Care Pressed!', event);
@@ -33,12 +45,12 @@ class ProvideCarePage extends Component {
    
     render() {
         const items = [
-            { name: 'Daily Care', routeName:'DailyVital' }, 
-            { name: 'Home Care',  routeName:'HomeCare' },
-            { name: 'Meal Plan',  routeName:'MealPlan' }, 
-            { name: 'Medication', routeName:'Medication' },
-            { name: 'Care Note',  routeName:'CareNote' },
-            { name: 'Care Circle', routeName:'CareCircle'}
+            { name: 'Daily Care', routeName:'DailyVital', icon: this.icons['dailyCare'] }, 
+            { name: 'Home Care',  routeName:'HomeCare', icon: this.icons['shop'] },
+            { name: 'Meal Plan',  routeName:'MealPlan', icon: this.icons['nutrition'] }, 
+            { name: 'Medication', routeName:'Medication', icon: this.icons['medications'] },
+            { name: 'Care Note',  routeName:'CareNote', icon: this.icons['careNotes'] },
+            { name: 'Care Circle', routeName:'CareCircle', icon: this.icons['vaccinations']}
           ];
 
         return (
@@ -49,7 +61,11 @@ class ProvideCarePage extends Component {
                 style={styles.gridView}
                 renderItem={item => (
                 <TouchableOpacity  onPress={() => this._buttonPressHandler(item.routeName)}>
-                <View style={[styles.itemContainer, { backgroundColor: '#78B6DD' }]}>
+                <View style={[styles.itemContainer, { backgroundColor: '#ffff' }]}>
+                    <Image
+                        style={styles.buttonImage}
+                        source={item.icon}
+                        ></Image>
                     <Text style={styles.itemName}>{item.name}</Text>
                     {/* <Text style={styles.itemCode}>{item.code}</Text> */}
                 </View>
@@ -85,19 +101,26 @@ const styles = {
     },
     itemContainer: {
         justifyContent: 'flex-end',
+        alignItems: 'center',
         borderRadius: 5,
-        padding: 10,
+        paddingBottom: 10,
+        borderWidth: 1,
+        borderColor: '#78B6DD',
         height: 130,
     },
     itemName: {
         fontSize: 16,
-        color: '#fff',
+        color: '#78B6DD',
         fontWeight: '600',
     },
     itemCode: {
         fontWeight: '600',
         fontSize: 12,
         color: '#fff',
+    },
+    buttonImage: {
+        width: 90,
+        height: 90
     }
 };
 

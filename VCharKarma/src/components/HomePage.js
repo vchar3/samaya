@@ -38,6 +38,14 @@ class HomePage extends Component {
     constructor() {
         super();
 
+        this.icons = { 
+            'provideCare'    : require('../../img/provideCare.png'),
+            'appointments'  : require('../../img/appointments.png'),
+            'consent'    : require('../../img/consent.png'),
+            'healthRecords'  : require('../../img/healthRecords.png'),
+            'insurance'    : require('../../img/insurance.png'),
+            'legal'  : require('../../img/legal.png')
+        };
         AsyncStorage.getItem('userName').then((value) => {
             this.setState({
                 userName: value
@@ -58,12 +66,12 @@ class HomePage extends Component {
    
     render() {
         const items = [
-            { name: 'Provide Care', routeName:'ProvideCare' }, 
-            { name: 'Medications', routeName:'Medications' },
-            { name: 'Health Records', routeName:'HealthRecords' }, 
-            { name: 'Insurance', routeName:'Insurance' },
-            { name: 'Consent', routeName:'Consent' }, 
-            { name: 'Legal', routeName:'Legal' }
+            { name: 'Provide Care', routeName:'ProvideCare' , icon: this.icons['provideCare']}, 
+            { name: 'Medications', routeName:'Medications', icon: this.icons['appointments']},
+            { name: 'Health Records', routeName:'HealthRecords', icon: this.icons['healthRecords'] }, 
+            { name: 'Insurance', routeName:'Insurance', icon: this.icons['insurance'] },
+            { name: 'Consent', routeName:'Consent', icon: this.icons['consent'] }, 
+            { name: 'Legal', routeName:'Legal', icon: this.icons['legal'] }
           ];
 
         return (
@@ -73,7 +81,11 @@ class HomePage extends Component {
                     style={styles.gridView}
                     renderItem={item => (
                     <TouchableOpacity  onPress={() => this._buttonPressHandler(item.routeName)}>
-                    <View style={[styles.itemContainer, { backgroundColor: '#78B6DD' }]}>
+                    <View style={[styles.itemContainer, { backgroundColor: '#ffff' }]}>
+                        <Image
+                            style={styles.buttonImage}
+                            source={item.icon}
+                        ></Image>
                         <Text style={styles.itemName}>{item.name}</Text>
                     </View>
                     </TouchableOpacity>
@@ -110,11 +122,17 @@ const styles = {
         alignItems: 'center',
         borderRadius: 5,
         paddingBottom: 10,
+        borderWidth: 1,
+        borderColor: '#78B6DD',
         height: 130,
       },
       itemName: {
         fontSize: 16,
-        color: '#fff',
+        color: '#78B6DD',
         fontWeight: '600',
       },
+      buttonImage: {
+          width: 90,
+          height: 90
+      }
   };
