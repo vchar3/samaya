@@ -5,10 +5,6 @@ import { ToggleSlider } from '../../../common/index';
 const Nutrition = ({self, onPress}) => {
     return (
         <View style={styles.container}>
-            <Text style={{textAlign:'center', fontSize:24, paddingTop: 20}}>
-                Nutrition Intake
-            </Text>
-           
                 <ToggleSlider 
                     textLabel = 'Breakfast'
                     toggleSwitchHandler= {(value) => self.setState({
@@ -49,13 +45,6 @@ const Nutrition = ({self, onPress}) => {
                     })}
                     isActive = {self.state.isAssistanceNeeded}
                 />
-
-
-            <TouchableOpacity onPress={onPress}>
-                <View style={styles.button}>
-                    <Text>Save</Text>
-                </View>
-            </TouchableOpacity>
         </View>
     );
 }; 

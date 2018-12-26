@@ -7,8 +7,6 @@ const Feeling = ({ onPress, text, _buttonPressHandler1, _checkBoxChanges, state 
 
     return (
         <View style={styles.modalContent}> 
-            <Text style={{fontSize: 30, color: '#7DBADF'}}> How are you </Text> 
-            <Text style={{fontSize: 30, color: '#7DBADF'}}> feeling today? </Text>
             <View style={{ justifyContent: 'space-between',  marginTop: 30, width: 270 }}>
                 <CheckBox
                     title='Happy'
@@ -51,11 +49,6 @@ const Feeling = ({ onPress, text, _buttonPressHandler1, _checkBoxChanges, state 
                 />
 
             </View>
-            <TouchableOpacity onPress={onPress}>
-            <View style={styles.button}>
-                <Text style={styles.buttonTextStyle}>{text}</Text>
-            </View>
-            </TouchableOpacity>
         </View>
     );
 };

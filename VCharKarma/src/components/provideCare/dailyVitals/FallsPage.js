@@ -5,10 +5,6 @@ import { ToggleSlider } from '../../../common/index';
 const FallsPage = ({self, onPress}) => {
     return (
         <View style={styles.container}>
-            <Text style={{textAlign:'center', fontSize:24, paddingTop: 20}}>
-                Falls
-            </Text>
-           
             <ToggleSlider 
                 textLabel = 'Did you take a bath'
                 toggleSwitchHandler= {(value) => self.setState({
@@ -37,13 +33,6 @@ const FallsPage = ({self, onPress}) => {
             </View>
             : null
             }
-
-
-            <TouchableOpacity onPress={onPress}>
-                <View style={styles.button}>
-                    <Text>Save</Text>
-                </View>
-            </TouchableOpacity>
         </View>
     );
 }; 

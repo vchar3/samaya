@@ -46,11 +46,13 @@ class ProvideCarePage extends Component {
     render() {
         const items = [
             { name: 'Daily Care', routeName:'DailyVital', icon: this.icons['dailyCare'] }, 
-            { name: 'Home Care',  routeName:'HomeCare', icon: this.icons['shop'] },
-            { name: 'Meal Plan',  routeName:'MealPlan', icon: this.icons['nutrition'] }, 
-            { name: 'Medication', routeName:'Medication', icon: this.icons['medications'] },
+            { name: 'Medications', routeName:'Medications', icon: this.icons['medications'] },
             { name: 'Care Note',  routeName:'CareNote', icon: this.icons['careNotes'] },
-            { name: 'Care Circle', routeName:'CareCircle', icon: this.icons['vaccinations']}
+            { name: 'Care Circle', routeName:'CareCircle', icon: this.icons['vaccinations']},
+            { name: 'Nutrition',  routeName:'MealPlan', icon: this.icons['nutrition'] },
+            { name: 'Shop',  routeName:'HomeCare', icon: this.icons['shop'] },
+
+
           ];
 
         return (
@@ -67,7 +69,6 @@ class ProvideCarePage extends Component {
                         source={item.icon}
                         ></Image>
                     <Text style={styles.itemName}>{item.name}</Text>
-                    {/* <Text style={styles.itemCode}>{item.code}</Text> */}
                 </View>
                 </TouchableOpacity>
                 )}
@@ -95,28 +96,24 @@ export default connect(mapStateToProps, mapDispatchToProps) (ProvideCarePage);
 const styles = {
     gridView: {
         flex: 1,
-        paddingTop: 60,
+        paddingTop: 40,
         backgroundColor: 'white',
-
+        paddingLeft:10
     },
     itemContainer: {
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
-        paddingBottom: 10,
         borderWidth: 1,
         borderColor: '#78B6DD',
         height: 130,
+        width: 150,
+        marginBottom: 20
     },
     itemName: {
         fontSize: 16,
         color: '#78B6DD',
         fontWeight: '600',
-    },
-    itemCode: {
-        fontWeight: '600',
-        fontSize: 12,
-        color: '#fff',
     },
     buttonImage: {
         width: 90,

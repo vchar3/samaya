@@ -34,8 +34,6 @@ class DailyVitalsPage extends Component {
       };
 
     state = { 
-        visibleModal: false,
-        pageName: '',
         isBreakfastTaken: false,
         isLunchTaken: false,
         isDinnerTaken: false,
@@ -98,127 +96,80 @@ class DailyVitalsPage extends Component {
         let otherVital = `Body Temp`+': '+this.state.otherVitals.temp +`\n`+`Resp Rate`+ ': '+ this.state.otherVitals.respiratory +`\n`+`Pluse`+': '+this.state.otherVitals.pulse
 
         let items = [
-            { name: 'Feeling', routeName:'FeelingPage', value: this.state.todayFeeling }, 
-            { name: 'Blood Pressure', routeName:'BloodPressure', value: bloodPressureValue },
-            { name: 'Nutrition Intake', routeName:'Nutrition', value: nutritionTitle },
-            { name: 'Bath', routeName:'Bath', value: bath }, 
-            { name: 'Num of Falls', routeName:'Falls', value: this.state.falls.number },
-            { name: 'Other Vitals', routeName:'OtherVitals', value: otherVital }
+            { name: 'Feeling', routeName:'FeelingPage', value: this.state.todayFeeling, model: this._renderFeelingPage() }, 
+            { name: 'Blood Pressure', routeName:'BloodPressure', value: bloodPressureValue,  model: this._renderBloodPressure() },
+            { name: 'Nutrition Intake', routeName:'Nutrition', value: nutritionTitle,  model: this._renderNutritionPage() },
+            { name: 'Bath', routeName:'Bath', value: bath,  model: this._renderBathPage() }, 
+            { name: 'Num of Falls', routeName:'Falls', value: this.state.falls.number,  model: this._renderFallsPage() },
+            { name: 'Other Vitals', routeName:'OtherVitals', value: otherVital,  model: this._renderOtherVitalsPage() }
           ];
 
         return (
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
+            <View style={styles.container}>
                 {/* <Text style={{color: 'orange', fontSize: 16, textAlign:'center', padding:20}}> 
                     Today is {moment(new Date()).format("MMMM Do, YYYY")}
                 </Text> */}
               
-                <ScrollView contentContainerStyle={{margin:10}}>
-                    {   items.map((item)=> (      
+                <ScrollView contentContainerStyle={styles.scrollContainer}>
+                    {   items.map((item)=> (   
                         <DropListCard
                             title={item.name}
                             subTitle='140/82'
-                            time='03/30' 
+                            time='03/30'
                         >
-                        <Text style={{color   :'#ffff',}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                            {item.model}
                         </DropListCard>
-                        
                         ))
                     }
-                </ScrollView>
-            
-                <GridView
-                    itemDimension={130}
-                    items={items}
-                    style={styles.gridView}
-                    renderItem={item => (
-                    <TouchableOpacity  onPress={() => this._buttonPressHandler(item.routeName)}>
-                    <View style={[styles.itemContainer, { backgroundColor: '#78B6DD' }]}>
-                        <Text style={styles.itemCode}>{item.value}</Text>
-                        <Text style={styles.itemName}>{item.name}</Text>
-                        
-                    </View>
-                    </TouchableOpacity>
-                )}/>
-
-                <Modal
-                    isVisible={this.state.visibleModal}
-                    backdropColor={'#2FAEE0'}
-                    backdropOpacity={1}
-                    animationIn={'zoomInDown'}
-                    animationOut={'zoomOutUp'}
-                    animationInTiming={1000}
-                    animationOutTiming={1000}
-                    backdropTransitionInTiming={1000}
-                    backdropTransitionOutTiming={1000}>
-                    
-                    {this._renderModalContent()}
-                </Modal>
-               
+                </ScrollView> 
             </View>
         );
     }
 
-    _renderModalContent = () => (
-        <View>
-        {
-            this.state.pageName === 'FeelingPage' 
-                ? <Feeling 
+    _renderFeelingPage=() => (
+        <View> 
+            <Feeling 
                     text='Save'
                     state= {this.state}
                     _checkBoxChanges= {(id, value) => feelingChanges(id, value, this)}
-                    onPress= { () => {
-                        this.setState({ visibleModal: false, pageName: ''})
-                    }}/>
-                : null 
-        }
-        {
-            this.state.pageName === 'BloodPressure' 
-                ? 
-                <BloodPressure 
-                    self = {this}
                 />
-                : null 
-        }
-        {
-            this.state.pageName === 'Nutrition' 
-                ? 
-                <Nutrition 
-                    self = {this}
-                    onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
-                : null 
-        }
-        {
-            this.state.pageName === 'Bath' 
-                ? 
-                <BathPage 
-                    self = {this}
-                    onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
-                : null 
-        }
-        {
-            this.state.pageName === 'Falls' 
-                ? 
-                <FallsPage 
-                    self = {this}
-                    onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
-                : null 
-        }
-         {
-            this.state.pageName === 'OtherVitals' 
-                ? 
-                <OtherVitalsPage 
-                    self = {this}
-                    onPress= { () => this.setState({ visibleModal: false, pageName: ''})}/>
-                : null 
-        }
         </View>
-    );
-
-    _buttonPressHandler(event) {
-        this.setState({ 
-            visibleModal: true,
-            pageName: event});
-    }
+    )
+    _renderBloodPressure=() => (
+        <View> 
+            <BloodPressure 
+                self = {this}
+            />
+        </View>
+    )
+    _renderNutritionPage=() => (
+        <View> 
+            <Nutrition 
+                self = {this}                  
+            />
+        </View>
+    )
+    _renderBathPage=() => (
+        <View> 
+            <BathPage 
+                self = {this}                  
+            />
+        </View>
+    )
+    _renderFallsPage=() => (
+        <View> 
+            <FallsPage 
+                self = {this}
+            />
+        </View>
+    )
+    _renderOtherVitalsPage=() => (
+        <View> 
+            <OtherVitalsPage 
+                self = {this}
+            />
+        </View>
+    )
 }
 
 function mapStateToProps(state) {
@@ -237,30 +188,11 @@ return {
 export default connect(mapStateToProps, mapDispatchToProps) (DailyVitalsPage);
 
 const styles = {
-    gridView: {
-        flex: 1,
-        paddingTop: 0,
+    container: {
+        flex: 1, 
+        backgroundColor: 'white'
     },
-    itemContainer: {
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        borderRadius: 5,
-        padding: 10,
-        height: 150,
-    },
-    itemName: {
-        fontSize: 16,
-        color: '#fff',
-        fontWeight: '600',
-    },
-    itemCode: {       
-        width: 150,
-        fontWeight: '600',
-        fontSize: 20,
-        color: '#fff'
-    },
-    bottomModal: {
-        justifyContent: 'flex-end',
-        margin: 0,
-    },
+    scrollContainer: {
+        margin:10
+    }
 };

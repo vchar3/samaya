@@ -7,6 +7,7 @@ import {ProvideCareStackRoute} from './ProvideCareStackNavigation';
 import HomePage from '../components/HomePage';
 import UserProfilePage from '../components/UserProfilePage';
 import ProvideCarePage from '../components/ProvideCarePage';
+import AppointmentsPage from '../components/AppointmentsPage';
 import MedicationsPage from '../components/MedicationsPage';
 import HealthRecordsPage from '../components/HealthRecordsPage';
 import InsurancePage from '../components/InsurancePage';
@@ -28,6 +29,7 @@ const HomeNavigator = createStackNavigator(
     {
         Home: { screen: HomePage },
         ProvideCare: {screen: ProvideCarePage},
+        Appointments: { screen: AppointmentsPage },
         Medications: { screen: MedicationsPage },
         HealthRecords: {screen: HealthRecordsPage},
         Insurance: {screen: InsurancePage},

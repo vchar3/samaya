@@ -5,10 +5,6 @@ import { ToggleSlider } from '../../../common/index';
 const OtherVitalsPage = ({self, onPress}) => {
     return (
         <View style={styles.container}>
-            <Text style={{textAlign:'center', fontSize:24, paddingTop: 20}}>
-                Other Vitals
-            </Text>
-           
             <View style={{flexDirection: 'row', justifyContent: 'space-around', padding: 20}}>
                 <Text style={{fontSize:18, width: 150}}>
                     Body Temp   
@@ -65,12 +61,6 @@ const OtherVitalsPage = ({self, onPress}) => {
                 {self.state.otherVitals.pulse}
                 </Text>
             </View>
-
-            <TouchableOpacity onPress={onPress}>
-                <View style={styles.button}>
-                    <Text>Save</Text>
-                </View>
-            </TouchableOpacity>
         </View>
     );
 }; 

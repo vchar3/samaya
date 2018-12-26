@@ -9,17 +9,17 @@ class DropListCard extends Component{
         //     'up'    : require('../../img/Arrowhead-01-128.png'),
         //     'down'  : require('../../img/Arrowhead-Down-01-128.png')
         // };
-
         this.state = {       //Step 3
             title       : props.title,
             expanded    : false,
             subTitle    : props.subTitle,
             animation   : new Animated.Value(),
-            time        : props.time
+            time        : props.time,
         };
     }
 
     toggle(){
+
         let initialValue    = this.state.expanded? this.state.maxHeight + this.state.minHeight : this.state.minHeight,
             finalValue      = this.state.expanded? this.state.minHeight : this.state.maxHeight + this.state.minHeight;
 
@@ -64,13 +64,13 @@ class DropListCard extends Component{
                 onPress={this.toggle.bind(this)}
                 underlayColor="#f1f1f1">
                 <View>
-                <View style={styles.titleContainer} onLayout={this._setMinHeight.bind(this)}>    
-                    <Text style={styles.title}>{this.state.title}</Text>
-                    <View>
-                        <Text style={styles.title}>{this.state.subTitle}</Text> 
-                        <Text>{this.state.time}</Text> 
-                    </View>
-                </View>      
+                    <View style={styles.titleContainer} onLayout={this._setMinHeight.bind(this)}>    
+                        <Text style={styles.title}>{this.state.title}</Text>
+                        <View>
+                            <Text style={styles.title}>{this.state.subTitle}</Text> 
+                            <Text>{this.state.time}</Text> 
+                        </View>
+                    </View>      
                 </View>
                 
             </TouchableHighlight>
@@ -79,7 +79,6 @@ class DropListCard extends Component{
                 {this.props.children}
             </View> : null
             }
-
         </Animated.View>
         );
     }

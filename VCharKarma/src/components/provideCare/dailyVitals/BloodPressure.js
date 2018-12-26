@@ -6,8 +6,6 @@ import { Slider } from 'react-native-elements'
 const BloodPressure = ({ self }) => {
     return ( 
         <View style={styles.modalContent}> 
-            <Text style={styles.titleStyle}> Blood Pressure </Text> 
-
                 <View style={styles.sliderContainer}>
                     <View style={styles.sliderContain}>
                         <Text style={styles.sliderChangeValue}>{self.state.sysValue}</Text>
@@ -57,12 +55,6 @@ const BloodPressure = ({ self }) => {
                         <Text style={styles.sliderTitle}>{'BPM'} </Text>
                     </View>
                 </View>
-
-            <TouchableOpacity onPress= { () => self.setState({ visibleModal: false, pageName: ''})}>
-            <View style={styles.button}>
-                <Text style={styles.buttonTextStyle}>{'Save'}</Text>
-            </View>
-            </TouchableOpacity>
         </View>
      
     );
