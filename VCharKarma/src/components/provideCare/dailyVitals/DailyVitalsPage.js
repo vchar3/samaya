@@ -38,6 +38,7 @@ class DailyVitalsPage extends Component {
         isLunchTaken: false,
         isDinnerTaken: false,
         isAssistanceNeeded: false,
+        dateTimeNut: '',
         foodToday:'',
         todayFeeling: '',
         sysValue: 100,
@@ -47,7 +48,8 @@ class DailyVitalsPage extends Component {
             isHappy: false,
             isSad: false,
             isTired: false,
-            isSick: false
+            isSick: false,
+            dateTime:''
         },
         bloodPressure: {
             sys:{ 
@@ -64,27 +66,31 @@ class DailyVitalsPage extends Component {
                 bpmMinimumValue: 40,
                 bpmMaximumValue: 240,
                 bpmStep: 1
-            }
+            },
+            dateTime:''
         },
         bath: {
             isBathTaken: false,
-            isAssistanceNeeded: false
+            isAssistanceNeeded: false,
+            dateTime:''
         },
         falls: {
             isFalls: false,
-            number: 0
+            number: 0,
+            dateTime:''
         },
         otherVitals: {
             temp: 0,
             respiratory: 0,
-            pulse: 0
+            pulse: 0,
+            dateTime:''
         }
 
     }
 
     render() {
         let bloodPressureValue = `Sys`+': '+this.state.sysValue+`\n`+`Dia`+ ': '+ this.state.diaValue+`\n`+`Bpm`+ ': '+ this.state.bpmValue
-
+        console.log(bloodPressureValue);
         let breakfast= this.state.isBreakfastTaken ? <Text style={{color:'green'}}>Breakfast </Text> :  <Text style={{color:'grey'}}>Breakfast </Text> ;
         let lunch= this.state.isLunchTaken ? <Text style={{color:'green'}}>Lunch </Text> :  <Text style={{color:'grey'}}>Lunch </Text> ;
         let dinner= this.state.isDinnerTaken ? <Text style={{color:'green'}}>Dinner </Text> :  <Text style={{color:'grey'}}>Dinner </Text> ;
@@ -96,26 +102,26 @@ class DailyVitalsPage extends Component {
         let otherVital = `Body Temp`+': '+this.state.otherVitals.temp +`\n`+`Resp Rate`+ ': '+ this.state.otherVitals.respiratory +`\n`+`Pluse`+': '+this.state.otherVitals.pulse
 
         let items = [
-            { name: 'Feeling', routeName:'FeelingPage', value: this.state.todayFeeling, model: this._renderFeelingPage() }, 
-            { name: 'Blood Pressure', routeName:'BloodPressure', value: bloodPressureValue,  model: this._renderBloodPressure() },
-            { name: 'Nutrition Intake', routeName:'Nutrition', value: nutritionTitle,  model: this._renderNutritionPage() },
-            { name: 'Bath', routeName:'Bath', value: bath,  model: this._renderBathPage() }, 
-            { name: 'Num of Falls', routeName:'Falls', value: this.state.falls.number,  model: this._renderFallsPage() },
-            { name: 'Other Vitals', routeName:'OtherVitals', value: otherVital,  model: this._renderOtherVitalsPage() }
+            { name: 'Mood', routeName:'FeelingPage', value: this.state.todayFeeling, model: this._renderFeelingPage(), updatedTime:this.state.feeling.dateTime }, 
+            { name: 'Blood Pressure', routeName:'BloodPressure', value: bloodPressureValue,  model: this._renderBloodPressure(), updatedTime:this.state.bloodPressure.dateTime },
+            { name: 'Nutrition Intake', routeName:'Nutrition', value: nutritionTitle,  model: this._renderNutritionPage(), updatedTime:this.state.dateTimeNut},
+            { name: 'Bath', routeName:'Bath', value: bath,  model: this._renderBathPage(), updatedTime:this.state.bath.dateTime }, 
+            { name: 'Num of Falls', routeName:'Falls', value: this.state.falls.number,  model: this._renderFallsPage(), updatedTime:this.state.falls.dateTime },
+            { name: 'Other Vitals', routeName:'OtherVitals', value: otherVital,  model: this._renderOtherVitalsPage(), updatedTime:this.state.otherVitals.dateTime }
           ];
 
         return (
             <View style={styles.container}>
                 {/* <Text style={{color: 'orange', fontSize: 16, textAlign:'center', padding:20}}> 
-                    Today is {moment(new Date()).format("MMMM Do, YYYY")}
+                    Today is {moment(new Date()).format("LT")}
                 </Text> */}
               
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
                     {   items.map((item)=> (   
                         <DropListCard
                             title={item.name}
-                            subTitle='140/82'
-                            time='03/30'
+                            subTitle={item.value}
+                            time={item.updatedTime}
                         >
                             {item.model}
                         </DropListCard>

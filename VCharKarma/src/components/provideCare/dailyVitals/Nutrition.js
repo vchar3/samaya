@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { ToggleSlider } from '../../../common/index';
+import moment from 'moment';
 
 const Nutrition = ({self, onPress}) => {
     return (
@@ -8,7 +9,8 @@ const Nutrition = ({self, onPress}) => {
                 <ToggleSlider 
                     textLabel = 'Breakfast'
                     toggleSwitchHandler= {(value) => self.setState({
-                        isBreakfastTaken :value 
+                        isBreakfastTaken :value,
+                        dateTime: moment(new Date()).format("LT")  
                     })}
                     isActive = {self.state.isBreakfastTaken}
                 />
@@ -16,7 +18,8 @@ const Nutrition = ({self, onPress}) => {
                 <ToggleSlider 
                     textLabel = 'Lunch'
                     toggleSwitchHandler= {(value) => self.setState({
-                        isLunchTaken :value 
+                        isLunchTaken :value,
+                        dateTime: moment(new Date()).format("LT")  
                     })}
                     isActive = {self.state.isLunchTaken}
                 />
@@ -24,7 +27,8 @@ const Nutrition = ({self, onPress}) => {
                 <ToggleSlider 
                     textLabel = 'Dinner'
                     toggleSwitchHandler= {(value) => self.setState({
-                        isDinnerTaken :value 
+                        isDinnerTaken :value,
+                        dateTime: moment(new Date()).format("LT")  
                     })}
                     isActive = {self.state.isDinnerTaken}
                 />
@@ -35,13 +39,14 @@ const Nutrition = ({self, onPress}) => {
                 <TextInput 
                     value={self.state.foodToday}
                     style={styles.inputStyle}
-                    onChangeText={ (food) => self.setState({ foodToday: food })}
+                    onChangeText={ (food) => self.setState({ foodToday: food, dateTime: moment(new Date()).format("LT")  })}
                 />
 
                 <ToggleSlider 
                     textLabel = 'Needed Assistance'
                     toggleSwitchHandler= {(value) =>self.setState({
-                        isAssistanceNeeded :value 
+                        isAssistanceNeeded :value,
+                        dateTime: moment(new Date()).format("LT")  
                     })}
                     isActive = {self.state.isAssistanceNeeded}
                 />

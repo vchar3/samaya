@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { ToggleSlider } from '../../../common/index';
+import moment from 'moment';
 
 const OtherVitalsPage = ({self, onPress}) => {
     return (

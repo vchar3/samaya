@@ -18,6 +18,11 @@ class DropListCard extends Component{
         };
     }
 
+    componentWillUpdate(nextProps, nextState) {
+        nextState.subTitle = nextProps.subTitle;
+        nextState.time = nextProps.time;
+    }
+
     toggle(){
 
         let initialValue    = this.state.expanded? this.state.maxHeight + this.state.minHeight : this.state.minHeight,

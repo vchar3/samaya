@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { ToggleSlider } from '../../../common/index';
+import moment from 'moment';
 
 const FallsPage = ({self, onPress}) => {
     return (
@@ -10,7 +11,8 @@ const FallsPage = ({self, onPress}) => {
                 toggleSwitchHandler= {(value) => self.setState({
                     falls: {
                         ...self.state.falls,
-                        isFalls :value
+                        isFalls :value,
+                        dateTime: moment(new Date()).format("LT") 
                     } 
                 })}
                 isActive = {self.state.falls.isFalls}
@@ -26,7 +28,8 @@ const FallsPage = ({self, onPress}) => {
                     onChangeText={ (value) => self.setState({ 
                         falls: {
                             ...self.state.falls,
-                            number :value
+                            number :value,
+                            dateTime: moment(new Date()).format("LT") 
                         }  
                     })}
                 />

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, Text, View, TouchableOpacity } from 'react-native';
-import { Slider } from 'react-native-elements'
+import { Slider } from 'react-native-elements';
+import moment from 'moment';
 
 
 const BloodPressure = ({ self }) => {
@@ -19,7 +20,7 @@ const BloodPressure = ({ self }) => {
                             minimumValue={self.state.bloodPressure.sys.minimumValue}
                             maximumValue={self.state.bloodPressure.sys.maximumValue}
                             step={self.state.bloodPressure.sys.step}
-                            onValueChange={(changeValue) => { self.setState({ sysValue: changeValue})} } />
+                            onValueChange={(changeValue) => { self.setState({ sysValue: changeValue, dateTime: moment(new Date()).format("LT") })} } />
                        
                         <Text style={styles.sliderTitle}>{'SYS'} </Text>
                         
@@ -36,7 +37,7 @@ const BloodPressure = ({ self }) => {
                             minimumValue={self.state.bloodPressure.dia.diaMinimumValue}
                             maximumValue={self.state.bloodPressure.dia.diaMaximumValue}
                             step={self.state.bloodPressure.dia.diaStep}
-                            onValueChange={(changeValue) => {self.setState({diaValue: changeValue})}} />
+                            onValueChange={(changeValue) => {self.setState({diaValue: changeValue, dateTime: moment(new Date()).format("LT") })}} />
                         <Text style={styles.sliderTitle}>{'DIA'} </Text>
                     </View>
 
@@ -51,7 +52,7 @@ const BloodPressure = ({ self }) => {
                             minimumValue={self.state.bloodPressure.bpm.bpmMinimumValue}
                             maximumValue={self.state.bloodPressure.bpm.bpmMaximumValue}
                             step={self.state.bloodPressure.bpm.bpmStep}
-                            onValueChange={(changeValue) => {self.setState({bpmValue: changeValue})}} />
+                            onValueChange={(changeValue) => {self.setState({bpmValue: changeValue, dateTime: moment(new Date()).format("LT") })}} />
                         <Text style={styles.sliderTitle}>{'BPM'} </Text>
                     </View>
                 </View>

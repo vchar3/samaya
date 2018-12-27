@@ -1,6 +1,7 @@
 import React, {Component}  from 'react';
 import {Image, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
-import { CheckBox } from 'react-native-elements'
+import { CheckBox } from 'react-native-elements';
+import moment from 'moment';
 
 
 const Feeling = ({ onPress, text, _buttonPressHandler1, _checkBoxChanges, state }) => {
