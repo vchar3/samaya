@@ -2,6 +2,7 @@ import React, {Component}  from 'react';
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
+import NotificationController from '../common/NotificationController';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards'
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 import GridView from 'react-native-super-grid';
@@ -25,7 +26,9 @@ class HomePage extends Component {
         },
         headerTintColor: "#ffff",
         headerTitleStyle: {
-            fontSize: 24
+            fontSize: 24,
+            alignSelf: 'center',
+            textAlign: 'center',
         },
         headerRight: (<OtherAccountPage />)
         }
@@ -75,6 +78,7 @@ class HomePage extends Component {
           ];
 
         return (
+            <View style={{flex:1}}>
                 <GridView
                     itemDimension={130}
                     items={items}
@@ -91,7 +95,8 @@ class HomePage extends Component {
                     </TouchableOpacity>
                     )}
                 />
-
+                <NotificationController />
+            </View>        
         );
     }
 }

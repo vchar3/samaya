@@ -1,5 +1,7 @@
 import React, {Component}  from 'react';
+import { PushNotificationIOS } from 'react-native';
 import PushNotification from 'react-native-push-notification';
+
 
 class NotificationController extends Component{
 
@@ -7,8 +9,13 @@ class NotificationController extends Component{
         PushNotification.configure({
         
             // (optional) Called when Token is generated (iOS and Android)
-            onRegister: function(token) {
-                console.log( 'TOKEN:', token );
+            onRegister: function(pushToken) {
+                console.log( 'TOKEN For Push Notification :', pushToken );
+                if(pushToken.os == 'android') {
+                    console.log('android token ', pushToken.token)
+                } else if(pushToken.os == 'ios') {
+                    console.log('android token ', pushToken.token)
+                }
             },
         
             // (required) Called when a remote or local notification is opened or received

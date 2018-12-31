@@ -4,13 +4,18 @@ import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
 import { Button, Card, CardSection, Header } from '../common/index';
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
+import DeviceInfo from 'react-native-device-info';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp, listenOrientationChange as loc, removeOrientationListener as rol} from 'react-native-responsive-screen';
 
 class LoginPage extends Component { 
     static navigationOptions = {
         title: '',
         headerStyle: {
             backgroundColor: '#7DBADF',
-            borderBottomColor: '#7DBADF'
+            borderBottomColor: '#7DBADF',
+            borderWidth: 0,
+            elevation: 0,
+            shadowOpacity: 0,
         }
       };
       
@@ -18,6 +23,14 @@ class LoginPage extends Component {
         username: '',
         password: '',
         errors: ''
+    }
+
+    componentDidMount() {
+        loc(this);
+    }
+
+    componentWillUnmount() {
+        rol();
     }
     
     componentDidUpdate(prevProps) {
@@ -32,6 +45,8 @@ class LoginPage extends Component {
     }
 
     _loginPress(event) {
+        //const deviceId = DeviceInfo.getDeviceId();
+        //console.log('deviceID ', deviceId);
         this.props.getUser(this.state.username, this.state.password);
     }
 
@@ -49,10 +64,8 @@ class LoginPage extends Component {
                 <View
                     style={{
                         position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
+                        width: wp('100%'),
+                        height: hp('100%')
                     }} 
                     >
                     <Image
@@ -69,7 +82,7 @@ class LoginPage extends Component {
                 </Text>
 
                 <CardSection>
-                    <View style={{flex: 1,flexDirection: 'row',  borderBottomColor:'#fff', borderBottomWidth:1, padding: 15}}>
+                    <View style={styles.inputContainerStyle}>
                         <View style={{justifyContent: 'center'}}>
                         <Image style={{paddingLeft: 15}} source={require('../../img/UserIcon.png')} />
                         </View>
@@ -86,7 +99,7 @@ class LoginPage extends Component {
                     </View> 
                 </CardSection>
                 <CardSection>
-                    <View style={{flex: 1,flexDirection: 'row', borderBottomColor:'#fff', borderBottomWidth:1, padding: 15 }}>
+                    <View style={styles.inputContainerStyle}>
                         <View style={{justifyContent: 'center'}}>
                         <Image style={{paddingLeft: 15}} source={require('../../img/PasswordIcon.png')} />
                         </View>
@@ -172,25 +185,41 @@ const styles = {
         fontStyle: 'italic'
 
     },
+    inputContainerStyle: {
+        flex: 1,flexDirection: 'row',  
+        borderBottomColor:'#fff', 
+        borderBottomWidth:1,  
+        paddingLeft: 15, 
+        paddingRight:15,
+        paddingTop:0,
+        paddingBottom:0
+    },
     inputStyle: { 
         paddingLeft: 5,
         paddingRight: 15,
         fontSize:24, 
         marginLeft: 15,
         marginRight: 15,
-        width:300,
-        maxWidth: 300,
-        height:30,
-        color: '#fff'
+        width:wp('90%'),
+        maxWidth: wp('90%'),
+        height:hp('10%'),
+        color: '#fff',
     },
     imageStyle: {
-        width: 312, 
-        height: 230,
-        padding:15
+        width: wp('65%'),
+        height: hp('27%'),
+        backgroundColor: 'red', 
+        resizeMode:'cover',
+        marginLeft: 15,
+        marginRight: 15
     },
     imageContainerStyle: {
         justifyContent: 'center', 
-        alignItems: 'center'
+        alignItems: 'center',
+        width: wp('100%'),
+        height: hp('30%'),
+        backgroundColor: 'green'
+        
     },
     errorTextStyle: {
         fontSize:20, 
