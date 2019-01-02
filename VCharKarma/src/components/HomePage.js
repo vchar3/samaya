@@ -1,5 +1,5 @@
 import React, {Component}  from 'react';
-import {ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, AsyncStorage } from 'react-native';
+import {ScrollView, StyleSheet, Text, View, TouchableOpacity, AsyncStorage, Dimensions,  } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
 import NotificationController from '../common/NotificationController';
@@ -12,7 +12,8 @@ import { BottomNavBar, AppHeader } from '../common/index';
 import {BottomTabBar} from '../navigators/AppNavigator';
 
 import OtherAccountPage from './OtherAccountPage';
-
+import Image from 'react-native-remote-svg';
+import SVGImage from '../common/SVGImage';
 
 class HomePage extends Component { 
     static navigationOptions = ({navigation}) =>{
@@ -42,12 +43,12 @@ class HomePage extends Component {
         super();
 
         this.icons = { 
-            'provideCare'    : require('../../img/provideCare.png'),
-            'appointments'  : require('../../img/appointments.png'),
-            'consent'    : require('../../img/consent.png'),
-            'healthRecords'  : require('../../img/healthRecords.png'),
-            'insurance'    : require('../../img/insurance.png'),
-            'legal'  : require('../../img/legal.png')
+            'provideCare'    : require('../../img/svg/homeProvideCare.svg'),
+            'appointments'  : require('../../img/svg/home-appointments.svg'),
+            'consent'    : require('../../img/svg/home-consent.svg'),
+            'healthRecords'  : require('../../img/svg/home-health-records.svg'),
+            'insurance'    : require('../../img/svg/home-insurance.svg'),
+            'legal'  : require('../../img/svg/home-legal.svg')
         };
         AsyncStorage.getItem('userName').then((value) => {
             this.setState({
@@ -89,7 +90,7 @@ class HomePage extends Component {
                         <Image
                             style={styles.buttonImage}
                             source={item.icon}
-                        ></Image>
+                        />
                         <Text style={styles.itemName}>{item.name}</Text>
                     </View>
                     </TouchableOpacity>
@@ -140,6 +141,6 @@ const styles = {
     },
     buttonImage: {
         width: 90,
-        height: 90
+        height: 90,
     }
   };

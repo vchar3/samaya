@@ -1,9 +1,10 @@
 import React, {Component}  from 'react';
-import {ScrollView, StyleSheet, Text, View, TouchableOpacity,Image } from 'react-native';
+import {ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 import GridView from 'react-native-super-grid';
+import Image from 'react-native-remote-svg'
 
 import OtherAccountPage from './OtherAccountPage';
 
@@ -29,12 +30,12 @@ class ProvideCarePage extends Component {
         super();
 
         this.icons = { 
-            'careNotes'    : require('../../img/careNotes.png'),
-            'dailyCare'  : require('../../img/dailyCare.png'),
-            'nutrition'    : require('../../img/nutrition.png'),
-            'shop'  : require('../../img/shop.png'),
-            'vaccinations'    : require('../../img/vaccinations.png'),
-            'medications'  : require('../../img/medications.png')
+            'careNotes'    : require('../../img/svg/provide-care-care-notes.svg'),
+            'dailyCare'  : require('../../img/svg/provide-care-daily-care.svg'),
+            'nutrition'    : require('../../img/svg/provide-care-nutrition.svg'),
+            'shop'  : require('../../img/svg/provide-care-shop.svg'),
+            'vaccinations'    : require('../../img/svg/provide-care-vaccinations.svg'),
+            'medications'  : require('../../img/svg/provide-care-medications.svg')
         };
     }
 
