@@ -1,5 +1,5 @@
 import React, {Component}  from 'react';
-import {ScrollView, StyleSheet, Text, View, TouchableOpacity, AsyncStorage, Dimensions,  } from 'react-native';
+import {ScrollView, StyleSheet, Text, View, TouchableOpacity, AsyncStorage, Dimensions, Image  } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
 import NotificationController from '../common/NotificationController';
@@ -12,7 +12,6 @@ import { BottomNavBar, AppHeader } from '../common/index';
 import {BottomTabBar} from '../navigators/AppNavigator';
 
 import OtherAccountPage from './OtherAccountPage';
-import Image from 'react-native-remote-svg';
 import SVGImage from '../common/SVGImage';
 
 class HomePage extends Component { 
@@ -87,7 +86,7 @@ class HomePage extends Component {
                     renderItem={item => (
                     <TouchableOpacity  onPress={() => this._buttonPressHandler(item.routeName)}>
                     <View style={[styles.itemContainer, { backgroundColor: '#ffff' }]}>
-                        <Image
+                        <SVGImage
                             style={styles.buttonImage}
                             source={item.icon}
                         />
