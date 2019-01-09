@@ -29,7 +29,8 @@ class MedicationsPage extends Component {
       };
 
     state = { 
-        userId: ''
+        userId: '',
+        listOfDates: {}
     }
 
 
@@ -45,7 +46,17 @@ class MedicationsPage extends Component {
 
     }
 
-    _addUserHandler( ){
+    componentDidUpdate(prevProps) {
+        if(this.props.medicationsList && this.props.medicationsList !== prevProps.medicationsList) {
+            console.log(this.props.medicationsList)
+            this.props.medicationsList.map((item) => {
+                    console.log(item)
+                })
+        }
+
+    }
+
+    _addUserHandler(){
         this.props.navigation.navigate('AddMedications');
     }
 
@@ -56,10 +67,32 @@ class MedicationsPage extends Component {
     }
    
     _calendarViewHandler() {
+        console.log(this.props.medicationsList);
         this.setState({
             showModel: false
         })
     }
+
+    renderDates(day) {
+        if(this.props.medicationsList) {
+           // console.log(this.props.medicationsList)
+            // this.props.medicationsList.maps((item) => {
+            //     console.log(item)
+            // })
+        }
+    }
+
+    // renderItem = (item) => {
+    //     return (
+    //       <View>
+    //         <View>
+    //           <View><Text>{moment(item.day).format('HH:mm')}</Text></View>
+    //           <View><Text>{item}</Text></View>
+    //         </View>
+    //       </View>
+    //     );
+    // };
+
     render() {
 
         return (
@@ -83,7 +116,7 @@ class MedicationsPage extends Component {
                 </View>
                 <View >
                     {
-                        this.state.showModel ? <ListView /> : <CalendarView />
+                        this.state.showModel ? <ListView /> : <CalendarView self={this}/>
                     }
                 </View>
                 
@@ -99,7 +132,7 @@ function mapStateToProps(state) {
         medications = state.medicationReducer.medicationData.data
     }
     return {
-      user: state.userReducer
+        medicationsList: medications
     }
   }
   
