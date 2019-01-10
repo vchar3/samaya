@@ -32,6 +32,23 @@ export function addMedication(medicationDetail) {
     }
 };
 
+export function medicationSchedule(userId) {
+    return (dispatch) => {
+        dispatch(sendMedicationData(userId));
+
+        baseURL.get('getMedicationSchedule', {
+            params: {
+                userid: userId
+            }
+        })
+        .then(res => dispatch(sendMedicationSuccess(res)))    
+        .catch(err => {
+            dispatch(sendMedicationFailure(err));
+            console.log("medicationSchedule Failure",err);
+        });
+    }
+}
+
 
 function sendMedicationData(medicationData) {
     return {

@@ -36,7 +36,8 @@ class AddMedicationsPage extends Component {
         storePhone: '',
         prescribedBy: '',
         setDate: null,
-        userId: ''
+        userId: '',
+        timesInDay:''
     }
 
     constructor() {
@@ -61,7 +62,8 @@ class AddMedicationsPage extends Component {
             discardAfterDate: this.state.discardAfter,
             storeName: this.state.pharmacyName,
             prescribedByDoctor: this.state.prescribedBy,
-            userId: this.state.userId
+            userId: this.state.userId,
+            timesInDay: this.state.timesInDay
         };
 
         this.props.addMedicationDetail(medicationDetail);
@@ -70,7 +72,7 @@ class AddMedicationsPage extends Component {
 
     render() {
 
-        let { medicationName, dosage, rxNumber, quantity, prescDate, refillLeft, dateFilled, discardAfter, pharmacyName, storePhone, prescribedBy} = this.state;
+        let { medicationName, timesInDay, dosage, rxNumber, quantity, prescDate, refillLeft, dateFilled, discardAfter, pharmacyName, storePhone, prescribedBy} = this.state;
         return (
             <View style={styles.modalContent}>
                 <View style={styles.tapBar}>
@@ -83,6 +85,11 @@ class AddMedicationsPage extends Component {
                         label='Medication Name'
                         value={medicationName}
                         onChangeText={ (medicationName) => this.setState({ medicationName }) }
+                    />
+                    <TextField
+                        label='How many times in a day'
+                        value={timesInDay}
+                        onChangeText={ (timesInDay) => this.setState({ timesInDay }) }
                     />
                     <TextField
                         label='Dosage (e.g. 10mg, 500 IU)'

@@ -6,7 +6,7 @@ import { Button } from '../common/index';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards';
 
 import OtherAccountPage from './OtherAccountPage';
-import { getMedicationList } from '../../redux/actions/medicationAction';
+import { getMedicationList, medicationSchedule } from '../../redux/actions/medicationAction';
 import { CalendarView } from './medication/CalendarView';
 import { ListView } from './medication/ListView';
 
@@ -41,18 +41,19 @@ class MedicationsPage extends Component {
                 userId: value,
                 showModel: false
             });
-            this.props.getMedication(value);
+            //this.props.getMedication(value);
+            this.props.getSchedule('5bada12711c58100981898c3');
         }) 
 
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.medicationsList && this.props.medicationsList !== prevProps.medicationsList) {
-            console.log(this.props.medicationsList)
-            this.props.medicationsList.map((item) => {
-                    console.log(item)
-                })
-        }
+        // if(this.props.medicationsList && this.props.medicationsList !== prevProps.medicationsList) {
+        //     console.log(this.props.medicationsList)
+        //     this.props.medicationsList.map((item) => {
+        //             console.log(item)
+        //         })
+        // }
 
     }
 
@@ -138,7 +139,8 @@ function mapStateToProps(state) {
   
 function mapDispatchToProps(dispatch) {
 return {
-    getMedication: (userId) => dispatch(getMedicationList(userId))
+    getMedication: (userId) => dispatch(getMedicationList(userId)),
+    getSchedule: (userId) => dispatch(medicationSchedule(userId))
 }
 
 }
