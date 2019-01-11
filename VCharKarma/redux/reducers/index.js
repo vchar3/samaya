@@ -7,6 +7,7 @@ import userReducer from './userReducer';
 import addUserReducer from './addUserReducer';
 import consentsReducer from './consentsReducer';
 import medicationReducer from './medicationReducer';
+import scheduleReducer from './scheduleReducer';
 
 const appReducers = combineReducers({
     nav,
@@ -14,7 +15,8 @@ const appReducers = combineReducers({
     userReducer,
     addUserReducer,
     consentsReducer,
-    medicationReducer
+    medicationReducer,
+    scheduleReducer
 });
 
 const rootReducers = (state, action) => {

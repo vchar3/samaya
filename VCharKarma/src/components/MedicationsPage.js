@@ -6,7 +6,8 @@ import { Button } from '../common/index';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards';
 
 import OtherAccountPage from './OtherAccountPage';
-import { getMedicationList, medicationSchedule } from '../../redux/actions/medicationAction';
+import { getMedicationList } from '../../redux/actions/medicationAction';
+import { medicationSchedule } from '../../redux/actions/scheduleAction';
 import { CalendarView } from './medication/CalendarView';
 import { ListView } from './medication/ListView';
 
@@ -30,7 +31,8 @@ class MedicationsPage extends Component {
 
     state = { 
         userId: '',
-        listOfDates: {}
+        listOfDates: {},
+        listOfSchedule: []
     }
 
 
@@ -54,6 +56,16 @@ class MedicationsPage extends Component {
         //             console.log(item)
         //         })
         // }
+
+        if(this.props.schedulesList && this.props.schedulesList !== prevProps.schedulesList) {
+            console.log(this.props.schedulesList)
+            this.props.schedulesList.map((item) => {
+                    console.log(item)
+                })
+            this.setState({
+                listOfSchedule:this.props.schedulesList 
+            })
+        }
 
     }
 
@@ -117,7 +129,7 @@ class MedicationsPage extends Component {
                 </View>
                 <View >
                     {
-                        this.state.showModel ? <ListView /> : <CalendarView self={this}/>
+                        this.state.showModel ? <ListView self={this}/> : <CalendarView self={this}/>
                     }
                 </View>
                 
@@ -128,12 +140,19 @@ class MedicationsPage extends Component {
 
 function mapStateToProps(state) {
     let medications;
+    let schedules;
 
     if(state.medicationReducer.medicationData) {
         medications = state.medicationReducer.medicationData.data
     }
+
+    if(state.scheduleReducer.scheduleData) {
+        schedules = state.scheduleReducer.scheduleData.data
+    }
+
     return {
-        medicationsList: medications
+        medicationsList: medications,
+        schedulesList : schedules
     }
   }
   
@@ -151,7 +170,8 @@ const styles = {
     container: {     
         flex:1,
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#fff'
     },
     calendarStyle: {
         width: 300, 
