@@ -12,7 +12,7 @@ const ListView = ({ self }) => {
                 {
                     self.state.listOfSchedule.map((item) => {
                         return (
-                            <Card style={styles.cardStyle}>
+                            <Card style={styles.cardStyle} >
                                 <CardTitle style={{fontSize:12}}
                                     title={item.name}
                                     isDark={true}

@@ -77,7 +77,7 @@ class EmailPage extends Component {
                 <TextField
                     label='Email'
                     keyboardType= 'email-address'
-                    autoCapitalize = {false}
+                    autoCapitalize = 'none'
                     value={email}
                     error={this.state.errorEmail}
                     errorColor={this.state.errorColor}

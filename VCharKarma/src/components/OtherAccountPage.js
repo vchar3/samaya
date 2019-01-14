@@ -42,10 +42,10 @@ class OtherAccountPage extends Component {
     }
 
     accountChange(accountId){
-        console.log(accountId);
+        var name = accountId.fullName.split(' ')[0];
         this.setState({
             visibleModal: false,
-            userName: accountId.fullName
+            userName: name
         })
     }
 
@@ -108,7 +108,8 @@ const styles = {
     textStyle : {
         fontSize : 14,
         color: 'white',
-        marginTop: 10
+        marginTop: 10,
+        paddingRight: 10
     }
 
 }

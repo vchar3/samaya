@@ -164,8 +164,7 @@ class CareNotesPage extends Component {
                     style = {styles.textAreaContainer} 
                     enabled 
                     behavior="padding"
-                    resetScrollToCoords={{ x: 0, y: 0 }}
-                    >
+                    resetScrollToCoords={{ x: 0, y: 0 }}>
                
                 <TextInput
                 style={styles.textArea}

@@ -34,10 +34,12 @@ class LoginPage extends Component {
     }
     
     componentDidUpdate(prevProps) {
-        const { authenticationToken } = this.props;
-        if(authenticationToken) {
+        const { authenticationToken, userDetailInfo } = this.props;
+        if(authenticationToken && authenticationToken !== prevProps.authenticationToken) {
             AsyncStorage.setItem('userToken', authenticationToken);
             AsyncStorage.setItem('userName', this.state.username);
+            //AsyncStorage.setItem('name', userDetailInfo.name);
+            AsyncStorage.setItem('userId', userDetailInfo.userid);
             this.props.navigation.navigate('HomeStack',{
                 userName: this.state.username
             }); 
@@ -88,7 +90,8 @@ class LoginPage extends Component {
                         </View>
                         <TextInput 
                             keyboardType= 'email-address'
-                            autoCapitalize = {false}
+                            autoCapitalize = 'none'
+                            autoCorrect = {false}
                             onChangeText={(value) => this.setState({username: value})}
                             value={this.state.userName}
                             placeholder="username"
@@ -147,8 +150,10 @@ class LoginPage extends Component {
 function mapStateToProps(state) {
     let token ;
     let error;
+    let userDetail = {};
     if(state.userReducer.data.data) {
-        token = state.userReducer.data.data.token
+        token = state.userReducer.data.data.token;
+        userDetail = state.userReducer.data.data;
     }
 
     if(state.userReducer.error.response) {
@@ -157,7 +162,8 @@ function mapStateToProps(state) {
 
     return {
       authenticationToken: token,
-      error: error
+      error: error,
+      userDetailInfo: userDetail
     }
   }
   
@@ -207,8 +213,7 @@ const styles = {
     },
     imageStyle: {
         width: wp('65%'),
-        height: hp('27%'),
-        backgroundColor: 'red', 
+        height: hp('27%'), 
         resizeMode:'cover',
         marginLeft: 15,
         marginRight: 15
@@ -217,8 +222,7 @@ const styles = {
         justifyContent: 'center', 
         alignItems: 'center',
         width: wp('100%'),
-        height: hp('30%'),
-        backgroundColor: 'green'
+        height: hp('30%')
         
     },
     errorTextStyle: {

@@ -1,41 +1,26 @@
 import React, {Component}  from 'react';
-import {Text, View, FlatList, TouchableOpacity } from 'react-native';
+import {Text, View, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import {List, ListItem} from 'react-native-elements';
 
 const OtherAccountModel = ({ self }) => {
     return (
         <View style={styles.modalContent}>
             <Text style={styles.headerStyle}> Change Accounts </Text> 
-            { self.state.data ?
-                self.state.data.map((items) => (
-                    <View key={items._id}> 
-                        <TouchableOpacity onPress= { () => self.accountChange(items)}>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.titleStyle}> {items.fullName} </Text>
-                                <Text style={styles.titleStyle}> {items.relationShip} </Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                ))
-                : <Text style={{backgroundColor: 'red'}}> There is no authorized account </Text>
-             }
-
-            {/* { self.state.data  ? 
-                <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0}}>
-                    <FlatList 
-                        data={self.state.data}
-                        renderItem={(item) => (
-                            <ListItem 
-                                title= {item.fullName}
-                                subtitle={item.relationShip}
-                                containerStyle={{ borderBottomWidth: 0}}
-                            />
-                        )}
-                        keyExtractor={item => item._id}
-                    />
-                </List>
-             : <Text style={{width: 20, backgroundColor: 'red'}}>{'There is no authorized account'}</Text>
-            }  */}
+            <ScrollView contentContainerStyle={styles.scrollStyle}> 
+                { self.state.data ?
+                    self.state.data.map((items) => (
+                        <View key={items._id}> 
+                            <TouchableOpacity onPress= { () => self.accountChange(items)}>
+                                <View style={{flexDirection: 'row'}}>
+                                    <Text style={styles.titleStyle}> {items.fullName} </Text>
+                                    <Text style={styles.titleStyle}> {items.relationShip} </Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    ))
+                    : <Text style={{backgroundColor: 'red'}}> There is no authorized account </Text>
+                }
+             </ScrollView>
             <TouchableOpacity onPress= { () => self.setState({ visibleModal: false})}>
                 <View style={styles.button}>
                     <Text style={styles.buttonTextStyle}>{'Close'}</Text>
@@ -78,6 +63,9 @@ const styles = {
         textAlign: 'center',
         padding:15
     },
+    scrollStyle: {
+        height: 300
+    }
 
 };
 

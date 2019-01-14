@@ -103,6 +103,8 @@ const HomeStackNavigation = createMaterialTopTabNavigator(
     {
       initialRouteName: 'Home',
       tabBarPosition: 'bottom',
+      swipeEnabled: false,
+      animationEnabled: true,
       tabBarOptions: {
         activeTintColor: 'orange',
         inactiveTintColor: 'grey',
