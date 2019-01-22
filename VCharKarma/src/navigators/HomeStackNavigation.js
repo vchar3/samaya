@@ -16,6 +16,7 @@ import LegalPage from '../components/LegalPage';
 import CareNotesPage from '../components/CareNotesPage';
 import CareCirclePage from '../components/provideCare/CareCirclePage';
 import SettingPage from '../components/SettingPage';
+import ChatPage from '../components/ChatPage';
 
 import DailyVitalsPage from '../components/provideCare/dailyVitals/DailyVitalsPage';
 import HomeCarePage from '../components/provideCare/HomeCarePage';
@@ -34,7 +35,7 @@ const HomeNavigator = createStackNavigator(
         HealthRecords: {screen: HealthRecordsPage},
         Insurance: {screen: InsurancePage},
         Consent: {screen: ConsentPage},
-        Legal: {screen: LegalPage},
+        Legal: {screen: ChatPage},
         CareNote: {screen: CareNotesPage},
         CareCircle: {screen: CareCirclePage},
 
