@@ -1,44 +1,82 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { ToggleSlider } from '../../../common/index';
 import moment from 'moment';
+import {connect} from 'react-redux';
+import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
 
-const FallsPage = ({self, onPress}) => {
-    return (
-        <View style={styles.container}>
-            <ToggleSlider 
-                textLabel = 'Did you take a bath'
-                toggleSwitchHandler= {(value) => self.setState({
-                    falls: {
-                        ...self.state.falls,
-                        isFalls :value,
-                        dateTime: moment(new Date()).format("LT") 
-                    } 
-                })}
-                isActive = {self.state.falls.isFalls}
-            />
-            { self.state.falls.isFalls  
-            ? <View>
-                <Text>
-                    Number of fell today
-                </Text>
-                <TextInput 
-                    value={self.state.falls.number}
-                    style={styles.inputStyle}
-                    onChangeText={ (value) => self.setState({ 
+class FallsPage extends Component { 
+    static navigationOptions = {
+        title: 'Falls',
+        headerStyle: {
+            backgroundColor: '#7DBADF',
+            borderBottomColor: '#fff'
+        },
+        headerTitleStyle: {
+            fontSize: 24
+        },
+        headerTintColor: "#ffff"
+    };
+
+    state = {
+        falls: {
+            isFalls: false,
+            number: 0,
+            dateTime:''
+        }
+    }
+    
+    render() {
+        return (
+            <View style={styles.container}>
+                <ToggleSlider 
+                    textLabel = 'Did you take a bath'
+                    toggleSwitchHandler= {(value) => this.setState({
                         falls: {
-                            ...self.state.falls,
-                            number :value,
+                            ...this.state.falls,
+                            isFalls :value,
                             dateTime: moment(new Date()).format("LT") 
-                        }  
+                        } 
                     })}
+                    isActive = {this.state.falls.isFalls}
                 />
+                { this.state.falls.isFalls  
+                ? <View>
+                    <Text>
+                        Number of fell today
+                    </Text>
+                    <TextInput 
+                        value={this.state.falls.number}
+                        style={styles.inputStyle}
+                        onChangeText={ (value) => this.setState({ 
+                            falls: {
+                                ...this.state.falls,
+                                number :value,
+                                dateTime: moment(new Date()).format("LT") 
+                            }  
+                        })}
+                    />
+                </View>
+                : null
+                }
             </View>
-            : null
-            }
-        </View>
-    );
+        );
+    }
 }; 
+
+function mapStateToProps(state) {
+    return {
+      user: state.userReducer
+    }
+}
+  
+function mapDispatchToProps(dispatch) {
+    return {
+        getUser: (username, password) => dispatch(getUserLogin(username, password))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (FallsPage);
 
 const styles = {
     container: {
@@ -64,6 +102,3 @@ const styles = {
         marginTop: 10
     },
 }
-
-
-export { FallsPage };

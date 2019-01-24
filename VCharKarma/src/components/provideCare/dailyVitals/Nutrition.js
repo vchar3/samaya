@@ -1,58 +1,96 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { ToggleSlider } from '../../../common/index';
 import moment from 'moment';
+import {connect} from 'react-redux';
+import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
 
-const Nutrition = ({self, onPress}) => {
-    return (
-        <View style={styles.container}>
-                <ToggleSlider 
-                    textLabel = 'Breakfast'
-                    toggleSwitchHandler= {(value) => self.setState({
-                        isBreakfastTaken :value,
-                        dateTime: moment(new Date()).format("LT")  
-                    })}
-                    isActive = {self.state.isBreakfastTaken}
-                />
+class NutritionPage extends Component { 
+    static navigationOptions = {
+        title: 'Nutrition',
+        headerStyle: {
+            backgroundColor: '#7DBADF',
+            borderBottomColor: '#fff'
+        },
+        headerTitleStyle: {
+            fontSize: 24
+        },
+        headerTintColor: "#ffff"
+    };
 
-                <ToggleSlider 
-                    textLabel = 'Lunch'
-                    toggleSwitchHandler= {(value) => self.setState({
-                        isLunchTaken :value,
-                        dateTime: moment(new Date()).format("LT")  
-                    })}
-                    isActive = {self.state.isLunchTaken}
-                />
+    state = {
+        isBreakfastTaken: false,
+        isLunchTaken: false,
+        isDinnerTaken: false,
+        isAssistanceNeeded: false,
+        dateTime: ''
+    }
+    
+    render() {
+        return (
+            <View style={styles.container}>
+                    <ToggleSlider 
+                        textLabel = 'Breakfast'
+                        toggleSwitchHandler= {(value) => this.setState({
+                            isBreakfastTaken :value,
+                            dateTime: moment(new Date()).format("LT")  
+                        })}
+                        isActive = {this.state.isBreakfastTaken}
+                    />
 
-                <ToggleSlider 
-                    textLabel = 'Dinner'
-                    toggleSwitchHandler= {(value) => self.setState({
-                        isDinnerTaken :value,
-                        dateTime: moment(new Date()).format("LT")  
-                    })}
-                    isActive = {self.state.isDinnerTaken}
-                />
+                    <ToggleSlider 
+                        textLabel = 'Lunch'
+                        toggleSwitchHandler= {(value) => this.setState({
+                            isLunchTaken :value,
+                            dateTime: moment(new Date()).format("LT")  
+                        })}
+                        isActive = {this.state.isLunchTaken}
+                    />
 
-                <Text style={{fontSize:24, marginTop: 10}}>
-                    What did you eat?
-                </Text>
-                <TextInput 
-                    value={self.state.foodToday}
-                    style={styles.inputStyle}
-                    onChangeText={ (food) => self.setState({ foodToday: food, dateTime: moment(new Date()).format("LT")  })}
-                />
+                    <ToggleSlider 
+                        textLabel = 'Dinner'
+                        toggleSwitchHandler= {(value) => this.setState({
+                            isDinnerTaken :value,
+                            dateTime: moment(new Date()).format("LT")  
+                        })}
+                        isActive = {this.state.isDinnerTaken}
+                    />
 
-                <ToggleSlider 
-                    textLabel = 'Needed Assistance'
-                    toggleSwitchHandler= {(value) =>self.setState({
-                        isAssistanceNeeded :value,
-                        dateTime: moment(new Date()).format("LT")  
-                    })}
-                    isActive = {self.state.isAssistanceNeeded}
-                />
-        </View>
-    );
-}; 
+                    <Text style={{fontSize:24, marginTop: 10}}>
+                        What did you eat?
+                    </Text>
+                    <TextInput 
+                        value={this.state.foodToday}
+                        style={styles.inputStyle}
+                        onChangeText={ (food) => this.setState({ foodToday: food, dateTime: moment(new Date()).format("LT")  })}
+                    />
+
+                    <ToggleSlider 
+                        textLabel = 'Needed Assistance'
+                        toggleSwitchHandler= {(value) =>this.setState({
+                            isAssistanceNeeded :value,
+                            dateTime: moment(new Date()).format("LT")  
+                        })}
+                        isActive = {this.state.isAssistanceNeeded}
+                    />
+            </View>
+        );
+    }
+};
+
+function mapStateToProps(state) {
+    return {
+      user: state.userReducer
+    }
+}
+  
+function mapDispatchToProps(dispatch) {
+    return {
+        getUser: (username, password) => dispatch(getUserLogin(username, password))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (NutritionPage);
 
 const styles = {
     container: {
@@ -78,6 +116,3 @@ const styles = {
         marginTop: 10
     },
 }
-
-
-export { Nutrition };
