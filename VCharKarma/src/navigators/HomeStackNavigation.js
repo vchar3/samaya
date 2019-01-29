@@ -24,6 +24,14 @@ import MealPlanPage from '../components/provideCare/MealPlanPage';
 import MedicationPage from '../components/provideCare/MedicationPage';
 import AddMedicationsPage from '../components/AddMedicationsPage';
 
+import BathPage from '../components/provideCare/dailyVitals/BathPage';
+import BloodPressurePage from '../components/provideCare/dailyVitals/BloodPressurePage';
+import FallsPage from '../components/provideCare/dailyVitals/FallsPage';
+import FeelingPage from '../components/provideCare/dailyVitals/FeelingPage';
+import NutritionPage from '../components/provideCare/dailyVitals/NutritionPage';
+import OtherVitalsPage from '../components/provideCare/dailyVitals/OtherVitalsPage';
+
+
 
 
 const HomeNavigator = createStackNavigator(
@@ -43,7 +51,15 @@ const HomeNavigator = createStackNavigator(
         HomeCare: {screen: HomeCarePage},
         MealPlan: { screen: MealPlanPage },
         Medication: {screen: MedicationPage},
-        AddMedications: {screen: AddMedicationsPage}
+        AddMedications: {screen: AddMedicationsPage},
+
+        Bath: {screen: BathPage},
+        BloodPressure: {screen: BloodPressurePage},
+        Falls: {screen: FallsPage},
+        Feeling: {screen: FeelingPage},
+        Nutrition: {screen: NutritionPage},
+        OtherVitals: {screen: OtherVitalsPage}
+
         // ProvideCareStack: ProvideCareStackRoute
         
 

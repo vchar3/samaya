@@ -30,6 +30,9 @@ class OtherVitalsPage extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <Text style={styles.timeStyle}> 
+                    Today is {moment(new Date()).format("LT")}
+                </Text> 
                 <View style={{flexDirection: 'row', justifyContent: 'space-around', padding: 20}}>
                     <Text style={{fontSize:18, width: 150}}>
                         Body Temp   
@@ -120,11 +123,17 @@ const styles = {
         alignItems: 'center',
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
-      },
-      inputStyle: { 
+    },
+    inputStyle: { 
         padding: 5,
         fontSize: 18, 
         borderWidth: 1,
         width: 60
     },
+    timeStyle: {
+        color: '#7DBADF', 
+        fontSize: 16, 
+        textAlign:'center', 
+        padding:20
+    }
 }

@@ -29,6 +29,9 @@ class FallsPage extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <Text style={styles.timeStyle}> 
+                    Today is {moment(new Date()).format("LT")}
+                </Text>  
                 <ToggleSlider 
                     textLabel = 'Did you take a bath'
                     toggleSwitchHandler= {(value) => this.setState({
@@ -93,12 +96,18 @@ const styles = {
         alignItems: 'center',
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
-      },
-      inputStyle: { 
+    },
+    inputStyle: { 
         padding: 5,
         fontSize:24, 
         borderWidth: 1,
         marginBottom: 10,
         marginTop: 10
     },
+    timeStyle: {
+        color: '#7DBADF', 
+        fontSize: 16, 
+        textAlign:'center', 
+        padding:20
+    }
 }

@@ -6,18 +6,7 @@ import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/action
 import GridView from 'react-native-super-grid';
 import Modal from 'react-native-modal'; 
 import moment from 'moment';
-
-import {Feeling} from './Feeling';
-import feelingChanges from './FeelingChanges';
-import {BloodPressure} from './BloodPressure';
-import {Nutrition} from './Nutrition';
-import {BathPage} from './BathPage';
-import {FallsPage} from './FallsPage';
-import {OtherVitalsPage} from './OtherVitalsPage';
-
 import OtherAccountPage from '../../OtherAccountPage';
-import DropListCard from '../../../common/DropListCard';
-
 
 class DailyVitalsPage extends Component { 
     static navigationOptions = {
@@ -88,6 +77,10 @@ class DailyVitalsPage extends Component {
 
     }
 
+    _buttonPressHandler(event) {
+        this.props.navigation.navigate(event);
+    }
+
     render() {
         let bloodPressureValue = `Sys`+': '+this.state.sysValue+`\n`+`Dia`+ ': '+ this.state.diaValue+`\n`+`Bpm`+ ': '+ this.state.bpmValue
         console.log(bloodPressureValue);
@@ -102,12 +95,12 @@ class DailyVitalsPage extends Component {
         let otherVital = `Body Temp`+': '+this.state.otherVitals.temp +`\n`+`Resp Rate`+ ': '+ this.state.otherVitals.respiratory +`\n`+`Pluse`+': '+this.state.otherVitals.pulse
 
         let items = [
-            { name: 'Mood', routeName:'FeelingPage', value: this.state.todayFeeling, model: this._renderFeelingPage(), updatedTime:this.state.feeling.dateTime }, 
-            { name: 'Blood Pressure', routeName:'BloodPressure', value: bloodPressureValue,  model: this._renderBloodPressure(), updatedTime:this.state.bloodPressure.dateTime },
-            { name: 'Nutrition Intake', routeName:'Nutrition', value: nutritionTitle,  model: this._renderNutritionPage(), updatedTime:this.state.dateTimeNut},
-            { name: 'Bath', routeName:'Bath', value: bath,  model: this._renderBathPage(), updatedTime:this.state.bath.dateTime }, 
-            { name: 'Num of Falls', routeName:'Falls', value: this.state.falls.number,  model: this._renderFallsPage(), updatedTime:this.state.falls.dateTime },
-            { name: 'Other Vitals', routeName:'OtherVitals', value: otherVital,  model: this._renderOtherVitalsPage(), updatedTime:this.state.otherVitals.dateTime }
+            { name: 'Mood', routeName:'FeelingPage', value: this.state.todayFeeling,  updatedTime:this.state.feeling.dateTime, routeName: 'Feeling' }, 
+            { name: 'Blood Pressure', routeName:'BloodPressure', value: bloodPressureValue,  updatedTime:this.state.bloodPressure.dateTime,  routeName: 'BloodPressure' },
+            { name: 'Nutrition Intake', routeName:'Nutrition', value: nutritionTitle,   updatedTime:this.state.dateTimeNut,  routeName: 'Nutrition'},
+            { name: 'Bath', routeName:'Bath', value: bath,  updatedTime:this.state.bath.dateTime,  routeName: 'Bath' }, 
+            { name: 'Num of Falls', routeName:'Falls', value: this.state.falls.number,   updatedTime:this.state.falls.dateTime,  routeName: 'Falls' },
+            { name: 'Other Vitals', routeName:'OtherVitals', value: otherVital,   updatedTime:this.state.otherVitals.dateTime,  routeName: 'OtherVitals' }
           ];
 
         return (
@@ -117,78 +110,43 @@ class DailyVitalsPage extends Component {
                 </Text> */}
               
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
-                    {   items.map((item)=> (   
-                        <DropListCard
-                            title={item.name}
-                            subTitle={item.value}
-                            time={item.updatedTime}
-                        >
-                            {item.model}
-                        </DropListCard>
-                        ))
+                    {   items.map((item) => 
+                            (   
+                                <View style={styles.containerBox}> 
+                                    <TouchableHighlight 
+                                        onPress={() => this._buttonPressHandler(item.routeName)}
+                                        underlayColor="#f1f1f1">
+                                        <View>
+                                            <View style={styles.titleContainer}>    
+                                                <Text style={styles.title}>{item.name}</Text>
+                                                <View>
+                                                    <Text style={styles.title}>{item.value}</Text> 
+                                                    <Text>{item.updatedTime}</Text> 
+                                                </View>
+                                            </View>      
+                                        </View>  
+                                    </TouchableHighlight>  
+                                </View>
+                            )
+                        )
+                    
                     }
                 </ScrollView> 
             </View>
         );
     }
-
-    _renderFeelingPage=() => (
-        <View> 
-            <Feeling 
-                    text='Save'
-                    state= {this.state}
-                    _checkBoxChanges= {(id, value) => feelingChanges(id, value, this)}
-                />
-        </View>
-    )
-    _renderBloodPressure=() => (
-        <View> 
-            <BloodPressure 
-                self = {this}
-            />
-        </View>
-    )
-    _renderNutritionPage=() => (
-        <View> 
-            <Nutrition 
-                self = {this}                  
-            />
-        </View>
-    )
-    _renderBathPage=() => (
-        <View> 
-            <BathPage 
-                self = {this}                  
-            />
-        </View>
-    )
-    _renderFallsPage=() => (
-        <View> 
-            <FallsPage 
-                self = {this}
-            />
-        </View>
-    )
-    _renderOtherVitalsPage=() => (
-        <View> 
-            <OtherVitalsPage 
-                self = {this}
-            />
-        </View>
-    )
 }
 
 function mapStateToProps(state) {
     return {
       user: state.userReducer
     }
-  }
+}
   
 function mapDispatchToProps(dispatch) {
-return {
-    getUser: (username, password) => dispatch(getUserLogin(username, password))
-}
-
+    return {
+        getUser: (username, password) => dispatch(getUserLogin(username, password))
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (DailyVitalsPage);
@@ -200,5 +158,21 @@ const styles = {
     },
     scrollContainer: {
         margin:10
+    },
+    titleContainer: {
+        flex:1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    title: {
+        padding : 10,
+        color   :'#ffff',
+        fontWeight:'bold',
+        fontSize:20
+    },
+    containerBox: {
+        backgroundColor: '#78B6DD',
+        margin:5,
+        overflow:'hidden'
     }
 };

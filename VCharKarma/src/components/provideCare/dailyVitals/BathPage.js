@@ -30,6 +30,9 @@ class BathPage extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <Text style={styles.timeStyle}> 
+                    Today is {moment(new Date()).format("LT")}
+                </Text>          
                     <ToggleSlider 
                         textLabel = 'Did you take a bath'
                         toggleSwitchHandler= {(value) => this.setState({
@@ -74,7 +77,8 @@ export default connect(mapStateToProps, mapDispatchToProps) (BathPage);
 const styles = {
     container: {
         backgroundColor: 'white',
-        padding: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
     },
@@ -86,5 +90,12 @@ const styles = {
         alignItems: 'center',
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
-      }
+    },
+    timeStyle: {
+        color: '#7DBADF', 
+        fontSize: 16, 
+        textAlign:'center', 
+        padding:20
+    }
+    
 }

@@ -32,14 +32,17 @@ class FeelingPage extends Component {
     render() {
         return (
             <View style={styles.modalContent}> 
-                <View style={{ justifyContent: 'space-between',  marginTop: 30, width: 270 }}>
+                <Text style={styles.timeStyle}> 
+                    Today is {moment(new Date()).format("LT")}
+                </Text>  
+                <View style={{ justifyContent: 'space-between', width: 270 }}>
                     <CheckBox
                         title='Happy'
                         size= {30}
                         uncheckedColor={'white'}
                         textStyle= {{color: 'white', fontSize: 20}}
                         containerStyle= {{backgroundColor:'#7DBADF'}}
-                        checked = {state.feeling.isHappy}
+                        checked = {this.state.feeling.isHappy}
                         onPress={(value)=> feelingChanges('Happy', value, this)}                  
                     />
 
@@ -49,7 +52,7 @@ class FeelingPage extends Component {
                         uncheckedColor={'white'}
                         textStyle= {{color: 'white', fontSize: 20}}
                         containerStyle= {{backgroundColor:'#7DBADF'}}
-                        checked = {state.feeling.isSad}
+                        checked = {this.state.feeling.isSad}
                         onPress={(value)=> feelingChanges('Sad', value, this)}                  
                     />
 
@@ -59,7 +62,7 @@ class FeelingPage extends Component {
                         uncheckedColor={'white'}
                         textStyle= {{color: 'white', fontSize: 20}}
                         containerStyle= {{backgroundColor:'#7DBADF'}}
-                        checked = {state.feeling.isTired}
+                        checked = {this.state.feeling.isTired}
                         onPress={(value)=> feelingChanges('Tired', value, this)}                  
                     />
 
@@ -69,7 +72,7 @@ class FeelingPage extends Component {
                         uncheckedColor={'white'}
                         textStyle= {{color: 'white', fontSize: 20}}
                         containerStyle= {{backgroundColor:'#7DBADF'}}
-                        checked = {state.feeling.isSick}
+                        checked = {this.state.feeling.isSick}
                         onPress={(value)=> feelingChanges('Sick', value, this)}                  
                     />
 
@@ -96,13 +99,12 @@ export default connect(mapStateToProps, mapDispatchToProps) (FeelingPage);
 const styles = {
     modalContent: {
         backgroundColor: 'white',
-        padding: 22,
         justifyContent: 'space-between',
         alignItems: 'center',
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
-      },
-      button: {
+    },
+    button: {
         backgroundColor: 'lightblue',
         width: 200,
         padding: 12,
@@ -111,10 +113,16 @@ const styles = {
         alignItems: 'center',
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
-      },
-      buttonTextStyle: {
+    },
+    buttonTextStyle: {
         fontWeight:'bold', 
         color: 'white', 
         fontSize: 24
-      },
+    },
+    timeStyle: {
+        color: '#7DBADF', 
+        fontSize: 16, 
+        textAlign:'center', 
+        padding:20
+    }
 };
