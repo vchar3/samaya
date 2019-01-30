@@ -135,6 +135,28 @@ const CalendarView = ({self }) => {
 //   }}
   // agenda container style
   style={styles.calendarStyle}
+  theme={{
+    backgroundColor: '#ffffff',
+    calendarBackground: '#ffffff',
+    textSectionTitleColor: '#b6c1cd',
+    selectedDayBackgroundColor: '#00adf5',
+    selectedDayTextColor: '#ffffff',
+    todayTextColor: '#00adf5',
+    dayTextColor: '#2d4150',
+    textDisabledColor: '#d9e1e8',
+    dotColor: '#00adf5',
+    selectedDotColor: '#ffffff',
+    arrowColor: 'orange',
+    monthTextColor: 'black',
+    textMonthFontWeight: 'bold',
+    textDayFontSize: 16,
+    textMonthFontSize: 16,
+    textDayHeaderFontSize: 16,
+    agendaDayTextColor: 'yellow',
+    agendaDayNumColor: 'green',
+    agendaTodayColor: 'red',
+    agendaKnobColor: 'black'
+  }}
 />
 
               <View style={styles.itemsStyle}> 

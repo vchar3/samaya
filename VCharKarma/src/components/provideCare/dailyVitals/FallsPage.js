@@ -4,6 +4,7 @@ import { ToggleSlider } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
+import { BarChart, Grid } from 'react-native-svg-charts'
 
 class FallsPage extends Component { 
     static navigationOptions = {
@@ -27,6 +28,8 @@ class FallsPage extends Component {
     }
     
     render() {
+        const fill = 'rgb(134, 65, 244)'
+        const data   = [ 50, 10, 40, 95, 4, 24 ]
         return (
             <View style={styles.container}>
                 <Text style={styles.timeStyle}> 
@@ -62,6 +65,17 @@ class FallsPage extends Component {
                 </View>
                 : null
                 }
+
+
+            <BarChart
+                style={{ height: 200 }}
+                data={ data }
+                svg={{ fill }}
+                contentInset={{ top: 30, bottom: 30 }}
+            >
+                <Grid/>
+            </BarChart>
+
             </View>
         );
     }
