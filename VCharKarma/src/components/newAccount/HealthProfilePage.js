@@ -5,6 +5,7 @@ import { TextField } from 'react-native-material-textfield';
 import { Button, CardSection} from '../../common/index';
 import {randomColor} from 'randomcolor';
 import {connect} from 'react-redux';
+import { CheckBox } from 'react-native-elements'
 import { createNewUser } from '../../../redux/actions/addUserAction';
 
 class HealthProfilePage extends Component { 
@@ -16,7 +17,9 @@ class HealthProfilePage extends Component {
         bloodType:'',
         allergies:'',
         height:'',
-        weight:''
+        weight:'',
+        buttonColor: '#32CD32',
+        checked: false
     }
 
     _buttonPressHandler(event) {
@@ -81,13 +84,23 @@ class HealthProfilePage extends Component {
                         weight:weight,
                       }) }
                 />
-  
+
+                </View>
+                <View style={{alignItems: 'flex-start'}}>
+                    <CheckBox 
+                    containerStyle={{width: 300, backgroundColor: '#ffff', borderRadius: 0}}
+                    textStyle={{color: 'blue'}}
+                    title='Term and Condition'
+                    checked={this.state.checked}
+                    size= {34}
+                    onPress={() => this.setState({checked: !this.state.checked})}
+                    />
                 </View>
                 <CardSection>
                     <Button 
-                        style={{backgroundColor:'#32CD32'}} 
+                        style={{backgroundColor:this.state.buttonColor}} 
                         onPress={this._buttonPressHandler.bind(this)}>
-                            Contiune
+                            <Text style={{color: '#fff'}}>Contiune</Text>
                     </Button>
                 </CardSection>
             </View>
