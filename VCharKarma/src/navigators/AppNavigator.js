@@ -13,6 +13,7 @@ import EmailPage from '../components/newAccount/EmailPage';
 import HealthProfilePage from '../components/newAccount/HealthProfilePage';
 import ProfilePage from '../components/newAccount/ProfilePage';
 import SuccessPage from '../components/newAccount/SuccessPage';
+import PDFViwer from '../common/PDFViwer';
 
 
 const middleware = createReactNavigationReduxMiddleware(
@@ -27,6 +28,7 @@ const AuthNavigator = createStackNavigator(
         Profile: {screen: ProfilePage},
         HealthProfile: {screen: HealthProfilePage},
         Success: {screen: SuccessPage},
+        PDFViwer: {screen: PDFViwer}
 
     }
 );

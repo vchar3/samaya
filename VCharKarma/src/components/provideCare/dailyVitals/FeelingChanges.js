@@ -1,37 +1,37 @@
 
 export default function feelingChanges(id, value, self) {
-    if(id === 'Happy') {
-        if(self.state.feeling.isHappy) {
+    if(id === 'Good') {
+        if(self.state.feeling.isGood) {
             self.setState({
                 feeling: {
                     ...self.state.feeling,
-                    isHappy: false
+                    isGood: false
                 }
             })
         } else {
             self.setState({
                 feeling: {
-                    isHappy: true,
-                    isSad: false,
+                    isGood: true,
+                    isFatigued: false,
                     isTired: false,
                     isSick: false
                 },
                 todayFeeling: id
             })
         }
-    } else if(id === 'Sad') {
-        if(self.state.feeling.isSad) {
+    } else if(id === 'Fatigued') {
+        if(self.state.feeling.isFatigued) {
             self.setState({
                 feeling: {
                     ...self.state.feeling,
-                    isSad: false
+                    isFatigued: false
                 }
             })
         } else {
             self.setState({
                 feeling: {
-                    isSad: true,
-                    isHappy: false,
+                    isFatigued: true,
+                    isGood: false,
                     isTired: false,
                     isSick: false
                 },
@@ -50,8 +50,8 @@ export default function feelingChanges(id, value, self) {
             self.setState({
                 feeling: {
                     isTired: true,
-                    isHappy: false,
-                    isSad: false,
+                    isGood: false,
+                    isFatigued: false,
                     isSick: false
                 },
                 todayFeeling: id
@@ -69,8 +69,8 @@ export default function feelingChanges(id, value, self) {
             self.setState({
                 feeling: {
                     isSick: true,
-                    isHappy: false,
-                    isSad: false,
+                    isGood: false,
+                    isFatigued: false,
                     isTired: false
                 },
                 todayFeeling: id

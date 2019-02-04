@@ -26,15 +26,20 @@ class SettingPage extends Component {
 
     }
 
-    _buttonPressHandler(event) {
-        AsyncStorage.clear();
-        this.props.getLogout();
-        this.props.navigation.navigate('AuthLoading');
+    _buttonPressHandler(routeName) {
+        if(routeName === 'Logout') {
+            AsyncStorage.clear();
+            this.props.getLogout();
+            this.props.navigation.navigate('AuthLoading');
+        } else {
+            this.props.navigation.navigate(routeName);
+        }
     }
    
     render() {
         const items = [
-            { title: 'Logout', icon: 'ios-exit', routeName:'Logout' }
+            { title: 'Logout', icon: 'ios-exit', routeName:'Logout' },
+            { title: 'Privacy Policy and Terms and Condition', icon: 'ios-exit', routeName:'TermAndConditionPDF' }
           ];
         return (
             <SafeAreaView style={styles.container}>

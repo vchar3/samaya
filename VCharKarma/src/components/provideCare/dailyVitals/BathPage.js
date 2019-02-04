@@ -5,6 +5,7 @@ import moment from 'moment';
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
 import { LineChart } from 'react-native-chart-kit';
+import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
 
 class BathPage extends Component { 
@@ -21,6 +22,7 @@ class BathPage extends Component {
     };
 
     state = {
+        noteText: '', 
         bath: {
             isBathTaken: false,
             isAssistanceNeeded: false,
@@ -34,28 +36,33 @@ class BathPage extends Component {
                 <Text style={styles.timeStyle}> 
                     Today is {moment(new Date()).format("LT")}
                 </Text>          
-                    <ToggleSlider 
-                        textLabel = 'Did you take a bath'
-                        toggleSwitchHandler= {(value) => this.setState({
-                            bath: {
-                                ...this.state.bath,
-                                isBathTaken :value
-                            } 
-                        })}
-                        isActive = {this.state.bath.isBathTaken}
-                    />
+                <ToggleSlider 
+                    textLabel = 'Did you take a bath'
+                    toggleSwitchHandler= {(value) => this.setState({
+                        bath: {
+                            ...this.state.bath,
+                            isBathTaken :value
+                        } 
+                    })}
+                    isActive = {this.state.bath.isBathTaken}
+                />
 
-                    <ToggleSlider 
-                        textLabel = 'Needed Assistance'
-                        toggleSwitchHandler= {(value) =>this.setState({
-                            bath: {
-                                ...this.state.bath,
-                                isAssistanceNeeded :value,
-                                dateTime: moment(new Date()).format("LT") 
-                            }
-                        })}
-                        isActive = {this.state.bath.isAssistanceNeeded}
-                    />
+                <ToggleSlider 
+                    textLabel = 'Needed Assistance'
+                    toggleSwitchHandler= {(value) =>this.setState({
+                        bath: {
+                            ...this.state.bath,
+                            isAssistanceNeeded :value,
+                            dateTime: moment(new Date()).format("LT") 
+                        }
+                    })}
+                    isActive = {this.state.bath.isAssistanceNeeded}
+                />
+
+                <AutoGrowTextArea 
+                    self= {this}
+                />
+                    
                     <View>
                     <Text>
                         Bezier Line Chart
@@ -107,11 +114,13 @@ export default connect(mapStateToProps, mapDispatchToProps) (BathPage);
 
 const styles = {
     container: {
+        flex: 1,
         backgroundColor: 'white',
         paddingLeft: 20,
         paddingRight: 20,
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+
     },
     button: {
         backgroundColor: 'lightblue',

@@ -4,6 +4,7 @@ import { Slider } from 'react-native-elements';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
+import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
 class BloodPressurePage extends Component { 
     static navigationOptions = {
@@ -18,7 +19,8 @@ class BloodPressurePage extends Component {
         headerTintColor: "#ffff"
       };
 
-    state = { 
+    state = {
+        noteText: '', 
         sysValue: 100,
         diaValue: 80,
         bpmValue:74,
@@ -48,55 +50,58 @@ class BloodPressurePage extends Component {
                 <Text style={styles.timeStyle}> 
                     Today is {moment(new Date()).format("LT")}
                 </Text>   
-                <View style={styles.sliderContainer}>
-                    <View style={styles.sliderContain}>
-                        <Text style={styles.sliderChangeValue}>{this.state.sysValue}</Text>
-                    
-                        <Slider
-                            style={styles.sliderStyle}
-                            thumbTintColor={'#7DBADF'}
-                            minimumTrackTintColor={'#7DBADF'}
-                            maximumTrackTintColor={'#d7e8ef'}
-                            value={this.state.sysValue}
-                            minimumValue={this.state.bloodPressure.sys.minimumValue}
-                            maximumValue={this.state.bloodPressure.sys.maximumValue}
-                            step={this.state.bloodPressure.sys.step}
-                            onValueChange={(changeValue) => { this.setState({ sysValue: changeValue, dateTime: moment(new Date()).format("LT") })} } />
-                    
-                        <Text style={styles.sliderTitle}>{'SYS'} </Text>
-                        
-                    </View>
 
-                    <View style={styles.sliderContain}>
-                        <Text style={styles.sliderChangeValue}>{this.state.diaValue}</Text>                    
-                        <Slider
-                            style={styles.sliderStyle}
-                            thumbTintColor={'#7DBADF'}
-                            minimumTrackTintColor={'#7DBADF'}
-                            maximumTrackTintColor={'#d7e8ef'}
-                            value={this.state.diaValue}
-                            minimumValue={this.state.bloodPressure.dia.diaMinimumValue}
-                            maximumValue={this.state.bloodPressure.dia.diaMaximumValue}
-                            step={this.state.bloodPressure.dia.diaStep}
-                            onValueChange={(changeValue) => {this.setState({diaValue: changeValue, dateTime: moment(new Date()).format("LT") })}} />
-                        <Text style={styles.sliderTitle}>{'DIA'} </Text>
-                    </View>
-
-                    <View style={styles.sliderContain}>
-                    <Text style={styles.sliderChangeValue}>{this.state.bpmValue}</Text>                    
-                        <Slider
-                            style={styles.sliderStyle}
-                            thumbTintColor={'#7DBADF'}
-                            minimumTrackTintColor={'#7DBADF'}
-                            maximumTrackTintColor={'#d7e8ef'}
-                            value={this.state.bpmValue}
-                            minimumValue={this.state.bloodPressure.bpm.bpmMinimumValue}
-                            maximumValue={this.state.bloodPressure.bpm.bpmMaximumValue}
-                            step={this.state.bloodPressure.bpm.bpmStep}
-                            onValueChange={(changeValue) => {this.setState({bpmValue: changeValue, dateTime: moment(new Date()).format("LT") })}} />
-                        <Text style={styles.sliderTitle}>{'BPM'} </Text>
-                    </View>
+                <View style={styles.sliderContain}>
+                    <Text style={styles.sliderChangeValue}>{this.state.sysValue}</Text>
+                    <Slider
+                        style={styles.sliderStyle}
+                        thumbTintColor={'#7DBADF'}
+                        minimumTrackTintColor={'#7DBADF'}
+                        maximumTrackTintColor={'#d7e8ef'}
+                        value={this.state.sysValue}
+                        minimumValue={this.state.bloodPressure.sys.minimumValue}
+                        maximumValue={this.state.bloodPressure.sys.maximumValue}
+                        step={this.state.bloodPressure.sys.step}
+                        onValueChange={(changeValue) => { this.setState({ sysValue: changeValue, dateTime: moment(new Date()).format("LT") })} } />
+                
+                    <Text style={styles.sliderTitle}>{'SYS'} </Text>
+                    
                 </View>
+
+                <View style={styles.sliderContain}>
+                    <Text style={styles.sliderChangeValue}>{this.state.diaValue}</Text>                    
+                    <Slider
+                        style={styles.sliderStyle}
+                        thumbTintColor={'#7DBADF'}
+                        minimumTrackTintColor={'#7DBADF'}
+                        maximumTrackTintColor={'#d7e8ef'}
+                        value={this.state.diaValue}
+                        minimumValue={this.state.bloodPressure.dia.diaMinimumValue}
+                        maximumValue={this.state.bloodPressure.dia.diaMaximumValue}
+                        step={this.state.bloodPressure.dia.diaStep}
+                        onValueChange={(changeValue) => {this.setState({diaValue: changeValue, dateTime: moment(new Date()).format("LT") })}} />
+                    <Text style={styles.sliderTitle}>{'DIA'} </Text>
+                </View>
+
+                <View style={styles.sliderContain}>
+                    <Text style={styles.sliderChangeValue}>{this.state.bpmValue}</Text>                    
+                    <Slider
+                        style={styles.sliderStyle}
+                        thumbTintColor={'#7DBADF'}
+                        minimumTrackTintColor={'#7DBADF'}
+                        maximumTrackTintColor={'#d7e8ef'}
+                        value={this.state.bpmValue}
+                        minimumValue={this.state.bloodPressure.bpm.bpmMinimumValue}
+                        maximumValue={this.state.bloodPressure.bpm.bpmMaximumValue}
+                        step={this.state.bloodPressure.bpm.bpmStep}
+                        onValueChange={(changeValue) => {this.setState({bpmValue: changeValue, dateTime: moment(new Date()).format("LT") })}} />
+                    <Text style={styles.sliderTitle}>{'BPM'} </Text>
+                </View>
+
+                <AutoGrowTextArea 
+                    self= {this}
+                />
+
             </View>
         
         );
@@ -120,12 +125,10 @@ export default connect(mapStateToProps, mapDispatchToProps) (BloodPressurePage);
 
 const styles = {
     modalContent: {
+        flex: 1,
         backgroundColor: 'white',
-        paddingTop: 30,
-        paddingBottom: 30,
         alignItems: 'center',
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
+        justifyContent: 'flex-start',
     },
     button: {
         backgroundColor: 'lightblue',
@@ -142,14 +145,8 @@ const styles = {
         color: 'white', 
         fontSize: 24
     },
-    sliderContainer: {     
-        alignItems: 'stretch',
-        justifyContent: 'center',
-        textAlign: 'center',
-    },
     sliderContain: {
         textAlign: 'center',
-        paddingTop: 20,
     },
     sliderStyle: {
         width: 270

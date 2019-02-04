@@ -4,6 +4,7 @@ import { ToggleSlider } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
+import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
 class OtherVitalsPage extends Component { 
     static navigationOptions = {
@@ -19,6 +20,7 @@ class OtherVitalsPage extends Component {
     };
 
     state = {
+        noteText: '', 
         otherVitals: {
             temp: 0,
             respiratory: 0,
@@ -52,7 +54,7 @@ class OtherVitalsPage extends Component {
                     </Text>
                 </View>
 
-                            <View style={{flexDirection: 'row', justifyContent: 'space-around', padding: 20}}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-around', padding: 20}}>
                     <Text style={{ fontSize:18, width: 150}}>
                         Respiratory Rate
                     </Text>
@@ -71,7 +73,7 @@ class OtherVitalsPage extends Component {
                     </Text>
                 </View>
 
-                            <View style={{flexDirection: 'row', justifyContent: 'space-around', padding: 20}}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-around', padding: 20}}>
                     <Text style={{fontSize:18, width: 150}}>
                         Pulse Oxygen
                     </Text>
@@ -89,6 +91,9 @@ class OtherVitalsPage extends Component {
                     {this.state.otherVitals.pulse}
                     </Text>
                 </View>
+                <AutoGrowTextArea 
+                    self= {this}
+                />
             </View>
         );
     }
@@ -110,10 +115,12 @@ export default connect(mapStateToProps, mapDispatchToProps) (OtherVitalsPage);
 
 const styles = {
     container: {
+        flex: 1,
         backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
+        paddingLeft: 20,
+        paddingRight: 20,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
     },
     button: {
         backgroundColor: 'lightblue',

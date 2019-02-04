@@ -4,11 +4,12 @@ import { ToggleSlider } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
-import { BarChart, Grid } from 'react-native-svg-charts'
+import { BarChart, Grid } from 'react-native-svg-charts';
+import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
 class FallsPage extends Component { 
     static navigationOptions = {
-        title: 'Falls',
+        title: 'Walks & Falls',
         headerStyle: {
             backgroundColor: '#7DBADF',
             borderBottomColor: '#fff'
@@ -20,6 +21,7 @@ class FallsPage extends Component {
     };
 
     state = {
+        noteText: '', 
         falls: {
             isFalls: false,
             number: 0,
@@ -36,7 +38,7 @@ class FallsPage extends Component {
                     Today is {moment(new Date()).format("LT")}
                 </Text>  
                 <ToggleSlider 
-                    textLabel = 'Did you take a bath'
+                    textLabel = 'Did you take walk today?'
                     toggleSwitchHandler= {(value) => this.setState({
                         falls: {
                             ...this.state.falls,
@@ -66,15 +68,17 @@ class FallsPage extends Component {
                 : null
                 }
 
-
-            <BarChart
-                style={{ height: 200 }}
-                data={ data }
-                svg={{ fill }}
-                contentInset={{ top: 30, bottom: 30 }}
-            >
-                <Grid/>
-            </BarChart>
+                <AutoGrowTextArea 
+                    self= {this}
+                />
+                <BarChart
+                    style={{ height: 200 }}
+                    data={ data }
+                    svg={{ fill }}
+                    contentInset={{ top: 30, bottom: 30 }}
+                >
+                    <Grid/>
+                </BarChart>
 
             </View>
         );
@@ -97,10 +101,13 @@ export default connect(mapStateToProps, mapDispatchToProps) (FallsPage);
 
 const styles = {
     container: {
+        flex: 1,
         backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
+        paddingLeft: 20,
+        paddingRight: 20,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+
     },
     button: {
         backgroundColor: 'lightblue',

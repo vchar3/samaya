@@ -156,12 +156,12 @@ export default class ChatPage extends Component {
                 }}/>
             <View style={styles.footer}>
                 <View style={styles.inputContainer}>
-                <TextInput style={styles.inputs}
-                    multiline={true}
-                    numberOfLines={4}
-                    placeholder="Write a message..."
-                    underlineColorAndroid='transparent'
-                    onChangeText={(value) => this.setState({userTypedText: value})}/>
+                    <TextInput style={styles.inputs}
+                        multiline={true}
+                        numberOfLines={4}
+                        placeholder="Write a message..."
+                        underlineColorAndroid='transparent'
+                        onChangeText={(value) => this.setState({userTypedText: value})}/>
                 </View>
 
                 <TouchableOpacity style={styles.btnSend} onPress={this._sendHandler.bind(this)}>

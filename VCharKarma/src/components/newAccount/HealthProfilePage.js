@@ -43,6 +43,11 @@ class HealthProfilePage extends Component {
             })
         }
     }
+
+    pdfClicked() {
+        console.log('term and condition');
+        this.props.navigation.navigate('PDFViwer');
+    }
    
     render() {
         const { navigation } = this.props;
@@ -86,15 +91,20 @@ class HealthProfilePage extends Component {
                 />
 
                 </View>
-                <View style={{alignItems: 'flex-start'}}>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-start', width: 300}}>
                     <CheckBox 
-                    containerStyle={{width: 300, backgroundColor: '#ffff', borderRadius: 0}}
-                    textStyle={{color: 'blue'}}
-                    title='Term and Condition'
+                    
+                    containerStyle={{backgroundColor: '#ffff', borderRadius: 0, borderWidth: 0, padding: 0}}
                     checked={this.state.checked}
-                    size= {34}
+                    size= {30}
                     onPress={() => this.setState({checked: !this.state.checked})}
                     />
+                    <View >
+                       <Text style={{fontSize: 20}}>I have read and agree to the </Text> 
+                       <TouchableOpacity onPress={() => this.pdfClicked()}>
+                       <Text style={{fontSize: 20, color: 'blue'}}>"Term and Condition" </Text>
+                    </TouchableOpacity>
+                    </View>
                 </View>
                 <CardSection>
                     <Button 
@@ -110,7 +120,6 @@ class HealthProfilePage extends Component {
 
 function mapStateToProps(state) {
     let responseMessage ;
-    console.log("state", state.addUserReducer.error.response)
     if(state.addUserReducer.data.data) {
         responseMessage = state.addUserReducer.data.data.successMessage
     }
@@ -126,7 +135,7 @@ function mapStateToProps(state) {
   
 function mapDispatchToProps(dispatch) {
     return {
-        newUserDetail: (accountDetail) => dispatch(createNewUser(accountDetail))
+        newUserDetail: (accountDetail) => dispatch(createNewUser(accountDetail))       
     }
 }
 

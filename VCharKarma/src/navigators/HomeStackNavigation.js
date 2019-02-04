@@ -17,6 +17,7 @@ import CareNotesPage from '../components/CareNotesPage';
 import CareCirclePage from '../components/provideCare/CareCirclePage';
 import SettingPage from '../components/SettingPage';
 import ChatPage from '../components/ChatPage';
+import PDFViwer from '../common/PDFViwer';
 
 import DailyVitalsPage from '../components/provideCare/dailyVitals/DailyVitalsPage';
 import HomeCarePage from '../components/provideCare/HomeCarePage';
@@ -68,7 +69,8 @@ const HomeNavigator = createStackNavigator(
 
 const SettingNavigator = createStackNavigator(
   {
-    SettingPage: { screen: SettingPage}
+    SettingPage: { screen: SettingPage},
+    TermAndConditionPDF: {screen: PDFViwer},
   }
 );
 

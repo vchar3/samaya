@@ -4,6 +4,7 @@ import { ToggleSlider } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
+import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
 class NutritionPage extends Component { 
     static navigationOptions = {
@@ -19,6 +20,7 @@ class NutritionPage extends Component {
     };
 
     state = {
+        noteText: '', 
         isBreakfastTaken: false,
         isLunchTaken: false,
         isDinnerTaken: false,
@@ -76,6 +78,9 @@ class NutritionPage extends Component {
                     })}
                     isActive = {this.state.isAssistanceNeeded}
                 />
+                <AutoGrowTextArea 
+                    self= {this}
+                />
             </View>
         );
     }
@@ -97,10 +102,13 @@ export default connect(mapStateToProps, mapDispatchToProps) (NutritionPage);
 
 const styles = {
     container: {
+        flex: 1,
         backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
+        paddingLeft: 20,
+        paddingRight: 20,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+
     },
     button: {
         backgroundColor: 'lightblue',
@@ -116,7 +124,8 @@ const styles = {
         fontSize:24, 
         borderWidth: 1,
         marginBottom: 10,
-        marginTop: 10
+        marginTop: 10,
+        width: 270
     },
     timeStyle: {
         color: '#7DBADF', 
