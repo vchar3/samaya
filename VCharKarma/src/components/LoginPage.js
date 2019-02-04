@@ -54,7 +54,7 @@ class LoginPage extends Component {
 
     _creatAccountPress(event) {
         console.log('Creat Account Press', this.state);
-        this.props.navigation.navigate('HealthProfile');
+        this.props.navigation.navigate('Email');
         
     }
    
