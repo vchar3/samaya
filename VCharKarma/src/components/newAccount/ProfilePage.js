@@ -3,6 +3,8 @@ import {ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-nativ
 import { NavigationActions } from 'react-navigation';
 import { TextField } from 'react-native-material-textfield';
 import { Button, CardSection} from '../../common/index';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 
 
@@ -12,6 +14,7 @@ class ProfilePage extends Component {
       };
 
     state = { 
+        isDateTimePickerVisible: false,
         firstName: '',
         lastName:'',
         dateOfBirth:'',
@@ -19,6 +22,19 @@ class ProfilePage extends Component {
         phone:'',
         homePhone:'',
     }
+
+    _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+ 
+    _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+   
+    _handleDatePicked = (date) => {
+      console.log('A date has been picked: ', date);
+      let dateToString = date.toString().split(' ');
+      let value = dateToString[1] + ' ' + dateToString[2] + ' ' + dateToString[3]
+
+      this.setState({ dateOfBirth: value});
+      this._hideDateTimePicker();
+    };
 
     _buttonPressHandler(event) {
         console.log('Home Pressed!');
@@ -40,6 +56,10 @@ class ProfilePage extends Component {
    
     render() {
         let { firstName, lastName, dateOfBirth, gender, phone, homePhone} = this.state;
+        var radio_props = [
+            {label: 'Male', value: 'M' },
+            {label: 'Female', value: 'F' }
+          ];
         return (
             <View style={styles.container}>
                 {/* <Text> {this.props.navigation.getParam('userName')}</Text> */}
@@ -64,18 +84,29 @@ class ProfilePage extends Component {
                 <TextField
                     label='Date of Birth'
                     value={dateOfBirth}
-                    onChangeText={ (dateOfBirth) => this.setState({ 
-                        dateOfBirth:dateOfBirth,
-                      }) }
+                    onChangeText={ (dateOfBirth) => this.setState({ dateOfBirth: dateOfBirth})}
+                    onFocus={() => this.setState({ isDateTimePickerVisible: true })}
                 />
                 
-                <TextField
-                    label='Gender'
-                    value={gender}
-                    onChangeText={ (gender) => this.setState({ 
-                        gender:gender,
-                      }) }
+                <DateTimePicker
+                    isVisible={this.state.isDateTimePickerVisible}
+                    onConfirm={this._handleDatePicked}
+                    onCancel={this._hideDateTimePicker}
+                    titleIOS={'Date of Birth'}
+                    mode={'date'}
                 />
+                
+                <View style={{width: 340, alignItems: 'center', marginTop: 10}}>
+                    <RadioForm
+                        radio_props={radio_props}
+                        initial={0}
+                        onPress={(value) => {this.setState({gender:value})}}
+                        formHorizontal={true}
+                        labelStyle={{fontSize: 20, marginRight: 20, color: '#9b9b9b'}}
+                        buttonWrapStyle={{marginLeft: 50}}
+
+                    />
+                </View>
 
                  <TextField
                     label='Mobile Phone'
@@ -115,7 +146,7 @@ const styles = {
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
 
       }
   };
