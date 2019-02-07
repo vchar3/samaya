@@ -10,7 +10,18 @@ import { createNewUser } from '../../../redux/actions/addUserAction';
 
 class HealthProfilePage extends Component { 
     static navigationOptions = {
-        title: 'Create New Account',
+        title: 'Health Profile',
+        headerStyle: {
+            backgroundColor: '#78B6DD',
+            borderBottomColor: '#fff',
+            
+        },
+        headerTintColor: "#ffff",
+        headerTitleStyle: {
+            fontSize: 24,
+            alignSelf: 'center',
+            textAlign: 'center',
+        },
       };
 
     state = { 
@@ -23,17 +34,23 @@ class HealthProfilePage extends Component {
     }
 
     _buttonPressHandler(event) {
-        let color = randomColor();
-        let healthDetail= {
-            bloodType:this.state.bloodType,
-            allergies:this.state.allergies,
-            height:this.state.height,
-            weight:this.state.weight,
-            backgroundColor: color         
-        };
+        if(this.state.checked) {
+            let color = randomColor();
+            let healthDetail= {
+                bloodType:this.state.bloodType,
+                allergies:this.state.allergies,
+                height:this.state.height,
+                weight:this.state.weight,
+                backgroundColor: color         
+            };
 
-        let accountInfo = {...this.props.navigation.getParam('accountDetail'), ...healthDetail };
-        this.props.newUserDetail(accountInfo);
+            let accountInfo = {...this.props.navigation.getParam('accountDetail'), ...healthDetail };
+            this.props.newUserDetail(accountInfo);
+        } else {
+            this.setState({
+                error: 'Term and Condition is not selected.'
+            })
+        }
     }
 
     componentDidUpdate() {
@@ -55,12 +72,19 @@ class HealthProfilePage extends Component {
 
         return (
             <View style={styles.container}>
-                <Text> {this.props.navigation.getParam('userName')}</Text>
-                <Text> {this.state.error}</Text>
+                {/* <Text> {this.props.navigation.getParam('userName')}</Text> */}
+                { this.state.error ?
+                <Text style={{marginTop: 20, color: 'red'}}> {this.state.error}</Text> 
+                :
+                null
+                }
                 <View style={{backgroundColor:'white', width: 300,}}>
                 <TextField
                     label='Blood Type'
                     value={bloodType}
+                    textColor={'#78B6DD'}
+                    baseColor={'#78B6DD'}
+                    tintColor={'#78B6DD'}
                     onChangeText={ (bloodType) => this.setState({ 
                         bloodType:bloodType,
                       }) }
@@ -69,6 +93,9 @@ class HealthProfilePage extends Component {
                 <TextField
                     label='Allergies'
                     value={allergies}
+                    textColor={'#78B6DD'}
+                    baseColor={'#78B6DD'}
+                    tintColor={'#78B6DD'}
                     onChangeText={ (allergies) => this.setState({ 
                         allergies:allergies,
                       }) }
@@ -77,6 +104,9 @@ class HealthProfilePage extends Component {
                 <TextField
                     label='Height'
                     value={height}
+                    textColor={'#78B6DD'}
+                    baseColor={'#78B6DD'}
+                    tintColor={'#78B6DD'}
                     onChangeText={ (height) => this.setState({ 
                         height:height,
                       }) }
@@ -85,6 +115,9 @@ class HealthProfilePage extends Component {
                 <TextField
                     label='Weight'
                     value={weight}
+                    textColor={'#78B6DD'}
+                    baseColor={'#78B6DD'}
+                    tintColor={'#78B6DD'}
                     onChangeText={ (weight) => this.setState({ 
                         weight:weight,
                       }) }
@@ -97,7 +130,10 @@ class HealthProfilePage extends Component {
                     containerStyle={{backgroundColor: '#ffff', borderRadius: 0, borderWidth: 0, padding: 0}}
                     checked={this.state.checked}
                     size= {30}
-                    onPress={() => this.setState({checked: !this.state.checked})}
+                    onPress={() => this.setState({
+                        checked: !this.state.checked,
+                        error: ''
+                    })}
                     />
                     <View >
                        <Text style={{fontSize: 20}}>I have read and agree to the </Text> 

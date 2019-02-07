@@ -7,7 +7,18 @@ import { Button, CardSection} from '../../common/index';
 
 class EmailPage extends Component { 
     static navigationOptions = {
-        title: 'Create New Account',
+        title: 'New Account',
+        headerStyle: {
+            backgroundColor: '#78B6DD',
+            borderBottomColor: '#fff',
+            
+        },
+        headerTintColor: "#ffff",
+        headerTitleStyle: {
+            fontSize: 24,
+            alignSelf: 'center',
+            textAlign: 'center',
+        },
       };
 
     state = {
@@ -72,7 +83,11 @@ class EmailPage extends Component {
         let { email, password, confirmPassword } = this.state;
         return (
             <View style={styles.container}>
-                <Text> {this.state.error}</Text>
+                { this.state.error ?
+                <Text style={{marginTop: 20, color: 'red'}}> {this.state.error}</Text> 
+                :
+                null
+                }
                 <View style={{backgroundColor:'white', width: 300,}}>
                 <TextField
                     label='Email'
@@ -81,6 +96,9 @@ class EmailPage extends Component {
                     value={email}
                     error={this.state.errorEmail}
                     errorColor={this.state.errorColor}
+                    textColor={'#78B6DD'}
+                    baseColor={'#78B6DD'}
+                    tintColor={'#78B6DD'}
                     onChangeText={ (email) => this._checkEmailHandler(email) }
                 />
 
@@ -91,6 +109,9 @@ class EmailPage extends Component {
                     secureTextEntry= {true}
                     error={this.state.errorPassword}
                     errorColor={this.state.errorColor}
+                    textColor={'#78B6DD'}
+                    baseColor={'#78B6DD'}
+                    tintColor={'#78B6DD'}
                     onChangeText={ (password) => this.setState({ 
                         password:password,
                         error: '',
@@ -105,6 +126,9 @@ class EmailPage extends Component {
                     secureTextEntry= {true}
                     error={this.state.errorConfPassword}
                     errorColor={this.state.errorColor}
+                    textColor={'#78B6DD'}
+                    baseColor={'#78B6DD'}
+                    tintColor={'#78B6DD'}
                     onChangeText={ (confirmPassword) => this.setState({ 
                         confirmPassword:confirmPassword,
                         error: '',
@@ -116,7 +140,7 @@ class EmailPage extends Component {
                     <Button 
                         style={{backgroundColor:'#32CD32'}} 
                         onPress={this._buttonPressHandler.bind(this)}>
-                            Contiune
+                          <Text style={{color: '#fff'}}>Contiune</Text>
                     </Button>
                 </CardSection>
             </View>

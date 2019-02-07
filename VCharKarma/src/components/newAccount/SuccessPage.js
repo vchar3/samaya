@@ -8,6 +8,17 @@ import { Button, CardSection} from '../../common/index';
 class SuccessPage extends Component { 
     static navigationOptions = {
         title: 'Congratulations',
+        headerStyle: {
+            backgroundColor: '#78B6DD',
+            borderBottomColor: '#fff',
+            
+        },
+        headerTintColor: "#ffff",
+        headerTitleStyle: {
+            fontSize: 24,
+            alignSelf: 'center',
+            textAlign: 'center',
+        },
       };
 
     _buttonPressHandler(event) {
