@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import {Image, Text, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { ToggleSlider } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
-import { BarChart, Grid } from 'react-native-svg-charts';
+import { BarChart, Grid, LineChart, XAxis } from 'react-native-svg-charts';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
 class FallsPage extends Component { 
@@ -31,7 +31,7 @@ class FallsPage extends Component {
     
     render() {
         const fill = 'rgb(134, 65, 244)'
-        const data   = [ 50, 10, 40, 95, 4, 24 ]
+        const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
         return (
             <View style={styles.container}>
                 <Text style={styles.timeStyle}> 
@@ -50,12 +50,13 @@ class FallsPage extends Component {
                 />
                 { this.state.falls.isFalls  
                 ? <View>
-                    <Text>
-                        Number of fell today
+                    <Text  style={styles.timeStyle}>
+                        Number of fall today
                     </Text>
                     <TextInput 
                         value={this.state.falls.number}
                         style={styles.inputStyle}
+                        keyboardType={ 'numeric'}
                         onChangeText={ (value) => this.setState({ 
                             falls: {
                                 ...this.state.falls,
@@ -72,13 +73,34 @@ class FallsPage extends Component {
                     self= {this}
                 />
                 <BarChart
-                    style={{ height: 200 }}
+                    style={{ height: 200, width: 300  }}
                     data={ data }
                     svg={{ fill }}
                     contentInset={{ top: 30, bottom: 30 }}
                 >
                     <Grid/>
                 </BarChart>
+
+                <ScrollView horizontal={true} contentContainerStyle={{width: 300}}>
+                    <View style={{ height: 200, padding: 20, width: 300 }}>
+                    <LineChart
+                        style={{ flex: 1 }}
+                        data={data}
+                        gridMin={0}
+                        contentInset={{ top: 10, bottom: 10 }}
+                        svg={{ stroke: 'rgb(134, 65, 244)' }}
+                    >
+                        <Grid />
+                    </LineChart>
+                    <XAxis
+                        style={{ marginHorizontal: -10 }}
+                        data={data}
+                        formatLabel={(value, index) => index}
+                        contentInset={{ left: 10, right: 10 }}
+                        svg={{ fontSize: 10, fill: 'black' }}
+                    />
+                    </View>
+                </ScrollView>
 
             </View>
         );
@@ -123,7 +145,8 @@ const styles = {
         fontSize:24, 
         borderWidth: 1,
         marginBottom: 10,
-        marginTop: 10
+        marginTop: 10,
+        color: '#7DBADF', 
     },
     timeStyle: {
         color: '#7DBADF', 

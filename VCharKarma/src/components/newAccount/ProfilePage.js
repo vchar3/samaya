@@ -194,6 +194,7 @@ class ProfilePage extends Component {
                     <TextField
                         label='Mobile Phone'
                         value={phone}
+                        keyboardType= {'phone-pad'}
                         error={this.state.errorMobile}
                         errorColor={this.state.errorColor}
                         textColor={'#78B6DD'}
@@ -208,6 +209,7 @@ class ProfilePage extends Component {
                     <TextField
                         label='Home Phone'
                         value={homePhone}
+                        keyboardType= {'phone-pad'}
                         textColor={'#78B6DD'}
                         baseColor={'#78B6DD'}
                         tintColor={'#78B6DD'}
