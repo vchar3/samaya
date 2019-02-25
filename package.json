@@ -1,0 +1,57 @@
+{
+  "name": "VCharKarma",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "moment": "^2.22.2",
+    "randomcolor": "^0.5.3",
+    "react": "16.4.1",
+    "react-native": "0.56.0",
+    "react-native-calendars": "^1.21.0",
+    "react-native-chart-kit": "^2.0.1",
+    "react-native-device-info": "^0.24.3",
+    "react-native-elements": "^0.19.1",
+    "react-native-flip-toggle-button": "^1.0.5",
+    "react-native-material-bottom-navigation": "^1.0.0",
+    "react-native-material-cards": "^1.0.9",
+    "react-native-material-textfield": "^0.12.0",
+    "react-native-modal": "^6.5.0",
+    "react-native-modal-datetime-picker": "^6.0.0",
+    "react-native-navigation": "^1.1.485",
+    "react-native-pdf": "^5.0.11",
+    "react-native-push-notification": "^3.1.2",
+    "react-native-remote-svg": "^1.4.0",
+    "react-native-responsive-screen": "^1.2.0",
+    "react-native-simple-radio-button": "^2.7.3",
+    "react-native-splash-screen": "^3.1.1",
+    "react-native-super-grid": "^2.4.3",
+    "react-native-svg": "^9.0.6",
+    "react-native-svg-charts": "^5.2.0",
+    "react-native-typography": "^1.4.0",
+    "react-native-vector-icons": "^5.0.0",
+    "react-navigation": "^2.13.0",
+    "react-navigation-redux-helpers": "^2.0.5",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-axios-middleware": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "rn-fetch-blob": "^0.10.15",
+    "socket.io-client": "^2.1.1",
+    "toggle-switch-react-native": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-jest": "23.4.2",
+    "babel-preset-react-native": "5.0.2",
+    "jest": "23.5.0",
+    "react-test-renderer": "16.4.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
