@@ -94,14 +94,16 @@ const CalendarView = ({self }) => {
   // Max amount of months allowed to scroll to the future. Default = 50
   //futureScrollRange={50}
   // specify how each item should be rendered in agenda
-  renderItem={(item, firstItemInDay) => {return (
-    
-          <View style={styles.item}>
-            <View><Text>{moment(item.day).format('HH:mm')}</Text></View>
-            <View><Text>{item.text}</Text></View>
-          </View>
-
-    );}}
+  renderItem= {
+    (item, firstItemInDay) => {
+      return ( 
+        <View style={styles.item}>
+          <Text>{moment(item.day).format('HH:mm')}</Text>
+          <Text style={{paddingLeft: 15}}>{item.text}</Text>
+        </View>
+      )
+    }
+  }
   // specify how each date should be rendered. day can be undefined if the item is not first in that day.
   renderDay={(day, item) => {return (<View />);}}
   // specify how empty date content with no items should be rendered
@@ -188,18 +190,17 @@ const styles = {
   emptyDate: {
     marginTop: 20,
     marginRight: 10,
-    borderTopWidth: 2,
-    borderTopColor: '#dddddd',
     height: 5,
   },
   item: {
     backgroundColor: 'white',
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'flex-start',
     borderRadius: 5,
-    padding: 10,
-    marginRight: 10,
-    marginTop: 17
+    padding: 15,
+    borderBottomWidth: 2, 
+    borderBottomColor: '#dddddd'
   },
 
 };

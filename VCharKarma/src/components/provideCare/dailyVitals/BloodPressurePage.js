@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
+import { Button, CardSection} from '../../../common/index';
+
 class BloodPressurePage extends Component { 
     static navigationOptions = {
         title: 'Blood Pressure',
@@ -24,24 +26,47 @@ class BloodPressurePage extends Component {
         sysValue: 100,
         diaValue: 80,
         bpmValue:74,
-        bloodPressure: {
+        sys:{ 
+            minimumValue: 90,
+            maximumValue: 160,
+            step: 1
+        },
+        dia: { 
+            diaMinimumValue: 60,
+            diaMaximumValue: 90,
+            diaStep: 1
+        },
+        bpm: { 
+            bpmMinimumValue: 40,
+            bpmMaximumValue: 240,
+            bpmStep: 1
+        }
+    }
+
+    _buttonPressHandler() {
+        let data = {
+            noteText: this.state.noteText, 
+            sysValue: this.state.sysValue,
+            diaValue: this.state.diaValue,
+            bpmValue: this.state.bpmValue,
             sys:{ 
-                minimumValue: 90,
-                maximumValue: 160,
-                step: 1
+                minimumValue: this.state.sys.minimumValue,
+                maximumValue: this.state.sys.maximumValue,
+                step: this.state.sys.step
             },
             dia: { 
-                diaMinimumValue: 60,
-                diaMaximumValue: 90,
-                diaStep: 1
+                diaMinimumValue: this.state.dia.diaMinimumValue,
+                diaMaximumValue: this.state.dia.diaMaximumValue,
+                diaStep: this.state.dia.diaStep
             },
             bpm: { 
-                bpmMinimumValue: 40,
-                bpmMaximumValue: 240,
-                bpmStep: 1
-            },
-            dateTime:''
-        },
+                bpmMinimumValue: this.state.bpm.bpmMinimumValue,
+                bpmMaximumValue: this.state.bpm.bpmMaximumValue,
+                bpmStep: this.state.bpm.bpmStep
+            }
+        };
+        
+        this.props.navigation.goBack();
     }
 
     render() {
@@ -54,15 +79,19 @@ class BloodPressurePage extends Component {
                 <View style={styles.sliderContain}>
                     <Text style={styles.sliderChangeValue}>{this.state.sysValue}</Text>
                     <Slider
-                        style={styles.sliderStyle}
-                        thumbTintColor={'#7DBADF'}
-                        minimumTrackTintColor={'#7DBADF'}
-                        maximumTrackTintColor={'#d7e8ef'}
-                        value={this.state.sysValue}
-                        minimumValue={this.state.bloodPressure.sys.minimumValue}
-                        maximumValue={this.state.bloodPressure.sys.maximumValue}
-                        step={this.state.bloodPressure.sys.step}
-                        onValueChange={(changeValue) => { this.setState({ sysValue: changeValue, dateTime: moment(new Date()).format("LT") })} } />
+                        style= {styles.sliderStyle}
+                        thumbTintColor= {'#7DBADF'}
+                        minimumTrackTintColor= {'#7DBADF'}
+                        maximumTrackTintColor= {'#d7e8ef'}
+                        value= {this.state.sysValue}
+                        minimumValue= {this.state.sys.minimumValue}
+                        maximumValue= {this.state.sys.maximumValue}
+                        step= {this.state.sys.step}
+                        onValueChange= {(changeValue) => { 
+                                this.setState({ sysValue: changeValue })
+                            } 
+                        } 
+                    />
                 
                     <Text style={styles.sliderTitle}>{'SYS'} </Text>
                     
@@ -76,10 +105,13 @@ class BloodPressurePage extends Component {
                         minimumTrackTintColor={'#7DBADF'}
                         maximumTrackTintColor={'#d7e8ef'}
                         value={this.state.diaValue}
-                        minimumValue={this.state.bloodPressure.dia.diaMinimumValue}
-                        maximumValue={this.state.bloodPressure.dia.diaMaximumValue}
-                        step={this.state.bloodPressure.dia.diaStep}
-                        onValueChange={(changeValue) => {this.setState({diaValue: changeValue, dateTime: moment(new Date()).format("LT") })}} />
+                        minimumValue={this.state.dia.diaMinimumValue}
+                        maximumValue={this.state.dia.diaMaximumValue}
+                        step={this.state.dia.diaStep}
+                        onValueChange={(changeValue) => {
+                                this.setState({diaValue: changeValue})
+                            }} 
+                        />
                     <Text style={styles.sliderTitle}>{'DIA'} </Text>
                 </View>
 
@@ -91,16 +123,28 @@ class BloodPressurePage extends Component {
                         minimumTrackTintColor={'#7DBADF'}
                         maximumTrackTintColor={'#d7e8ef'}
                         value={this.state.bpmValue}
-                        minimumValue={this.state.bloodPressure.bpm.bpmMinimumValue}
-                        maximumValue={this.state.bloodPressure.bpm.bpmMaximumValue}
-                        step={this.state.bloodPressure.bpm.bpmStep}
-                        onValueChange={(changeValue) => {this.setState({bpmValue: changeValue, dateTime: moment(new Date()).format("LT") })}} />
+                        minimumValue={this.state.bpm.bpmMinimumValue}
+                        maximumValue={this.state.bpm.bpmMaximumValue}
+                        step={this.state.bpm.bpmStep}
+                        onValueChange={(changeValue) => {
+                                this.setState({ bpmValue: changeValue })}
+                            } 
+                        />
                     <Text style={styles.sliderTitle}>{'BPM'} </Text>
                 </View>
 
                 <AutoGrowTextArea 
                     self= {this}
                 />
+
+
+                <CardSection>
+                    <Button 
+                        style={{backgroundColor:'#32CD32'}} 
+                        onPress={this._buttonPressHandler.bind(this)}>
+                          <Text style={{color: '#fff'}}>Save</Text>
+                    </Button>
+                </CardSection>
 
             </View>
         

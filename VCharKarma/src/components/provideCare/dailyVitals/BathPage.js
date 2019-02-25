@@ -3,9 +3,11 @@ import {Image, Text, View, TouchableOpacity, TextInput, Dimensions } from 'react
 import { ToggleSlider } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
+import { fetchDataFromAPI, getUserLogin, addBath } from '../../../../redux/actions/dailyVitalsAction';
 import { LineChart } from 'react-native-chart-kit';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
+
+import { Button, CardSection} from '../../../common/index';
 
 
 class BathPage extends Component { 
@@ -23,11 +25,22 @@ class BathPage extends Component {
 
     state = {
         noteText: '', 
-        bath: {
-            isBathTaken: false,
-            isAssistanceNeeded: false,
-            dateTime:''
-        },
+        isBathTaken: false,
+        isAssistanceNeeded: false,
+
+
+    }
+
+    _buttonPressHandler() {
+        let data = {
+            id: 'Bath',
+            isBathTaken: this.state.isBathTaken,
+            noteText: this.state.noteText,
+            isAssistanceNeeded: this.state.isAssistanceNeeded,
+        };
+
+        this.props.postBath(data);
+        this.props.navigation.goBack();
     }
     
     render() {
@@ -39,29 +52,30 @@ class BathPage extends Component {
                 <ToggleSlider 
                     textLabel = 'Did you take a bath'
                     toggleSwitchHandler= {(value) => this.setState({
-                        bath: {
-                            ...this.state.bath,
-                            isBathTaken :value
-                        } 
+                        isBathTaken: value
                     })}
-                    isActive = {this.state.bath.isBathTaken}
+                    isActive = {this.state.isBathTaken}
                 />
 
                 <ToggleSlider 
                     textLabel = 'Needed Assistance'
                     toggleSwitchHandler= {(value) =>this.setState({
-                        bath: {
-                            ...this.state.bath,
-                            isAssistanceNeeded :value,
-                            dateTime: moment(new Date()).format("LT") 
-                        }
+                        isAssistanceNeeded: value,
                     })}
-                    isActive = {this.state.bath.isAssistanceNeeded}
+                    isActive = {this.state.isAssistanceNeeded}
                 />
 
                 <AutoGrowTextArea 
                     self= {this}
                 />
+
+                <CardSection>
+                    <Button 
+                        style={{backgroundColor:'#32CD32'}} 
+                        onPress={this._buttonPressHandler.bind(this)}>
+                          <Text style={{color: '#fff'}}>Save</Text>
+                    </Button>
+                </CardSection>
                     
                     <View>
                     <Text>
@@ -106,7 +120,7 @@ function mapStateToProps(state) {
   
 function mapDispatchToProps(dispatch) {
     return {
-        getUser: (username, password) => dispatch(getUserLogin(username, password))
+        postBath: (bathData) => dispatch(addBath(bathData))
     }
 }
 

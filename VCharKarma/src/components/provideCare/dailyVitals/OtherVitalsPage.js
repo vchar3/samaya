@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
+import { Button, CardSection} from '../../../common/index';
+
 class OtherVitalsPage extends Component { 
     static navigationOptions = {
         title: 'OtherVitals',
@@ -21,12 +23,21 @@ class OtherVitalsPage extends Component {
 
     state = {
         noteText: '', 
-        otherVitals: {
-            temp: 0,
-            respiratory: 0,
-            pulse: 0,
-            dateTime:''
-        }
+        temp: 0,
+        respiratory: 0,
+        pulse: 0,
+
+    }
+
+    _buttonPressHandler() {
+        let data  = {
+            noteText: this.state.noteText, 
+            temp: this.state.temp,
+            respiratory: this.state.respiratory,
+            pulse: this.state.pulse,
+        };
+        
+        this.props.navigation.goBack();
     }
     
     render() {
@@ -40,17 +51,14 @@ class OtherVitalsPage extends Component {
                         Body Temp   
                     </Text>
                     <TextInput 
-                        value={this.state.otherVitals.temp}
+                        value={this.state.temp}
                         style={styles.inputStyle}
                         onChangeText={ (value) => this.setState({ 
-                            otherVitals: {
-                                ...this.state.otherVitals,
-                                temp :value
-                            }  
+                            temp :value 
                         })}
                     />
                     <Text style={{textAlign:'center', fontSize:20, width: 60, marginLeft: 20}}>
-                    {this.state.otherVitals.temp}
+                    {this.state.temp}
                     </Text>
                 </View>
 
@@ -59,17 +67,14 @@ class OtherVitalsPage extends Component {
                         Respiratory Rate
                     </Text>
                     <TextInput 
-                        value={this.state.otherVitals.respiratory}
+                        value={this.state.respiratory}
                         style={styles.inputStyle}
                         onChangeText={ (value) => this.setState({ 
-                            otherVitals: {
-                                ...this.state.otherVitals,
                                 respiratory :value
-                            }  
                         })}
                     />
                     <Text style={{textAlign:'center', fontSize:20, width: 60, marginLeft: 20}}>
-                    {this.state.otherVitals.respiratory}
+                    {this.state.respiratory}
                     </Text>
                 </View>
 
@@ -81,19 +86,25 @@ class OtherVitalsPage extends Component {
                         value={this.state.otherVitals.pulse}
                         style={styles.inputStyle}
                         onChangeText={ (value) => this.setState({ 
-                            otherVitals: {
-                                ...this.state.otherVitals,
-                                pulse :value
-                            }  
+                            pulse :value
                         })}
                     />
                     <Text style={{textAlign:'center', fontSize:20, width: 60, marginLeft: 20}}>
-                    {this.state.otherVitals.pulse}
+                    {this.state.pulse}
                     </Text>
                 </View>
+
                 <AutoGrowTextArea 
                     self= {this}
                 />
+
+                <CardSection>
+                    <Button 
+                        style={{backgroundColor:'#32CD32'}} 
+                        onPress={this._buttonPressHandler.bind(this)}>
+                          <Text style={{color: '#fff'}}>Save</Text>
+                    </Button>
+                </CardSection>
             </View>
         );
     }

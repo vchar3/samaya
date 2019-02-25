@@ -7,6 +7,8 @@ import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/action
 import { BarChart, Grid, LineChart, XAxis } from 'react-native-svg-charts';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
+import { Button, CardSection} from '../../../common/index';
+
 class FallsPage extends Component { 
     static navigationOptions = {
         title: 'Walks & Falls',
@@ -22,11 +24,19 @@ class FallsPage extends Component {
 
     state = {
         noteText: '', 
-        falls: {
-            isFalls: false,
-            number: 0,
-            dateTime:''
-        }
+        isFalls: false,
+        number: 0
+
+    }
+
+    _buttonPressHandler() {
+        let data = {
+            noteText: this.state.noteText, 
+            isFalls: this.state.isFalls,
+            number: this.state.number
+        };
+        
+        this.props.navigation.goBack();
     }
     
     render() {
@@ -40,15 +50,11 @@ class FallsPage extends Component {
                 <ToggleSlider 
                     textLabel = 'Did you take walk today?'
                     toggleSwitchHandler= {(value) => this.setState({
-                        falls: {
-                            ...this.state.falls,
-                            isFalls :value,
-                            dateTime: moment(new Date()).format("LT") 
-                        } 
+                        isFalls: value
                     })}
-                    isActive = {this.state.falls.isFalls}
+                    isActive = {this.state.isFalls}
                 />
-                { this.state.falls.isFalls  
+                { this.state.isFalls  
                 ? <View>
                     <Text  style={styles.timeStyle}>
                         Number of fall today
@@ -58,11 +64,7 @@ class FallsPage extends Component {
                         style={styles.inputStyle}
                         keyboardType={ 'numeric'}
                         onChangeText={ (value) => this.setState({ 
-                            falls: {
-                                ...this.state.falls,
-                                number :value,
-                                dateTime: moment(new Date()).format("LT") 
-                            }  
+                            number :value,
                         })}
                     />
                 </View>
@@ -72,6 +74,16 @@ class FallsPage extends Component {
                 <AutoGrowTextArea 
                     self= {this}
                 />
+
+
+                <CardSection>
+                    <Button 
+                        style={{backgroundColor:'#32CD32'}} 
+                        onPress={this._buttonPressHandler.bind(this)}>
+                          <Text style={{color: '#fff'}}>Save</Text>
+                    </Button>
+                </CardSection>
+
                 <BarChart
                     style={{ height: 200, width: 300  }}
                     data={ data }

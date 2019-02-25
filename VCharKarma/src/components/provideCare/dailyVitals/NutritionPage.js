@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
+import { Button, CardSection} from '../../../common/index';
+
 class NutritionPage extends Component { 
     static navigationOptions = {
         title: 'Nutrition',
@@ -24,8 +26,19 @@ class NutritionPage extends Component {
         isBreakfastTaken: false,
         isLunchTaken: false,
         isDinnerTaken: false,
-        isAssistanceNeeded: false,
-        dateTime: ''
+        isAssistanceNeeded: false
+    }
+
+    _buttonPressHandler() {
+        let data  = {
+            noteText: this.state.noteText, 
+            isBreakfastTaken: this.state.isBreakfastTaken,
+            isLunchTaken: this.state.isLunchTaken,
+            isDinnerTaken: this.state.isDinnerTaken,
+            isAssistanceNeeded: this.state.isAssistanceNeeded
+        };
+
+        this.props.navigation.goBack();
     }
     
     render() {
@@ -38,7 +51,6 @@ class NutritionPage extends Component {
                     textLabel = 'Breakfast'
                     toggleSwitchHandler= {(value) => this.setState({
                         isBreakfastTaken :value,
-                        dateTime: moment(new Date()).format("LT")  
                     })}
                     isActive = {this.state.isBreakfastTaken}
                 />
@@ -47,7 +59,6 @@ class NutritionPage extends Component {
                     textLabel = 'Lunch'
                     toggleSwitchHandler= {(value) => this.setState({
                         isLunchTaken :value,
-                        dateTime: moment(new Date()).format("LT")  
                     })}
                     isActive = {this.state.isLunchTaken}
                 />
@@ -78,9 +89,18 @@ class NutritionPage extends Component {
                     })}
                     isActive = {this.state.isAssistanceNeeded}
                 />
+
                 <AutoGrowTextArea 
                     self= {this}
                 />
+                
+                <CardSection>
+                    <Button 
+                        style={{backgroundColor:'#32CD32'}} 
+                        onPress={this._buttonPressHandler.bind(this)}>
+                          <Text style={{color: '#fff'}}>Save</Text>
+                    </Button>
+                </CardSection>
             </View>
         );
     }

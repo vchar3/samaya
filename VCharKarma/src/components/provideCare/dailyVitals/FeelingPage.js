@@ -7,6 +7,8 @@ import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
+import { Button, CardSection} from '../../../common/index';
+
 class FeelingPage extends Component { 
     static navigationOptions = {
         title: 'Feeling',
@@ -23,13 +25,23 @@ class FeelingPage extends Component {
     state = {
         sliderValue: 0,
         noteText: '',
-        feeling: {
-            isGood: false,
-            isFatigued: false,
-            isTired: false,
-            isSick: false,
-            dateTime:''
-        },
+        isGood: false,
+        isFatigued: false,
+        isTired: false,
+        isSick: false
+    }
+
+    _buttonPressHandler() {
+        let data  = {
+            sliderValue: this.state.sliderValue,
+            noteText: this.state.noteText,
+            isGood: this.state.isGood,
+            isFatigued: this.state.isFatigued,
+            isTired: this.state.isTired,
+            isSick: this.state.isSick
+        };
+
+        this.props.navigation.goBack();
     }
     
     render() {
@@ -45,7 +57,7 @@ class FeelingPage extends Component {
                         uncheckedColor={'white'}
                         textStyle= {{color: 'white', fontSize: 20}}
                         containerStyle= {{backgroundColor:'#7DBADF', width: 140}}
-                        checked = {this.state.feeling.isGood}
+                        checked = {this.state.isGood}
                         onPress={(value)=> feelingChanges('Good', value, this)}                  
                     />
 
@@ -55,7 +67,7 @@ class FeelingPage extends Component {
                         uncheckedColor={'white'}
                         textStyle= {{color: 'white', fontSize: 20}}
                         containerStyle= {{backgroundColor:'#7DBADF', width: 140}}
-                        checked = {this.state.feeling.isFatigued}
+                        checked = {this.state.isFatigued}
                         onPress={(value)=> feelingChanges('Fatigued', value, this)}                  
                     />
                 </View>
@@ -66,7 +78,7 @@ class FeelingPage extends Component {
                         uncheckedColor={'white'}
                         textStyle= {{color: 'white', fontSize: 20}}
                         containerStyle= {{backgroundColor:'#7DBADF', width: 140}}
-                        checked = {this.state.feeling.isTired}
+                        checked = {this.state.isTired}
                         onPress={(value)=> feelingChanges('Tired', value, this)}                  
                     />
 
@@ -76,7 +88,7 @@ class FeelingPage extends Component {
                         uncheckedColor={'white'}
                         textStyle= {{color: 'white', fontSize: 20}}
                         containerStyle= {{backgroundColor:'#7DBADF', width: 140}}
-                        checked = {this.state.feeling.isSick}
+                        checked = {this.state.isSick}
                         onPress={(value)=> feelingChanges('Sick', value, this)}                  
                     />
 
@@ -97,9 +109,18 @@ class FeelingPage extends Component {
                     />
                     <Text style={styles.sliderTextStyle}>{this.state.sliderValue}</Text>
                 </View>
+
                 <AutoGrowTextArea 
                     self= {this}
                 />
+
+                <CardSection>
+                    <Button 
+                        style={{backgroundColor:'#32CD32'}} 
+                        onPress={this._buttonPressHandler.bind(this)}>
+                          <Text style={{color: '#fff'}}>Save</Text>
+                    </Button>
+                </CardSection>
             </View>
         );
     }
