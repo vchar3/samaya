@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Image, Text, View, TouchableOpacity } from 'react-native';
+import {Image, Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Slider } from 'react-native-elements';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
+import { addBloodPressure } from '../../../../redux/actions/dailyVitalsAction';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
 import { Button, CardSection} from '../../../common/index';
@@ -22,6 +22,7 @@ class BloodPressurePage extends Component {
       };
 
     state = {
+        userId: '',
         noteText: '', 
         sysValue: 100,
         diaValue: 80,
@@ -43,8 +44,19 @@ class BloodPressurePage extends Component {
         }
     }
 
+    constructor() {
+        super(); 
+        AsyncStorage.getItem('userName').then((value) => {
+            this.setState({
+                userId: value
+            });
+        }) 
+    }
+
+
     _buttonPressHandler() {
         let data = {
+            id: 'BloodPressure',
             noteText: this.state.noteText, 
             sysValue: this.state.sysValue,
             diaValue: this.state.diaValue,
@@ -63,9 +75,10 @@ class BloodPressurePage extends Component {
                 bpmMinimumValue: this.state.bpm.bpmMinimumValue,
                 bpmMaximumValue: this.state.bpm.bpmMaximumValue,
                 bpmStep: this.state.bpm.bpmStep
-            }
+            },
+            userId: this.state.userId
         };
-        
+        this.props.postBloodPressure(data);
         this.props.navigation.goBack();
     }
 
@@ -160,7 +173,7 @@ function mapStateToProps(state) {
   
 function mapDispatchToProps(dispatch) {
     return {
-        getUser: (username, password) => dispatch(getUserLogin(username, password))
+        postBloodPressure: (bloodPressureData) => dispatch(addBloodPressure(bloodPressureData))
     }
 
 }

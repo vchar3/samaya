@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import {Image, Text, View, TouchableOpacity, TextInput, AsyncStorage } from 'react-native';
 import { ToggleSlider } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
+import { addOtherVitals } from '../../../../redux/actions/dailyVitalsAction';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
 import { Button, CardSection} from '../../../common/index';
@@ -22,6 +22,7 @@ class OtherVitalsPage extends Component {
     };
 
     state = {
+        userId: '',
         noteText: '', 
         temp: 0,
         respiratory: 0,
@@ -29,14 +30,25 @@ class OtherVitalsPage extends Component {
 
     }
 
+    constructor() {
+        super(); 
+        AsyncStorage.getItem('userName').then((value) => {
+            this.setState({
+                userId: value
+            });
+        }) 
+    }
+
     _buttonPressHandler() {
         let data  = {
+            id: 'OtherVitals',
             noteText: this.state.noteText, 
             temp: this.state.temp,
             respiratory: this.state.respiratory,
             pulse: this.state.pulse,
+            userId: this.state.userId
         };
-        
+        this.props.postOtherVital(data);
         this.props.navigation.goBack();
     }
     
@@ -83,7 +95,7 @@ class OtherVitalsPage extends Component {
                         Pulse Oxygen
                     </Text>
                     <TextInput 
-                        value={this.state.otherVitals.pulse}
+                        value={this.state.pulse}
                         style={styles.inputStyle}
                         onChangeText={ (value) => this.setState({ 
                             pulse :value
@@ -118,7 +130,7 @@ function mapStateToProps(state) {
   
 function mapDispatchToProps(dispatch) {
     return {
-        getUser: (username, password) => dispatch(getUserLogin(username, password))
+        postOtherVital: (otherVitalData) => dispatch(addOtherVitals(otherVitalData))
     }
 }
 

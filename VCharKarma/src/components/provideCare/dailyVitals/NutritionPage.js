@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import {Image, Text, View, TouchableOpacity, TextInput, AsyncStorage } from 'react-native';
 import { ToggleSlider } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
+import { addNutrition } from '../../../../redux/actions/dailyVitalsAction';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
 import { Button, CardSection} from '../../../common/index';
@@ -22,6 +22,7 @@ class NutritionPage extends Component {
     };
 
     state = {
+        userId: '',
         noteText: '', 
         isBreakfastTaken: false,
         isLunchTaken: false,
@@ -29,15 +30,26 @@ class NutritionPage extends Component {
         isAssistanceNeeded: false
     }
 
+    constructor() {
+        super(); 
+        AsyncStorage.getItem('userName').then((value) => {
+            this.setState({
+                userId: value
+            });
+        }) 
+    }
+
     _buttonPressHandler() {
         let data  = {
+            id: 'Nutrition',
             noteText: this.state.noteText, 
             isBreakfastTaken: this.state.isBreakfastTaken,
             isLunchTaken: this.state.isLunchTaken,
             isDinnerTaken: this.state.isDinnerTaken,
-            isAssistanceNeeded: this.state.isAssistanceNeeded
+            isAssistanceNeeded: this.state.isAssistanceNeeded,
+            userId: this.state.userId
         };
-
+        this.props.postNutrition(data);
         this.props.navigation.goBack();
     }
     
@@ -114,7 +126,7 @@ function mapStateToProps(state) {
   
 function mapDispatchToProps(dispatch) {
     return {
-        getUser: (username, password) => dispatch(getUserLogin(username, password))
+        postNutrition: (nutritionData) => dispatch(addNutrition(nutritionData))
     }
 }
 

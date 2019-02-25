@@ -33,11 +33,7 @@ export function addBath(bathData) {
 export function addBloodPressure(bloodPressureData) {
     return (dispatch) => {
         dispatch(sendVitalsData(bloodPressureData));
-        baseURL.post('bloodPressure', 
-            {
-                record: bloodPressureData
-            }
-        )
+        baseURL.post('dailyVitals', bloodPressureData)
         .then(res => dispatch(sendVitalsSuccess(res)))    
         .catch(err => {
             dispatch(sendVitalsFailure(err));
@@ -49,11 +45,7 @@ export function addBloodPressure(bloodPressureData) {
 export function addFall(fallData) {
     return (dispatch) => {
         dispatch(sendVitalsData(fallData));
-        baseURL.post('fall', 
-            {
-                record: fallData
-            }
-        )
+        baseURL.post('dailyVitals', fallData)
         .then(res => dispatch(sendVitalsSuccess(res)))    
         .catch(err => {
             dispatch(sendVitalsFailure(err));
@@ -65,11 +57,7 @@ export function addFall(fallData) {
 export function addFeeling(feelingData) {
     return (dispatch) => {
         dispatch(sendVitalsData(feelingData));
-        baseURL.post('feeling', 
-            {
-                record: feelingData
-            }
-        )
+        baseURL.post('dailyVitals', feelingData)
         .then(res => dispatch(sendVitalsSuccess(res)))    
         .catch(err => {
             dispatch(sendVitalsFailure(err));
@@ -81,11 +69,7 @@ export function addFeeling(feelingData) {
 export function addNutrition(nutritionData) {
     return (dispatch) => {
         dispatch(sendVitalsData(nutritionData));
-        baseURL.post('nutrition', 
-            {
-                record: nutritionData
-            }
-        )
+        baseURL.post('dailyVitals', nutritionData)
         .then(res => dispatch(sendVitalsSuccess(res)))    
         .catch(err => {
             dispatch(sendVitalsFailure(err));
@@ -94,10 +78,10 @@ export function addNutrition(nutritionData) {
     }
 }
 
-export function addOther(otherData) {
+export function addOtherVitals(otherData) {
     return (dispatch) => {
         dispatch(sendVitalsData(otherData));
-        baseURL.post('other', otherData)
+        baseURL.post('dailyVitals', otherData)
         .then(res => dispatch(sendVitalsSuccess(res)))    
         .catch(err => {
             dispatch(sendVitalsFailure(err));

@@ -1,10 +1,10 @@
 import React, {Component}  from 'react';
-import {Image, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight, TextInput } from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight, TextInput, AsyncStorage } from 'react-native';
 import { CheckBox, Slider } from 'react-native-elements';
 import moment from 'moment';
 import feelingChanges from './FeelingChanges';
 import {connect} from 'react-redux';
-import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
+import { addFeeling } from '../../../../redux/actions/dailyVitalsAction';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
 import { Button, CardSection} from '../../../common/index';
@@ -23,6 +23,7 @@ class FeelingPage extends Component {
     };
 
     state = {
+        userId: '',
         sliderValue: 0,
         noteText: '',
         isGood: false,
@@ -31,16 +32,27 @@ class FeelingPage extends Component {
         isSick: false
     }
 
+    constructor() {
+        super(); 
+        AsyncStorage.getItem('userName').then((value) => {
+            this.setState({
+                userId: value
+            });
+        }) 
+    }
+
     _buttonPressHandler() {
         let data  = {
+            id: 'Mood',
             sliderValue: this.state.sliderValue,
             noteText: this.state.noteText,
             isGood: this.state.isGood,
             isFatigued: this.state.isFatigued,
             isTired: this.state.isTired,
-            isSick: this.state.isSick
+            isSick: this.state.isSick,
+            userId: this.state.userId
         };
-
+        this.props.postFeeling(data);
         this.props.navigation.goBack();
     }
     
@@ -134,7 +146,7 @@ function mapStateToProps(state) {
   
 function mapDispatchToProps(dispatch) {
     return {
-        getUser: (username, password) => dispatch(getUserLogin(username, password))
+        postFeeling: (feelingData) => dispatch(addFeeling(feelingData))
     }
 }
 

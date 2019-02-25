@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Image, Text, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import {Image, Text, View, TouchableOpacity, TextInput, ScrollView, AsyncStorage } from 'react-native';
 import { ToggleSlider } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import { fetchDataFromAPI, getUserLogin } from '../../../../redux/actions/actions';
+import { addFall } from '../../../../redux/actions/dailyVitalsAction';
 import { BarChart, Grid, LineChart, XAxis } from 'react-native-svg-charts';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
@@ -23,19 +23,31 @@ class FallsPage extends Component {
     };
 
     state = {
+        userId: '',
         noteText: '', 
         isFalls: false,
         number: 0
 
     }
 
+    constructor() {
+        super(); 
+        AsyncStorage.getItem('userName').then((value) => {
+            this.setState({
+                userId: value
+            });
+        }) 
+    }
+
     _buttonPressHandler() {
         let data = {
+            id: 'Fall',
             noteText: this.state.noteText, 
             isFalls: this.state.isFalls,
-            number: this.state.number
+            number: this.state.number,
+            userId: this.state.userId
         };
-        
+        this.props.postFall(data);
         this.props.navigation.goBack();
     }
     
@@ -60,7 +72,7 @@ class FallsPage extends Component {
                         Number of fall today
                     </Text>
                     <TextInput 
-                        value={this.state.falls.number}
+                        value={this.state.number}
                         style={styles.inputStyle}
                         keyboardType={ 'numeric'}
                         onChangeText={ (value) => this.setState({ 
@@ -127,7 +139,7 @@ function mapStateToProps(state) {
   
 function mapDispatchToProps(dispatch) {
     return {
-        getUser: (username, password) => dispatch(getUserLogin(username, password))
+        postFall: (fallData) => dispatch(addFall(fallData))
     }
 }
 

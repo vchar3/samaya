@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Image, Text, View, TouchableOpacity, TextInput, Dimensions } from 'react-native';
+import {Image, Text, View, TouchableOpacity, TextInput, Dimensions, AsyncStorage } from 'react-native';
 import { ToggleSlider } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import { fetchDataFromAPI, getUserLogin, addBath } from '../../../../redux/actions/dailyVitalsAction';
+import { addBath } from '../../../../redux/actions/dailyVitalsAction';
 import { LineChart } from 'react-native-chart-kit';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
@@ -24,11 +24,21 @@ class BathPage extends Component {
     };
 
     state = {
+        userId: '',
         noteText: '', 
         isBathTaken: false,
         isAssistanceNeeded: false,
 
 
+    }
+
+    constructor() {
+        super(); 
+        AsyncStorage.getItem('userName').then((value) => {
+            this.setState({
+                userId: value
+            });
+        }) 
     }
 
     _buttonPressHandler() {
@@ -37,6 +47,7 @@ class BathPage extends Component {
             isBathTaken: this.state.isBathTaken,
             noteText: this.state.noteText,
             isAssistanceNeeded: this.state.isAssistanceNeeded,
+            userId: this.state.userId
         };
 
         this.props.postBath(data);

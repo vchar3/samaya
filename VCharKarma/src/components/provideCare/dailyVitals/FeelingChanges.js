@@ -1,7 +1,7 @@
 
 export default function feelingChanges(id, value, self) {
     if(id === 'Good') {
-        if(self.state.feeling.isGood) {
+        if(self.state.isGood) {
             self.setState({
                 isGood: false
             })
@@ -15,7 +15,7 @@ export default function feelingChanges(id, value, self) {
             })
         }
     } else if(id === 'Fatigued') {
-        if(self.state.feeling.isFatigued) {
+        if(self.state.isFatigued) {
             self.setState({
                 isFatigued: false
             })
@@ -29,7 +29,7 @@ export default function feelingChanges(id, value, self) {
             })
         }
     } else if(id === 'Tired') {
-        if(self.state.feeling.isTired) {
+        if(self.state.isTired) {
             self.setState({
                 isTired: false
             })
@@ -43,7 +43,7 @@ export default function feelingChanges(id, value, self) {
             })
         }
     } else if(id === 'Sick') {
-        if(self.state.feeling.isSick) {
+        if(self.state.isSick) {
             self.setState({
                 isSick: false
             })
