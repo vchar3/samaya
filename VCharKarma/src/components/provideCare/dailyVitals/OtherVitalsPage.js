@@ -112,7 +112,7 @@ class OtherVitalsPage extends Component {
 
                 <CardSection>
                     <Button 
-                        style={{backgroundColor:'#32CD32'}} 
+                        style={{backgroundColor:'#7DBADF'}} 
                         onPress={this._buttonPressHandler.bind(this)}>
                           <Text style={{color: '#fff'}}>Save</Text>
                     </Button>
