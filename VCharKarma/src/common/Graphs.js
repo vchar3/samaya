@@ -8,7 +8,11 @@ const Graphs = ({uri}) => {
                 scrollEnabled= {false}
                 scalesPageToFit= {true}
                 javaScriptEnabled= {true}
-                source={{uri: uri}}                       
+                source={{uri: uri}}
+                automaticallyAdjustContentInsets={false} 
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                startInLoadingState={true}                      
             />
         </View>
     );
@@ -16,7 +20,8 @@ const Graphs = ({uri}) => {
 
 const styles = {
     container: {
-        width: '100%', height:200
+        width: '100%', 
+        height:250
     }
   };
 

@@ -4,7 +4,7 @@ import { NavigationActions } from 'react-navigation';
 import {connect} from 'react-redux';
 import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 import GridView from 'react-native-super-grid';
-import Image from 'react-native-remote-svg'
+import Image from 'react-native-remote-svg';
 
 import OtherAccountPage from './OtherAccountPage';
 
