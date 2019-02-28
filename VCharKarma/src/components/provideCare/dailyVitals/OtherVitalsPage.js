@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Image, Text, View, TouchableOpacity, TextInput, AsyncStorage } from 'react-native';
-import { ToggleSlider } from '../../../common/index';
+import { ToggleSlider, Graphs } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { addOtherVitals } from '../../../../redux/actions/dailyVitalsAction';
@@ -117,6 +117,9 @@ class OtherVitalsPage extends Component {
                           <Text style={{color: '#fff'}}>Save</Text>
                     </Button>
                 </CardSection>
+                <Graphs 
+                    uri= {'http://localhost:3000/api/graphs'}
+                />
             </View>
         );
     }

@@ -1,6 +1,7 @@
 import React, {Component}  from 'react';
 import {Image, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight, TextInput, AsyncStorage } from 'react-native';
 import { CheckBox, Slider } from 'react-native-elements';
+import { Graphs } from '../../../common/index';
 import moment from 'moment';
 import feelingChanges from './FeelingChanges';
 import {connect} from 'react-redux';
@@ -133,6 +134,9 @@ class FeelingPage extends Component {
                           <Text style={{color: '#fff'}}>Save</Text>
                     </Button>
                 </CardSection>
+                <Graphs 
+                    uri= {'http://localhost:3000/api/graphs'}
+                />
             </View>
         );
     }

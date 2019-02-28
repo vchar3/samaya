@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Image, Text, View, TouchableOpacity, TextInput, Dimensions, AsyncStorage } from 'react-native';
-import { ToggleSlider } from '../../../common/index';
+import { ToggleSlider, Graphs } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { addBath } from '../../../../redux/actions/dailyVitalsAction';
@@ -92,37 +92,39 @@ class BathPage extends Component {
                           <Text style={{color: '#fff'}}>Save</Text>
                     </Button>
                 </CardSection>
-                    
-                    <View>
-                    <Text>
-                        Bezier Line Chart
-                    </Text>
-                    <LineChart
-                        data={{
-                        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septemeber', 'October', 'November', 'Decemeber'],
-                        datasets: [{
-                            data: [ 20, 45, 28, 80, 99, 43, 1010, 321, 400, 2389, 2783, 3000 ]
-                        }]
-                        }}
-                        width={Dimensions.get('window').width - 40} // from react-native
-                        height={220}
-                        chartConfig={{
-                        backgroundColor: '#e26a00',
-                        backgroundGradientFrom: '#fb8c00',
-                        backgroundGradientTo: '#ffa726',
-                        decimalPlaces: 2, // optional, defaults to 2dp
-                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                        style: {
-                            borderRadius: 16
-                        }
-                        }}
-                        bezier
-                        style={{
-                        marginVertical: 8,
-                        borderRadius: 16
-                        }}
+                    <Graphs 
+                        uri= {'http://localhost:3000/api/graphs'}
                     />
-                    </View>
+                    {/* <View>
+                        <Text>
+                            Bezier Line Chart
+                        </Text>
+                        <LineChart
+                            data={{
+                            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septemeber', 'October', 'November', 'Decemeber'],
+                            datasets: [{
+                                data: [ 20, 45, 28, 80, 99, 43, 1010, 321, 400, 2389, 2783, 3000 ]
+                            }]
+                            }}
+                            width={Dimensions.get('window').width - 40} // from react-native
+                            height={220}
+                            chartConfig={{
+                            backgroundColor: '#e26a00',
+                            backgroundGradientFrom: '#fb8c00',
+                            backgroundGradientTo: '#ffa726',
+                            decimalPlaces: 2, // optional, defaults to 2dp
+                            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                            style: {
+                                borderRadius: 16
+                            }
+                            }}
+                            bezier
+                            style={{
+                            marginVertical: 8,
+                            borderRadius: 16
+                            }}
+                        />
+                    </View> */}
             </View>
         );
     }
