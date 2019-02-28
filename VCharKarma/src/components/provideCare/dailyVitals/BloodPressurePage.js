@@ -87,7 +87,7 @@ class BloodPressurePage extends Component {
         return ( 
             <View style={styles.modalContent}> 
                 <Text style={styles.timeStyle}> 
-                    Today is {moment(new Date()).format("LT")}
+                    Today is {moment(new Date()).format("MMM DD, YYYY")}
                 </Text>   
 
                 <View style={styles.sliderContain}>

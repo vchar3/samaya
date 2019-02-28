@@ -58,7 +58,7 @@ class BathPage extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.timeStyle}> 
-                    Today is {moment(new Date()).format("LT")}
+                    Today is {moment(new Date()).format("MMM DD, YYYY")}
                 </Text>          
                 <ToggleSlider 
                     textLabel = 'Did you take a bath'

@@ -56,7 +56,7 @@ class OtherVitalsPage extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.timeStyle}> 
-                    Today is {moment(new Date()).format("LT")}
+                    Today is {moment(new Date()).format("MMM DD, YYYY")}
                 </Text> 
                 <View style={{flexDirection: 'row', justifyContent: 'space-around', padding: 20}}>
                     <Text style={{fontSize:18, width: 150}}>

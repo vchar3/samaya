@@ -35,7 +35,7 @@ class DailyVitalsPage extends Component {
             { name: 'Blood Pressure', routeName:'BloodPressure', icon: 'heartbeat'  },
             { name: 'Nutrition Intake', routeName:'Nutrition', icon: 'apple' },
             { name: 'Bath', routeName:'Bath', icon: 'bathtub'  }, 
-            { name: 'Num of Falls', routeName:'Falls', icon: 'bicycle' },
+            { name: 'Fall', routeName:'Falls', icon: 'bicycle' },
             { name: 'Other Vitals', routeName:'OtherVitals', icon: 'angellist'  }
           ];
 

@@ -1,5 +1,5 @@
 import React, {Component}  from 'react';
-import {Image, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight, TextInput, AsyncStorage } from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight, TextInput, AsyncStorage, ScrollView } from 'react-native';
 import { CheckBox, Slider } from 'react-native-elements';
 import { Graphs } from '../../../common/index';
 import moment from 'moment';
@@ -7,6 +7,8 @@ import feelingChanges from './FeelingChanges';
 import {connect} from 'react-redux';
 import { addFeeling } from '../../../../redux/actions/dailyVitalsAction';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
+import {randomColor} from 'randomcolor';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import { Button, CardSection} from '../../../common/index';
 
@@ -30,7 +32,11 @@ class FeelingPage extends Component {
         isGood: false,
         isFatigued: false,
         isTired: false,
-        isSick: false
+        isSick: false,
+        goodValue: 0,
+        fatiguedValue: 0,
+        tiredValue: 0,
+        sickValue: 0,
     }
 
     constructor() {
@@ -47,23 +53,102 @@ class FeelingPage extends Component {
             id: 'Mood',
             sliderValue: this.state.sliderValue,
             noteText: this.state.noteText,
-            isGood: this.state.isGood,
-            isFatigued: this.state.isFatigued,
-            isTired: this.state.isTired,
-            isSick: this.state.isSick,
+            goodValue: this.state.goodValue,
+            fatiguedValue: this.state.fatiguedValue,
+            tiredValue: this.state.tiredValue,
+            sickValue: this.state.sickValue,
             userId: this.state.userId
         };
         this.props.postFeeling(data);
         this.props.navigation.goBack();
     }
+
+    _buttonPressHandler(sliderValue, event) {
+        if(event === 'Good') {
+            this.setState({
+                isGood: true,
+                isFatigued: false,
+                isTired: false,
+                isSick: false,
+                goodValue: sliderValue
+            });
+
+        } else if(event === 'Fatigued') {
+            this.setState({
+                isGood: false,
+                isFatigued: true,
+                isTired: false,
+                isSick: false,
+                fatiguedValue: sliderValue 
+            });
+
+        } else if(event === 'Tired') {
+            this.setState({
+                isGood: false,
+                isFatigued: false,
+                isTired: true,
+                isSick: false,
+                tiredValue: sliderValue
+            });
+
+        } else if(event === 'Sick') {
+            this.setState({
+                isGood: false,
+                isFatigued: false,
+                isTired: false,
+                isSick: true,
+                sickValue: sliderValue
+            });
+
+        }
+    }
     
     render() {
+        let items = [
+            { name: 'Good', icon: 'grin-hearts', sliderValue: this.state.goodValue, showSlider: this.state.isGood }, 
+            { name: 'Fatigued', icon: 'flushed', sliderValue: this.state.fatiguedValue, showSlider: this.state.isFatigued  },
+            { name: 'Tired', icon: 'grin-beam-sweat', sliderValue: this.state.tiredValue, showSlider: this.state.isTired },
+            { name: 'Sick', icon: 'sad-cry', sliderValue: this.state.sickValue, showSlider: this.state.isSick  }
+          ];
         return (
             <View style={styles.modalContent}> 
                 <Text style={styles.timeStyle}> 
-                    Today is {moment(new Date()).format("LT")}
-                </Text>  
-                <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                    Today is {moment(new Date()).format("MMM DD, YYYY")}
+                </Text>
+                <ScrollView>
+                <View>
+                {   items.map((item) => 
+                        (   
+                            <TouchableHighlight 
+                                onPress={() => this._buttonPressHandler(item.sliderValue, item.name)} >
+                                <View style={[styles.containerBox, {backgroundColor: randomColor()}]}> 
+                                    <FontAwesome5 name={item.icon} size={50} color={'white'} style={{width: 50}}/> 
+                                    <View style={{width: 200, marginLeft: 10}}>
+                                        <Text style={styles.title}>{item.name}</Text>
+                                        {item.showSlider ? 
+                                        <Slider
+                                            style={styles.sliderStyle}
+                                            value={item.sliderValue}
+                                            minimumValue={0}
+                                            maximumValue={10}
+                                            step={1}
+                                            minimumTrackTintColor={'green'}
+                                            maximumTrackTintColor={'red'}
+                                            thumbTintColor={'#7DBADF'}
+                                            thumbTouchSize={{width: 240, height: 100}}
+                                            onValueChange={(value) => this._buttonPressHandler(value, item.name)} 
+                                        />
+                                        : 
+                                        null
+                                        } 
+                                    </View>
+                                </View>
+                            </TouchableHighlight> 
+                        )
+                    )
+                }  
+                </View>
+                {/* <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                     <CheckBox
                         title='Good'
                         size= {30}
@@ -121,7 +206,7 @@ class FeelingPage extends Component {
                         onValueChange={(value) => this.setState({sliderValue: value})} 
                     />
                     <Text style={styles.sliderTextStyle}>{this.state.sliderValue}</Text>
-                </View>
+                </View> */}
 
                 <AutoGrowTextArea 
                     self= {this}
@@ -137,6 +222,7 @@ class FeelingPage extends Component {
                 <Graphs 
                     uri= {'http://localhost:3000/api/graphs'}
                 />
+            </ScrollView>
             </View>
         );
     }
@@ -160,8 +246,8 @@ const styles = {
     modalContent: {
         flex: 1,
         backgroundColor: 'white',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
+        // justifyContent: 'flex-start',
+        // alignItems: 'center',
     },
     button: {
         backgroundColor: 'lightblue',
@@ -197,7 +283,23 @@ const styles = {
         fontWeight: 'bold',
     },
     sliderStyle: {
-        marginLeft:30,
-        marginRight: 30
+        marginLeft:10,
+        marginRight: 10
+    },
+    containerBox: {
+        height: 100,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingLeft: 30,
+        paddingRight: 15,
+        borderWidth: 1,
+        borderColor: '#FFFF'
+    },
+    title: {
+        padding : 10,
+        color   :'#ffff',
+        fontWeight:'bold',
+        fontSize:22
     },
 };

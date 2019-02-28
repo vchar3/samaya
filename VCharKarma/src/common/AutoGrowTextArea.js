@@ -39,8 +39,8 @@ const styles = {
         maxHeight: 100,
         flexDirection: 'row',
         alignItems:'center', 
-        width:300,
-        marginTop: 15
+        margin: 15,
+        
     },
 };
 
