@@ -1,7 +1,7 @@
 import React, {Component}  from 'react';
 import {Image, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight, TextInput, AsyncStorage, ScrollView } from 'react-native';
 import { CheckBox, Slider } from 'react-native-elements';
-import { Graphs } from '../../../common/index';
+import { Charts } from '../../../common/index';
 import moment from 'moment';
 import feelingChanges from './FeelingChanges';
 import {connect} from 'react-redux';
@@ -116,113 +116,54 @@ class FeelingPage extends Component {
                     Today is {moment(new Date()).format("MMM DD, YYYY")}
                 </Text>
                 <ScrollView>
-                <View>
-                {   items.map((item) => 
-                        (   
-                            <TouchableHighlight 
-                                onPress={() => this._buttonPressHandler(item.sliderValue, item.name)} >
-                                <View style={[styles.containerBox, {backgroundColor: '#7DBADF'}]}> 
-                                    <FontAwesome5 name={item.icon} size={50} color={'white'} style={{width: 50}}/> 
-                                    <View style={{width: 200, marginLeft: 10}}>
-                                        <Text style={styles.title}>{item.name}</Text>
-                                        {item.showSlider ? 
-                                        <Slider
-                                            style={styles.sliderStyle}
-                                            value={item.sliderValue}
-                                            minimumValue={0}
-                                            maximumValue={10}
-                                            step={1}
-                                            minimumTrackTintColor={'green'}
-                                            maximumTrackTintColor={'red'}
-                                            thumbTintColor={'#ffff'}
-                                            thumbTouchSize={{width: 240, height: 100}}
-                                            onValueChange={(value) => this._buttonPressHandler(value, item.name)} 
-                                        />
-                                        : 
-                                        null
-                                        } 
+                    <View>
+                    {   items.map((item) => 
+                            (   
+                                <TouchableHighlight 
+                                    onPress={() => this._buttonPressHandler(item.sliderValue, item.name)} >
+                                    <View style={[styles.containerBox, {backgroundColor: '#7DBADF'}]}> 
+                                        <FontAwesome5 name={item.icon} size={50} color={'white'} style={{width: 50}}/> 
+                                        <View style={{width: 200, marginLeft: 10}}>
+                                            <Text style={styles.title}>{item.name}</Text>
+                                            {item.showSlider ? 
+                                            <Slider
+                                                style={styles.sliderStyle}
+                                                value={item.sliderValue}
+                                                minimumValue={0}
+                                                maximumValue={10}
+                                                step={1}
+                                                minimumTrackTintColor={'green'}
+                                                maximumTrackTintColor={'red'}
+                                                thumbTintColor={'#ffff'}
+                                                thumbTouchSize={{width: 240, height: 100}}
+                                                onValueChange={(value) => this._buttonPressHandler(value, item.name)} 
+                                            />
+                                            : 
+                                            null
+                                            } 
+                                        </View>
                                     </View>
-                                </View>
-                            </TouchableHighlight> 
+                                </TouchableHighlight> 
+                            )
                         )
-                    )
-                }  
-                </View>
-                {/* <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                    <CheckBox
-                        title='Good'
-                        size= {30}
-                        uncheckedColor={'white'}
-                        textStyle= {{color: 'white', fontSize: 20}}
-                        containerStyle= {{backgroundColor:'#7DBADF', width: 140}}
-                        checked = {this.state.isGood}
-                        onPress={(value)=> feelingChanges('Good', value, this)}                  
+                    }  
+                    </View>
+                
+                    <AutoGrowTextArea 
+                        self= {this}
                     />
 
-                    <CheckBox
-                        title='Fatigued'
-                        size= {30}
-                        uncheckedColor={'white'}
-                        textStyle= {{color: 'white', fontSize: 20}}
-                        containerStyle= {{backgroundColor:'#7DBADF', width: 140}}
-                        checked = {this.state.isFatigued}
-                        onPress={(value)=> feelingChanges('Fatigued', value, this)}                  
+                    <CardSection>
+                        <Button 
+                            style={{backgroundColor:'#7DBADF'}} 
+                            onPress={this._buttonPressHandler.bind(this)}>
+                            <Text style={{color: '#fff'}}>Save</Text>
+                        </Button>
+                    </CardSection>
+                    <Charts 
+                        uri= {'graphs'}
                     />
-                </View>
-                <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                    <CheckBox
-                        title='Tired'
-                        size= {30}
-                        uncheckedColor={'white'}
-                        textStyle= {{color: 'white', fontSize: 20}}
-                        containerStyle= {{backgroundColor:'#7DBADF', width: 140}}
-                        checked = {this.state.isTired}
-                        onPress={(value)=> feelingChanges('Tired', value, this)}                  
-                    />
-
-                    <CheckBox
-                        title='Sick'
-                        size= {30}
-                        uncheckedColor={'white'}
-                        textStyle= {{color: 'white', fontSize: 20}}
-                        containerStyle= {{backgroundColor:'#7DBADF', width: 140}}
-                        checked = {this.state.isSick}
-                        onPress={(value)=> feelingChanges('Sick', value, this)}                  
-                    />
-
-                </View>
-                <View style={styles.sliderContainerStyle}>
-                    <Text style={styles.sliderTextStyle}>How are you feeling on scale of 1 to 10?</Text>
-                    <Slider
-                        style={styles.sliderStyle}
-                        value={this.state.sliderValue}
-                        minimumValue={0}
-                        maximumValue={10}
-                        step={1}
-                        minimumTrackTintColor={'green'}
-                        maximumTrackTintColor={'red'}
-                        thumbTintColor={'#7DBADF'}
-                        thumbTouchSize={{width: 240, height: 100}}
-                        onValueChange={(value) => this.setState({sliderValue: value})} 
-                    />
-                    <Text style={styles.sliderTextStyle}>{this.state.sliderValue}</Text>
-                </View> */}
-
-                <AutoGrowTextArea 
-                    self= {this}
-                />
-
-                <CardSection>
-                    <Button 
-                        style={{backgroundColor:'#7DBADF'}} 
-                        onPress={this._buttonPressHandler.bind(this)}>
-                          <Text style={{color: '#fff'}}>Save</Text>
-                    </Button>
-                </CardSection>
-                <Graphs 
-                    uri= {'http://localhost:3000/api/graphs'}
-                />
-            </ScrollView>
+                </ScrollView>
             </View>
         );
     }

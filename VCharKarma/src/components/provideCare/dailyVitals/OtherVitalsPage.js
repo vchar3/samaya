@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Image, Text, View, TouchableOpacity, TextInput, AsyncStorage } from 'react-native';
-import { ToggleSlider, Graphs } from '../../../common/index';
+import {Image, Text, View, TouchableOpacity, TextInput, AsyncStorage, ScrollView } from 'react-native';
+import { ToggleSlider, Charts } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { addOtherVitals } from '../../../../redux/actions/dailyVitalsAction';
@@ -51,75 +51,66 @@ class OtherVitalsPage extends Component {
         this.props.postOtherVital(data);
         this.props.navigation.goBack();
     }
+
+    _updateState(name, value) {
+        if(name == 'Body Temp') {
+            this.setState({ 
+                temp :value 
+            })
+        } else if( name === 'Respiratory Rate') {
+            this.setState({ 
+                respiratory :value
+            });
+        } else if(name === 'Pulse Oxygen') {
+            this.setState({ 
+                pulse :value
+            })
+        }
+    }
     
     render() {
+        let items = [
+            { name: 'Body Temp', icon: 'grin-hearts', value: this.state.temp }, 
+            { name: 'Respiratory Rate', icon: 'grin-hearts', value: this.state.respiratory }, 
+            { name: 'Pulse Oxygen', icon: 'grin-hearts', value: this.state.pulse }
+          ];
         return (
             <View style={styles.container}>
                 <Text style={styles.timeStyle}> 
                     Today is {moment(new Date()).format("MMM DD, YYYY")}
-                </Text> 
-                <View style={{flexDirection: 'row', justifyContent: 'space-around', padding: 20}}>
-                    <Text style={{fontSize:18, width: 150}}>
-                        Body Temp   
-                    </Text>
-                    <TextInput 
-                        value={this.state.temp}
-                        style={styles.inputStyle}
-                        onChangeText={ (value) => this.setState({ 
-                            temp :value 
-                        })}
+                </Text>
+                <ScrollView> 
+                    {   items.map((item) => 
+                            (          
+                                <View style={{flexDirection: 'row', justifyContent: 'space-around', marginBottom: 10}}>
+                                    <Text style={{fontSize:18, width: 150,  color: '#7DBADF'}}>
+                                        {item.name}  
+                                    </Text>
+                                    <TextInput 
+                                        value={item.value}
+                                        style={styles.inputStyle}
+                                        onChangeText={ (value) => this._updateState(item.name, value)}
+                                    />
+                                </View>
+                            )
+                        )
+                    }
+                    
+                    <AutoGrowTextArea 
+                        self= {this}
                     />
-                    <Text style={{textAlign:'center', fontSize:20, width: 60, marginLeft: 20}}>
-                    {this.state.temp}
-                    </Text>
-                </View>
 
-                <View style={{flexDirection: 'row', justifyContent: 'space-around', padding: 20}}>
-                    <Text style={{ fontSize:18, width: 150}}>
-                        Respiratory Rate
-                    </Text>
-                    <TextInput 
-                        value={this.state.respiratory}
-                        style={styles.inputStyle}
-                        onChangeText={ (value) => this.setState({ 
-                                respiratory :value
-                        })}
+                    <CardSection>
+                        <Button 
+                            style={styles.buttonStyle} 
+                            onPress={this._buttonPressHandler.bind(this)}>
+                            <Text style={styles.buttonTextStyle}>Save</Text>
+                        </Button>
+                    </CardSection>
+                    <Charts 
+                        uri= {'graphs'}
                     />
-                    <Text style={{textAlign:'center', fontSize:20, width: 60, marginLeft: 20}}>
-                    {this.state.respiratory}
-                    </Text>
-                </View>
-
-                <View style={{flexDirection: 'row', justifyContent: 'space-around', padding: 20}}>
-                    <Text style={{fontSize:18, width: 150}}>
-                        Pulse Oxygen
-                    </Text>
-                    <TextInput 
-                        value={this.state.pulse}
-                        style={styles.inputStyle}
-                        onChangeText={ (value) => this.setState({ 
-                            pulse :value
-                        })}
-                    />
-                    <Text style={{textAlign:'center', fontSize:20, width: 60, marginLeft: 20}}>
-                    {this.state.pulse}
-                    </Text>
-                </View>
-
-                <AutoGrowTextArea 
-                    self= {this}
-                />
-
-                <CardSection>
-                    <Button 
-                        style={{backgroundColor:'#7DBADF'}} 
-                        onPress={this._buttonPressHandler.bind(this)}>
-                          <Text style={{color: '#fff'}}>Save</Text>
-                    </Button>
-                </CardSection>
-                <Graphs 
-                    uri= {'http://localhost:3000/api/graphs'}
-                />
+                </ScrollView>
             </View>
         );
     }
@@ -143,25 +134,18 @@ const styles = {
     container: {
         flex: 1,
         backgroundColor: 'white',
-        paddingLeft: 20,
-        paddingRight: 20,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
     },
-    button: {
-        backgroundColor: 'lightblue',
-        padding: 12,
-        margin: 16,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
+    buttonStyle: {
+        backgroundColor:'#7DBADF'
+    },
+    buttonTextStyle: {
+        color: '#fff'
     },
     inputStyle: { 
-        padding: 5,
         fontSize: 18, 
         borderWidth: 1,
-        width: 60
+        width: 60,
+        borderColor: '#7DBADF'
     },
     timeStyle: {
         color: '#7DBADF', 

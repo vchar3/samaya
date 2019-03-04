@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Image, Text, View, TouchableOpacity, TextInput, ScrollView, AsyncStorage } from 'react-native';
-import { ToggleSlider, Graphs } from '../../../common/index';
+import { ToggleSlider, Charts } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { addFall } from '../../../../redux/actions/dailyVitalsAction';
@@ -58,77 +58,78 @@ class FallsPage extends Component {
             <View style={styles.container}>
                 <Text style={styles.timeStyle}> 
                     Today is {moment(new Date()).format("MMM DD, YYYY")}
-                </Text>  
-                <ToggleSlider 
-                    textLabel = 'Did you take walk today?'
-                    toggleSwitchHandler= {(value) => this.setState({
-                        isFalls: value
-                    })}
-                    isActive = {this.state.isFalls}
-                />
-                { this.state.isFalls  
-                ? <View>
-                    <Text  style={styles.timeStyle}>
-                        Number of fall today
-                    </Text>
-                    <TextInput 
-                        value={this.state.number}
-                        style={styles.inputStyle}
-                        keyboardType={ 'numeric'}
-                        onChangeText={ (value) => this.setState({ 
-                            number :value,
+                </Text> 
+                <ScrollView>
+                    <ToggleSlider 
+                        textLabel = 'Did you take walk today?'
+                        toggleSwitchHandler= {(value) => this.setState({
+                            isFalls: value
                         })}
+                        isActive = {this.state.isFalls}
                     />
-                </View>
-                : null
-                }
-
-                <AutoGrowTextArea 
-                    self= {this}
-                />
-
-
-                <CardSection>
-                    <Button 
-                        style={{backgroundColor:'#7DBADF'}} 
-                        onPress={this._buttonPressHandler.bind(this)}>
-                          <Text style={{color: '#fff'}}>Save</Text>
-                    </Button>
-                </CardSection>
-                <Graphs 
-                    uri= {'http://localhost:3000/api/graphs'}
-                />
-
-                {/* <BarChart
-                    style={{ height: 200, width: 300  }}
-                    data={ data }
-                    svg={{ fill }}
-                    contentInset={{ top: 30, bottom: 30 }}
-                >
-                    <Grid/>
-                </BarChart>
-
-                <ScrollView horizontal={true} contentContainerStyle={{width: 300}}>
-                    <View style={{ height: 200, padding: 20, width: 300 }}>
-                    <LineChart
-                        style={{ flex: 1 }}
-                        data={data}
-                        gridMin={0}
-                        contentInset={{ top: 10, bottom: 10 }}
-                        svg={{ stroke: 'rgb(134, 65, 244)' }}
-                    >
-                        <Grid />
-                    </LineChart>
-                    <XAxis
-                        style={{ marginHorizontal: -10 }}
-                        data={data}
-                        formatLabel={(value, index) => index}
-                        contentInset={{ left: 10, right: 10 }}
-                        svg={{ fontSize: 10, fill: 'black' }}
-                    />
+                    { this.state.isFalls  
+                    ? <View>
+                        <Text  style={styles.timeStyle}>
+                            Number of fall today
+                        </Text>
+                        <TextInput 
+                            value={this.state.number}
+                            style={styles.inputStyle}
+                            keyboardType={ 'numeric'}
+                            onChangeText={ (value) => this.setState({ 
+                                number :value,
+                            })}
+                        />
                     </View>
-                </ScrollView> */}
+                    : null
+                    }
 
+                    <AutoGrowTextArea 
+                        self= {this}
+                    />
+
+
+                    <CardSection>
+                        <Button 
+                            style={{backgroundColor:'#7DBADF'}} 
+                            onPress={this._buttonPressHandler.bind(this)}>
+                            <Text style={{color: '#fff'}}>Save</Text>
+                        </Button>
+                    </CardSection>
+                    <Charts 
+                        uri= {'graphs'}
+                    />
+
+                    {/* <BarChart
+                        style={{ height: 200, width: 300  }}
+                        data={ data }
+                        svg={{ fill }}
+                        contentInset={{ top: 30, bottom: 30 }}
+                    >
+                        <Grid/>
+                    </BarChart>
+
+                    <ScrollView horizontal={true} contentContainerStyle={{width: 300}}>
+                        <View style={{ height: 200, padding: 20, width: 300 }}>
+                        <LineChart
+                            style={{ flex: 1 }}
+                            data={data}
+                            gridMin={0}
+                            contentInset={{ top: 10, bottom: 10 }}
+                            svg={{ stroke: 'rgb(134, 65, 244)' }}
+                        >
+                            <Grid />
+                        </LineChart>
+                        <XAxis
+                            style={{ marginHorizontal: -10 }}
+                            data={data}
+                            formatLabel={(value, index) => index}
+                            contentInset={{ left: 10, right: 10 }}
+                            svg={{ fontSize: 10, fill: 'black' }}
+                        />
+                        </View>
+                    </ScrollView> */}
+                </ScrollView>
             </View>
         );
     }
@@ -151,11 +152,7 @@ export default connect(mapStateToProps, mapDispatchToProps) (FallsPage);
 const styles = {
     container: {
         flex: 1,
-        backgroundColor: 'white',
-        paddingLeft: 20,
-        paddingRight: 20,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
+        backgroundColor: 'white'
 
     },
     button: {

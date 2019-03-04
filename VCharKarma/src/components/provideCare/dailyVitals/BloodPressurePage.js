@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Image, Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
+import {Image, Text, View, TouchableOpacity, AsyncStorage, ScrollView } from 'react-native';
 import { Slider } from 'react-native-elements';
-import { Graphs } from '../../../common/index';
+import { Charts } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { addBloodPressure } from '../../../../redux/actions/dailyVitalsAction';
@@ -83,87 +83,62 @@ class BloodPressurePage extends Component {
         this.props.navigation.goBack();
     }
 
+    _updateHandler(value, name) {
+        if(name === 'SYS') {
+            this.setState({ sysValue: value }) ;
+        } else if(name === 'DIA') {
+            this.setState({diaValue: value});
+        } else if(name === 'BPM') {
+            this.setState({ bpmValue: value });
+        }
+    }
+
     render() {
+        let items = [
+            { name: 'SYS', icon: 'grin-hearts', sliderMin: this.state.sys.minimumValue, sliderMax: this.state.sys.maximumValue, sliderValue: this.state.sysValue },
+            { name: 'DIA', icon: 'grin-hearts', sliderMin: this.state.dia.diaMinimumValue, sliderMax: this.state.dia.diaMaximumValue, sliderValue: this.state.diaValue }, 
+            { name: 'BPM', icon: 'grin-hearts', sliderMin: this.state.bpm.bpmMinimumValue, sliderMax: this.state.bpm.bpmMaximumValue, sliderValue: this.state.bpmValue },  
+          ];
         return ( 
             <View style={styles.modalContent}> 
                 <Text style={styles.timeStyle}> 
                     Today is {moment(new Date()).format("MMM DD, YYYY")}
                 </Text>   
+                <ScrollView>
+                    {items.map((item) => 
+                        <View style={styles.sliderContain}>
+                            <Text style={styles.sliderChangeValue}>{item.sliderValue}</Text>
+                            <Slider
+                                style= {styles.sliderStyle}
+                                thumbTintColor= {'#7DBADF'}
+                                minimumTrackTintColor= {'#7DBADF'}
+                                maximumTrackTintColor= {'#d7e8ef'}
+                                value= {item.sliderValue}
+                                minimumValue= {item.sliderMin}
+                                maximumValue= {item.sliderMax}
+                                step= {1}
+                                onValueChange= {(changeValue) => this._updateHandler(changeValue, item.name)} 
+                            />
+                            <Text style={styles.sliderTitle}>{item.name} </Text>   
+                        </View>
+                    )}
 
-                <View style={styles.sliderContain}>
-                    <Text style={styles.sliderChangeValue}>{this.state.sysValue}</Text>
-                    <Slider
-                        style= {styles.sliderStyle}
-                        thumbTintColor= {'#7DBADF'}
-                        minimumTrackTintColor= {'#7DBADF'}
-                        maximumTrackTintColor= {'#d7e8ef'}
-                        value= {this.state.sysValue}
-                        minimumValue= {this.state.sys.minimumValue}
-                        maximumValue= {this.state.sys.maximumValue}
-                        step= {this.state.sys.step}
-                        onValueChange= {(changeValue) => { 
-                                this.setState({ sysValue: changeValue })
-                            } 
-                        } 
+                    <AutoGrowTextArea 
+                        self= {this}
                     />
-                
-                    <Text style={styles.sliderTitle}>{'SYS'} </Text>
                     
-                </View>
+                    <CardSection>
+                        <Button 
+                            style={{backgroundColor:'#7DBADF'}} 
+                            onPress={this._buttonPressHandler.bind(this)}>
+                            <Text style={{color: '#fff'}}>Save</Text>
+                        </Button>
+                    </CardSection>
 
-                <View style={styles.sliderContain}>
-                    <Text style={styles.sliderChangeValue}>{this.state.diaValue}</Text>                    
-                    <Slider
-                        style={styles.sliderStyle}
-                        thumbTintColor={'#7DBADF'}
-                        minimumTrackTintColor={'#7DBADF'}
-                        maximumTrackTintColor={'#d7e8ef'}
-                        value={this.state.diaValue}
-                        minimumValue={this.state.dia.diaMinimumValue}
-                        maximumValue={this.state.dia.diaMaximumValue}
-                        step={this.state.dia.diaStep}
-                        onValueChange={(changeValue) => {
-                                this.setState({diaValue: changeValue})
-                            }} 
-                        />
-                    <Text style={styles.sliderTitle}>{'DIA'} </Text>
-                </View>
-
-                <View style={styles.sliderContain}>
-                    <Text style={styles.sliderChangeValue}>{this.state.bpmValue}</Text>                    
-                    <Slider
-                        style={styles.sliderStyle}
-                        thumbTintColor={'#7DBADF'}
-                        minimumTrackTintColor={'#7DBADF'}
-                        maximumTrackTintColor={'#d7e8ef'}
-                        value={this.state.bpmValue}
-                        minimumValue={this.state.bpm.bpmMinimumValue}
-                        maximumValue={this.state.bpm.bpmMaximumValue}
-                        step={this.state.bpm.bpmStep}
-                        onValueChange={(changeValue) => {
-                                this.setState({ bpmValue: changeValue })}
-                            } 
-                        />
-                    <Text style={styles.sliderTitle}>{'BPM'} </Text>
-                </View>
-
-                <AutoGrowTextArea 
-                    self= {this}
-                />
-
-
-                <CardSection>
-                    <Button 
-                        style={{backgroundColor:'#7DBADF'}} 
-                        onPress={this._buttonPressHandler.bind(this)}>
-                          <Text style={{color: '#fff'}}>Save</Text>
-                    </Button>
-                </CardSection>
-
-                <Graphs 
-                    uri= {'http://localhost:3000/api/graphs'}
-                />
-
+                    <Charts 
+                        uri= {'graphs'}
+                    />
+                </ScrollView>
             </View>
         
         );
@@ -188,9 +163,7 @@ export default connect(mapStateToProps, mapDispatchToProps) (BloodPressurePage);
 const styles = {
     modalContent: {
         flex: 1,
-        backgroundColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
+        backgroundColor: 'white'
     },
     button: {
         backgroundColor: 'lightblue',
@@ -209,6 +182,7 @@ const styles = {
     },
     sliderContain: {
         textAlign: 'center',
+        alignItems: 'center'
     },
     sliderStyle: {
         width: 270

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Image, Text, View, TouchableOpacity, TextInput, Dimensions, AsyncStorage } from 'react-native';
-import { ToggleSlider, Graphs } from '../../../common/index';
+import {Image, Text, View, TouchableOpacity, TextInput, Dimensions, AsyncStorage, ScrollView } from 'react-native';
+import { ToggleSlider, Charts } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { addBath } from '../../../../redux/actions/dailyVitalsAction';
@@ -59,41 +59,42 @@ class BathPage extends Component {
             <View style={styles.container}>
                 <Text style={styles.timeStyle}> 
                     Today is {moment(new Date()).format("MMM DD, YYYY")}
-                </Text>          
-                <ToggleSlider 
-                    textLabel = 'Did you take a bath'
-                    toggleSwitchHandler= {(value) => this.setState({
-                        isBathTaken: value
-                    })}
-                    isActive = {this.state.isBathTaken}
-                />
+                </Text>
+                <ScrollView>          
+                    <ToggleSlider 
+                        textLabel = 'Did you take a bath'
+                        toggleSwitchHandler= {(value) => this.setState({
+                            isBathTaken: value
+                        })}
+                        isActive = {this.state.isBathTaken}
+                    />
 
-                <ToggleSlider 
-                    textLabel = 'Needed Assistance'
-                    toggleSwitchHandler= {(value) =>this.setState({
-                        isAssistanceNeeded: value,
-                    })}
-                    isActive = {this.state.isAssistanceNeeded}
-                />
+                    <ToggleSlider 
+                        textLabel = 'Needed Assistance'
+                        toggleSwitchHandler= {(value) =>this.setState({
+                            isAssistanceNeeded: value,
+                        })}
+                        isActive = {this.state.isAssistanceNeeded}
+                    />
 
-                <AutoGrowTextArea 
-                    self= {this}
-                />
+                    <AutoGrowTextArea 
+                        self= {this}
+                    />
 
-                <CardSection>
-                    <Button 
-                        style={{backgroundColor:'#7DBADF'}} 
-                        onPress={this._buttonPressHandler.bind(this)}>
-                          <Text style={{color: '#fff'}}>Save</Text>
-                    </Button>
-                    <Button 
-                        style={{backgroundColor:'#7DBADF'}} 
-                        onPress={this._buttonPressHandler.bind(this)}>
-                          <Text style={{color: '#fff'}}>Save</Text>
-                    </Button>
-                </CardSection>
-                    <Graphs 
-                        uri= {'http://localhost:3000/api/graphs'}
+                    <CardSection>
+                        <Button 
+                            style={{backgroundColor:'#7DBADF'}} 
+                            onPress={this._buttonPressHandler.bind(this)}>
+                            <Text style={{color: '#fff'}}>Save</Text>
+                        </Button>
+                        <Button 
+                            style={{backgroundColor:'#7DBADF'}} 
+                            onPress={this._buttonPressHandler.bind(this)}>
+                            <Text style={{color: '#fff'}}>Save</Text>
+                        </Button>
+                    </CardSection>
+                    <Charts 
+                        uri= {'graphs'}
                     />
                     {/* <View>
                         <Text>
@@ -125,6 +126,7 @@ class BathPage extends Component {
                             }}
                         />
                     </View> */}
+                </ScrollView>
             </View>
         );
     }
@@ -147,11 +149,7 @@ export default connect(mapStateToProps, mapDispatchToProps) (BathPage);
 const styles = {
     container: {
         flex: 1,
-        backgroundColor: 'white',
-        paddingLeft: 20,
-        paddingRight: 20,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
+        backgroundColor: 'white'
 
     },
     button: {

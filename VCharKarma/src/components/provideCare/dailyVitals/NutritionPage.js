@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, TextInput, AsyncStorage, ScrollView } from 'react-native';
-import { ToggleSlider, Graphs } from '../../../common/index';
+import { ToggleSlider, Charts } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { addNutrition } from '../../../../redux/actions/dailyVitalsAction';
@@ -85,14 +85,16 @@ class NutritionPage extends Component {
                         isActive = {this.state.isDinnerTaken}
                     />
 
-                    <Text style={{fontSize:24, marginTop: 10, color: '#7DBADF', }}>
+                    <Text style={{fontSize:24, marginTop: 10, color: '#7DBADF', textAlign: 'center'}}>
                         What did you eat?
                     </Text>
+                    <View style={{alignItems:'center'}}>
                     <TextInput 
                         value={this.state.foodToday}
                         style={styles.inputStyle}
                         onChangeText={ (food) => this.setState({ foodToday: food, dateTime: moment(new Date()).format("LT")  })}
                     />
+                    </View>
 
                     <ToggleSlider 
                         textLabel = 'Needed Assistance'
@@ -114,8 +116,8 @@ class NutritionPage extends Component {
                             <Text style={{color: '#fff'}}>Save</Text>
                         </Button>
                     </CardSection>
-                    <Graphs 
-                        uri= {'http://localhost:3000/api/graphs'}
+                    <Charts 
+                        uri= {'graphs'}
                     />
                 </ScrollView>
             </View>

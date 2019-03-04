@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
-import { localhostUrl } from '../../redux/apiUrlConfig';
+import { url } from '../../redux/apiUrlConfig';
  
 import Pdf from 'react-native-pdf';
  
@@ -9,8 +9,8 @@ export default class PDFViwer extends React.Component {
         title: 'Terms Of Service',
       };
     render() {
-        let url = localhostUrl + '/termOfService';
-        const source = {uri:url, cache:true};
+        let sourceUrl = url + '/termOfService';
+        const source = {uri:sourceUrl, cache:true};
         //const source = require('./test.pdf');  // ios only
         //const source = {uri:'bundle-assets://test.pdf'};
  

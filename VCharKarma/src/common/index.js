@@ -7,5 +7,5 @@ export * from './ToggleSlider';
 export * from './BottomNavBar';
 export * from './PageLayout';
 export * from './AppHeader';
-export * from './Graphs';
+export * from './Charts';
 

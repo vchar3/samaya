@@ -1,14 +1,16 @@
 import React from 'react';
 import { View, Text, WebView } from 'react-native';
+import {url} from '../../redux/apiUrlConfig'
 
-const Graphs = ({uri}) => { 
+const Charts = ({uri}) => { 
+    let sourceUrl = url + uri;
     return (
         <View style={styles.container}>
             <WebView
                 scrollEnabled= {false}
                 scalesPageToFit= {true}
                 javaScriptEnabled= {true}
-                source={{uri: uri}}
+                source={{uri: sourceUrl}}
                 automaticallyAdjustContentInsets={false} 
                 javaScriptEnabled={true}
                 domStorageEnabled={true}
@@ -25,4 +27,4 @@ const styles = {
     }
   };
 
-  export { Graphs };
+  export { Charts };
