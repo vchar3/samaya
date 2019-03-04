@@ -3,11 +3,11 @@ import { Text, View } from 'react-native';
 import FlipToggle from 'react-native-flip-toggle-button'
 import { material } from 'react-native-typography'
 
-const ToggleSlider = ({ textLabel, isActive, toggleSwitchHandler, toggleLongPressHandler }) => {
+const ToggleSlider = ({ textLabel, isActive, toggleSwitchHandler, toggleLongPressHandler, textStyle }) => {
     return (
         <View style={styles.container}>
                 <View  style={styles.textContainer}> 
-                    <Text style={styles.textStyle}>{textLabel}</Text>
+                    <Text style={[styles.textStyle, textStyle]}>{textLabel}</Text>
                 </View>
                 <View style={styles.sliderContainer}>
                     <FlipToggle
@@ -20,8 +20,8 @@ const ToggleSlider = ({ textLabel, isActive, toggleSwitchHandler, toggleLongPres
                         sliderRadius={50}
                         // onLabel={'On'}
                         // offLabel={'Off'}
-                        labelStyle={{color: 'black' }}
-                        buttonOnColor={'green'}
+                        //labelStyle={{color: 'black' }}
+                        buttonOnColor={'#7DBADF'}
                         buttonOffColor={'grey'}
                         sliderOnColor= {'white'}
                         sliderOffColor={ 'white'}
@@ -35,8 +35,8 @@ const ToggleSlider = ({ textLabel, isActive, toggleSwitchHandler, toggleLongPres
 const styles = {
     container: {     
         flexDirection: 'row', 
-        // marginLeft: 15,
-        // marginRight: 15,
+        marginLeft: 30,
+        marginRight: 30,
         marginBottom: 7.5, 
         marginTop: 7.5,
 
@@ -48,6 +48,7 @@ const styles = {
     },
     textStyle: {
         fontSize: 16,
+        color: '#7DBADF'
 
     },
     sliderContainer: { 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, Text, View, TouchableOpacity, TextInput, AsyncStorage } from 'react-native';
+import {Text, View, TextInput, AsyncStorage, ScrollView } from 'react-native';
 import { ToggleSlider, Graphs } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
@@ -58,64 +58,66 @@ class NutritionPage extends Component {
             <View style={styles.container}>
                 <Text style={styles.timeStyle}> 
                     Today is {moment(new Date()).format("MMM DD, YYYY")}
-                </Text> 
-                <ToggleSlider 
-                    textLabel = 'Breakfast'
-                    toggleSwitchHandler= {(value) => this.setState({
-                        isBreakfastTaken :value,
-                    })}
-                    isActive = {this.state.isBreakfastTaken}
-                />
-
-                <ToggleSlider 
-                    textLabel = 'Lunch'
-                    toggleSwitchHandler= {(value) => this.setState({
-                        isLunchTaken :value,
-                    })}
-                    isActive = {this.state.isLunchTaken}
-                />
-
-                <ToggleSlider 
-                    textLabel = 'Dinner'
-                    toggleSwitchHandler= {(value) => this.setState({
-                        isDinnerTaken :value,
-                        dateTime: moment(new Date()).format("LT")  
-                    })}
-                    isActive = {this.state.isDinnerTaken}
-                />
-
-                <Text style={{fontSize:24, marginTop: 10}}>
-                    What did you eat?
                 </Text>
-                <TextInput 
-                    value={this.state.foodToday}
-                    style={styles.inputStyle}
-                    onChangeText={ (food) => this.setState({ foodToday: food, dateTime: moment(new Date()).format("LT")  })}
-                />
+                <ScrollView> 
+                    <ToggleSlider 
+                        textLabel = 'Breakfast'
+                        toggleSwitchHandler= {(value) => this.setState({
+                            isBreakfastTaken :value,
+                        })}
+                        isActive = {this.state.isBreakfastTaken}
+                    />
 
-                <ToggleSlider 
-                    textLabel = 'Needed Assistance'
-                    toggleSwitchHandler= {(value) =>this.setState({
-                        isAssistanceNeeded :value,
-                        dateTime: moment(new Date()).format("LT")  
-                    })}
-                    isActive = {this.state.isAssistanceNeeded}
-                />
+                    <ToggleSlider 
+                        textLabel = 'Lunch'
+                        toggleSwitchHandler= {(value) => this.setState({
+                            isLunchTaken :value,
+                        })}
+                        isActive = {this.state.isLunchTaken}
+                    />
 
-                <AutoGrowTextArea 
-                    self= {this}
-                />
-                
-                <CardSection>
-                    <Button 
-                        style={{backgroundColor:'#7DBADF'}} 
-                        onPress={this._buttonPressHandler.bind(this)}>
-                          <Text style={{color: '#fff'}}>Save</Text>
-                    </Button>
-                </CardSection>
-                <Graphs 
-                    uri= {'http://localhost:3000/api/graphs'}
-                />
+                    <ToggleSlider 
+                        textLabel = 'Dinner'
+                        toggleSwitchHandler= {(value) => this.setState({
+                            isDinnerTaken :value,
+                            dateTime: moment(new Date()).format("LT")  
+                        })}
+                        isActive = {this.state.isDinnerTaken}
+                    />
+
+                    <Text style={{fontSize:24, marginTop: 10, color: '#7DBADF', }}>
+                        What did you eat?
+                    </Text>
+                    <TextInput 
+                        value={this.state.foodToday}
+                        style={styles.inputStyle}
+                        onChangeText={ (food) => this.setState({ foodToday: food, dateTime: moment(new Date()).format("LT")  })}
+                    />
+
+                    <ToggleSlider 
+                        textLabel = 'Needed Assistance'
+                        toggleSwitchHandler= {(value) =>this.setState({
+                            isAssistanceNeeded :value,
+                            dateTime: moment(new Date()).format("LT")  
+                        })}
+                        isActive = {this.state.isAssistanceNeeded}
+                    />
+
+                    <AutoGrowTextArea 
+                        self= {this}
+                    />
+                    
+                    <CardSection>
+                        <Button 
+                            style={{backgroundColor:'#7DBADF'}} 
+                            onPress={this._buttonPressHandler.bind(this)}>
+                            <Text style={{color: '#fff'}}>Save</Text>
+                        </Button>
+                    </CardSection>
+                    <Graphs 
+                        uri= {'http://localhost:3000/api/graphs'}
+                    />
+                </ScrollView>
             </View>
         );
     }
@@ -139,10 +141,10 @@ const styles = {
     container: {
         flex: 1,
         backgroundColor: 'white',
-        paddingLeft: 20,
-        paddingRight: 20,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
+        // paddingLeft: 20,
+        // paddingRight: 20,
+        // justifyContent: 'flex-start',
+        // alignItems: 'center',
 
     },
     button: {
@@ -158,6 +160,7 @@ const styles = {
         padding: 5,
         fontSize:24, 
         borderWidth: 1,
+        borderColor: '#7DBADF',
         marginBottom: 10,
         marginTop: 10,
         width: 270

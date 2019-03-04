@@ -121,7 +121,7 @@ class FeelingPage extends Component {
                         (   
                             <TouchableHighlight 
                                 onPress={() => this._buttonPressHandler(item.sliderValue, item.name)} >
-                                <View style={[styles.containerBox, {backgroundColor: randomColor()}]}> 
+                                <View style={[styles.containerBox, {backgroundColor: '#7DBADF'}]}> 
                                     <FontAwesome5 name={item.icon} size={50} color={'white'} style={{width: 50}}/> 
                                     <View style={{width: 200, marginLeft: 10}}>
                                         <Text style={styles.title}>{item.name}</Text>
@@ -134,7 +134,7 @@ class FeelingPage extends Component {
                                             step={1}
                                             minimumTrackTintColor={'green'}
                                             maximumTrackTintColor={'red'}
-                                            thumbTintColor={'#7DBADF'}
+                                            thumbTintColor={'#ffff'}
                                             thumbTouchSize={{width: 240, height: 100}}
                                             onValueChange={(value) => this._buttonPressHandler(value, item.name)} 
                                         />
@@ -269,7 +269,7 @@ const styles = {
         fontSize: 16, 
         textAlign:'center', 
         fontWeight: 'bold',
-        padding:20
+        padding:10
     },
     sliderContainerStyle: {
         width: 340,
@@ -294,7 +294,7 @@ const styles = {
         paddingLeft: 30,
         paddingRight: 15,
         borderWidth: 1,
-        borderColor: '#FFFF'
+        borderColor: '#ffff'
     },
     title: {
         padding : 10,
