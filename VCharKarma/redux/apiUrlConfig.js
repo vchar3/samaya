@@ -13,5 +13,8 @@ const baseURL = axios.create({
   baseURL: url
 });
 
-export { baseURL, webSocketUrl, url };
-
+export {
+  baseURL,
+  webSocketUrl,
+  url
+};

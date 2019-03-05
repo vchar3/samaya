@@ -73,6 +73,11 @@ const SettingNavigator = createStackNavigator(
     TermAndConditionPDF: {screen: PDFViwer},
   }
 );
+const ChatNavigator = createStackNavigator(
+  {
+    ChatPage: { screen: ChatPage},
+  }
+);
 
 const DrawNavigator = createDrawerNavigator(
   {
@@ -99,12 +104,12 @@ const HomeStackNavigation = createMaterialTopTabNavigator(
           }
         } 
       },
-      Profile: { 
-        screen: UserProfilePage,
+      Chat: { 
+        screen: ChatNavigator,
         navigationOptions: {
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Chat',
           tabBarIcon: ({ tintColor }) => {
-            return <Ionicons name='ios-add-circle' size={25} color={tintColor} />
+            return <Ionicons name='ios-chatboxes' size={25} color={tintColor} />
           }
         }  
       },

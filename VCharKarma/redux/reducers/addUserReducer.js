@@ -1,6 +1,14 @@
-import { DATA_SENDING, DATA_SENDING_SUCCESS, DATA_SENDING_FAILURE} from '../constants';
-import { NavigationActions } from 'react-navigation';
-import {SwitchNavigator } from '../../src/navigators/AppNavigator';
+import {
+    DATA_SENDING,
+    DATA_SENDING_SUCCESS,
+    DATA_SENDING_FAILURE
+} from '../constants';
+import {
+    NavigationActions
+} from 'react-navigation';
+import {
+    SwitchNavigator
+} from '../../src/navigators/AppNavigator';
 
 const initialState = {
     data: [],
@@ -9,7 +17,7 @@ const initialState = {
 }
 
 export default function addUserReducer(state = initialState, action) {
-    switch(action.type) {
+    switch (action.type) {
         case DATA_SENDING:
             return {
                 ...state,
@@ -28,7 +36,7 @@ export default function addUserReducer(state = initialState, action) {
                 isLoading: false,
                 error: action.error
             }
-        default: 
+        default:
             return state
     }
 }

@@ -50,7 +50,7 @@ class DailyVitalsPage extends Component {
                             (   
                                 <TouchableHighlight 
                                     onPress={() => this._buttonPressHandler(item.routeName)} >
-                                    <View style={[styles.containerBox, {backgroundColor: randomColor()}]}> 
+                                    <View style={[styles.containerBox, {backgroundColor: '#7DBADF'}]}> 
                                         <FontAwesome name={item.icon} size={50} color={'white'} /> 
                                         <Text style={styles.title}>{item.name}</Text>  
                                         <Feather name='chevron-right' size={50} color={'white'} /> 

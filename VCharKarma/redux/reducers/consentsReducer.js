@@ -1,4 +1,8 @@
-import { CONSENTS_SENDING, CONSENTS_SENDING_SUCCESS, CONSENTS_SENDING_FAILURE} from '../constants';
+import {
+    CONSENTS_SENDING,
+    CONSENTS_SENDING_SUCCESS,
+    CONSENTS_SENDING_FAILURE
+} from '../constants';
 
 const initialState = {
     data: [],
@@ -7,7 +11,7 @@ const initialState = {
 }
 
 export default function consentsReducer(state = initialState, action) {
-    switch(action.type) {
+    switch (action.type) {
         case CONSENTS_SENDING:
             return {
                 ...state,
@@ -26,7 +30,7 @@ export default function consentsReducer(state = initialState, action) {
                 isLoading: false,
                 error: action.error
             }
-        default: 
+        default:
             return state
     }
 }

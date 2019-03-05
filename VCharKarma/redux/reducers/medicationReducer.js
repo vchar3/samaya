@@ -1,4 +1,8 @@
-import { MEDICATION_SENDING, MEDICATION_SENDING_SUCCESS, MEDICATION_SENDING_FAILURE} from '../constants';
+import {
+    MEDICATION_SENDING,
+    MEDICATION_SENDING_SUCCESS,
+    MEDICATION_SENDING_FAILURE
+} from '../constants';
 
 const initialState = {
     data: [],
@@ -7,7 +11,7 @@ const initialState = {
 }
 
 export default function medicationReducer(state = initialState, action) {
-    switch(action.type) {
+    switch (action.type) {
         case MEDICATION_SENDING:
             return {
                 ...state,
@@ -26,9 +30,7 @@ export default function medicationReducer(state = initialState, action) {
                 isLoading: false,
                 error: action.error
             }
-        default: 
+        default:
             return state
     }
 }
-
-

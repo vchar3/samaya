@@ -1,5 +1,9 @@
-import { combineReducers } from 'redux';
-import { USER_LOGOUT} from '../constants';
+import {
+  combineReducers
+} from 'redux';
+import {
+  USER_LOGOUT
+} from '../constants';
 
 import nav from './navReducer';
 import auth from './authReducer';
@@ -11,22 +15,22 @@ import scheduleReducer from './scheduleReducer';
 import dailyVitalsReducer from './dailyVitalsReducer';
 
 const appReducers = combineReducers({
-    nav,
-    auth,
-    userReducer,
-    addUserReducer,
-    consentsReducer,
-    medicationReducer,
-    scheduleReducer,
-    dailyVitalsReducer
+  nav,
+  auth,
+  userReducer,
+  addUserReducer,
+  consentsReducer,
+  medicationReducer,
+  scheduleReducer,
+  dailyVitalsReducer
 });
 
 const rootReducers = (state, action) => {
-    if (action.type === USER_LOGOUT) {
-      state = undefined
-    }
-  
-    return appReducers(state, action)
+  if (action.type === USER_LOGOUT) {
+    state = undefined
   }
+
+  return appReducers(state, action)
+}
 
 export default rootReducers;
