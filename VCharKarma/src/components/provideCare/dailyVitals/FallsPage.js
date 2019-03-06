@@ -1,26 +1,14 @@
 import React, {Component} from 'react';
 import {Image, Text, View, TouchableOpacity, TextInput, ScrollView, AsyncStorage } from 'react-native';
-import { ToggleSlider, Charts } from '../../../common/index';
+import { ToggleSlider, Charts, Button, CardSection , headerBar} from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { addFall } from '../../../../redux/actions/dailyVitalsAction';
 import { BarChart, Grid, LineChart, XAxis } from 'react-native-svg-charts';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
-import { Button, CardSection} from '../../../common/index';
-
 class FallsPage extends Component { 
-    static navigationOptions = {
-        title: 'Walks & Falls',
-        headerStyle: {
-            backgroundColor: '#7DBADF',
-            borderBottomColor: '#fff'
-        },
-        headerTitleStyle: {
-            fontSize: 24
-        },
-        headerTintColor: "#ffff"
-    };
+    static navigationOptions = () => (headerBar('Walks & Falls'));
 
     state = {
         userId: '',
@@ -91,7 +79,7 @@ class FallsPage extends Component {
 
                     <CardSection>
                         <Button 
-                            style={{backgroundColor:'#7DBADF'}} 
+                            style={{backgroundColor:'#0077B5'}} 
                             onPress={this._buttonPressHandler.bind(this)}>
                             <Text style={{color: '#fff'}}>Save</Text>
                         </Button>
@@ -170,10 +158,10 @@ const styles = {
         borderWidth: 1,
         marginBottom: 10,
         marginTop: 10,
-        color: '#7DBADF', 
+        color: '#0077B5', 
     },
     timeStyle: {
-        color: '#7DBADF', 
+        color: '#0077B5', 
         fontSize: 16, 
         textAlign:'center', 
         padding:20

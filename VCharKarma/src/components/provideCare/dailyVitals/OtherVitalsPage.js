@@ -1,26 +1,14 @@
 import React, {Component} from 'react';
 import {Image, Text, View, TouchableOpacity, TextInput, AsyncStorage, ScrollView } from 'react-native';
-import { ToggleSlider, Charts } from '../../../common/index';
+import { ToggleSlider, Charts, Button, CardSection, headerBar } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { addOtherVitals } from '../../../../redux/actions/dailyVitalsAction';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
-import { Button, CardSection} from '../../../common/index';
-
 class OtherVitalsPage extends Component { 
-    static navigationOptions = {
-        title: 'OtherVitals',
-        headerStyle: {
-            backgroundColor: '#7DBADF',
-            borderBottomColor: '#fff'
-        },
-        headerTitleStyle: {
-            fontSize: 24
-        },
-        headerTintColor: "#ffff"
-    };
-
+    static navigationOptions = () => (headerBar('OtherVitals'));
+    
     state = {
         userId: '',
         noteText: '', 
@@ -83,7 +71,7 @@ class OtherVitalsPage extends Component {
                     {   items.map((item) => 
                             (          
                                 <View style={{flexDirection: 'row', justifyContent: 'space-around', marginBottom: 10}}>
-                                    <Text style={{fontSize:18, width: 150,  color: '#7DBADF'}}>
+                                    <Text style={{fontSize:18, width: 150,  color: '#0077B5'}}>
                                         {item.name}  
                                     </Text>
                                     <TextInput 
@@ -136,7 +124,7 @@ const styles = {
         backgroundColor: 'white',
     },
     buttonStyle: {
-        backgroundColor:'#7DBADF'
+        backgroundColor:'#0077B5'
     },
     buttonTextStyle: {
         color: '#fff'
@@ -145,10 +133,10 @@ const styles = {
         fontSize: 18, 
         borderWidth: 1,
         width: 60,
-        borderColor: '#7DBADF'
+        borderColor: '#0077B5'
     },
     timeStyle: {
-        color: '#7DBADF', 
+        color: '#0077B5', 
         fontSize: 16, 
         textAlign:'center', 
         padding:20

@@ -17,7 +17,7 @@ class MedicationsPage extends Component {
         return {
         title: 'Medications',
         headerStyle: {
-            backgroundColor: '#78B6DD',
+            backgroundColor: '#0077B5',
             borderBottomColor: '#fff',
             
         },

@@ -12,8 +12,8 @@ class SettingPage extends Component {
     static navigationOptions = {
         title: 'Setting',
         headerStyle: {
-            backgroundColor: '#7DBADF',
-            borderBottomColor: '#7DBADF'
+            backgroundColor: '#0077B5',
+            borderBottomColor: '#0077B5'
         },
         headerTitleStyle: {
             fontSize: 24

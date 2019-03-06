@@ -1,26 +1,14 @@
 import React, {Component} from 'react';
 import {Image, Text, View, TouchableOpacity, AsyncStorage, ScrollView } from 'react-native';
 import { Slider } from 'react-native-elements';
-import { Charts } from '../../../common/index';
+import { Charts, headerBar, Button, CardSection } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { addBloodPressure } from '../../../../redux/actions/dailyVitalsAction';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
-import { Button, CardSection} from '../../../common/index';
-
 class BloodPressurePage extends Component { 
-    static navigationOptions = {
-        title: 'Blood Pressure',
-        headerStyle: {
-            backgroundColor: '#7DBADF',
-            borderBottomColor: '#fff'
-        },
-        headerTitleStyle: {
-            fontSize: 24
-        },
-        headerTintColor: "#ffff"
-      };
+    static navigationOptions = () => (headerBar('Blood Pressure'));
 
     state = {
         userId: '',
@@ -110,8 +98,8 @@ class BloodPressurePage extends Component {
                             <Text style={styles.sliderChangeValue}>{item.sliderValue}</Text>
                             <Slider
                                 style= {styles.sliderStyle}
-                                thumbTintColor= {'#7DBADF'}
-                                minimumTrackTintColor= {'#7DBADF'}
+                                thumbTintColor= {'#0077B5'}
+                                minimumTrackTintColor= {'#0077B5'}
                                 maximumTrackTintColor= {'#d7e8ef'}
                                 value= {item.sliderValue}
                                 minimumValue= {item.sliderMin}
@@ -126,10 +114,10 @@ class BloodPressurePage extends Component {
                     <AutoGrowTextArea 
                         self= {this}
                     />
-                    
+
                     <CardSection>
                         <Button 
-                            style={{backgroundColor:'#7DBADF'}} 
+                            style={{backgroundColor:'#0077B5'}} 
                             onPress={this._buttonPressHandler.bind(this)}>
                             <Text style={{color: '#fff'}}>Save</Text>
                         </Button>
@@ -194,7 +182,7 @@ const styles = {
         fontSize: 24, 
         textAlign: 'center',
         fontWeight: 'bold',
-        color: '#7DBADF' 
+        color: '#0077B5' 
     },
     titleStyle: {
         fontSize: 24, 
@@ -202,10 +190,10 @@ const styles = {
     },
     sliderTitle: {
         fontSize: 14,
-        color: '#7DBADF'
+        color: '#0077B5'
     },
     timeStyle: {
-        color: '#7DBADF', 
+        color: '#0077B5', 
         fontSize: 16, 
         textAlign:'center', 
         padding:20

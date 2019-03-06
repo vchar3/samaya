@@ -22,8 +22,8 @@ export default class ChatPage extends Component {
     static navigationOptions = {
         title: 'Chat',
         headerStyle: {
-            backgroundColor: '#7DBADF',
-            borderBottomColor: '#7DBADF'
+            backgroundColor: '#0077B5',
+            borderBottomColor: '#0077B5'
         },
         headerTintColor: "#ffff",
         headerTitleStyle: {

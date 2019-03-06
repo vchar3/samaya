@@ -1,13 +1,24 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import OtherAccountPage from '../components/OtherAccountPage';
 
-const Header = ({headerText}) => { 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.textStyle}>{headerText}</Text>
-        </View>
-    );
-};
+const headerBar = (headerTitle) => {
+    return {           
+      title: headerTitle,
+      headerStyle: {
+          backgroundColor: '#0077B5',
+          borderBottomColor: '#fff',
+          
+      },
+      headerTintColor: "#ffff",
+      headerTitleStyle: {
+          fontSize: 24,
+          alignSelf: 'center',
+          textAlign: 'center',
+      },
+      headerRight: (<OtherAccountPage />)
+    }
+  }
 
 const styles = {
     container: {
@@ -28,4 +39,4 @@ const styles = {
     }
   };
 
-  export { Header };
+  export { headerBar };

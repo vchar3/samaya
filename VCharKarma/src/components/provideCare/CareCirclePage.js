@@ -10,7 +10,7 @@ class CareCirclePage extends Component {
     static navigationOptions = {
         title: 'Care Circle',
         headerStyle: {
-            backgroundColor: '#7DBADF',
+            backgroundColor: '#0077B5',
             borderBottomColor: '#fff'
         },
         headerTintColor: "#ffff",

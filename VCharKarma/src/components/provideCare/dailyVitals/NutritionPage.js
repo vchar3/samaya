@@ -1,25 +1,13 @@
 import React, {Component} from 'react';
 import {Text, View, TextInput, AsyncStorage, ScrollView } from 'react-native';
-import { ToggleSlider, Charts } from '../../../common/index';
+import { ToggleSlider, Charts, Button, CardSection, headerBar } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { addNutrition } from '../../../../redux/actions/dailyVitalsAction';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
-import { Button, CardSection} from '../../../common/index';
-
-class NutritionPage extends Component { 
-    static navigationOptions = {
-        title: 'Nutrition',
-        headerStyle: {
-            backgroundColor: '#7DBADF',
-            borderBottomColor: '#fff'
-        },
-        headerTitleStyle: {
-            fontSize: 24
-        },
-        headerTintColor: "#ffff"
-    };
+class NutritionPage extends Component {
+    static navigationOptions = () => (headerBar('Nutrition')); 
 
     state = {
         userId: '',
@@ -85,7 +73,7 @@ class NutritionPage extends Component {
                         isActive = {this.state.isDinnerTaken}
                     />
 
-                    <Text style={{fontSize:24, marginTop: 10, color: '#7DBADF', textAlign: 'center'}}>
+                    <Text style={{fontSize:24, marginTop: 10, color: '#0077B5', textAlign: 'center'}}>
                         What did you eat?
                     </Text>
                     <View style={{alignItems:'center'}}>
@@ -111,7 +99,7 @@ class NutritionPage extends Component {
                     
                     <CardSection>
                         <Button 
-                            style={{backgroundColor:'#7DBADF'}} 
+                            style={{backgroundColor:'#0077B5'}} 
                             onPress={this._buttonPressHandler.bind(this)}>
                             <Text style={{color: '#fff'}}>Save</Text>
                         </Button>
@@ -162,13 +150,13 @@ const styles = {
         padding: 5,
         fontSize:24, 
         borderWidth: 1,
-        borderColor: '#7DBADF',
+        borderColor: '#0077B5',
         marginBottom: 10,
         marginTop: 10,
         width: 270
     },
     timeStyle: {
-        color: '#7DBADF', 
+        color: '#0077B5', 
         fontSize: 16, 
         textAlign:'center', 
         padding:20

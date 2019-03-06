@@ -9,8 +9,8 @@ class UserProfilePage extends Component {
     static navigationOptions = {
         title: 'User Profile',
         headerStyle: {
-            backgroundColor: '#7DBADF',
-            borderBottomColor: '#7DBADF'
+            backgroundColor: '#0077B5',
+            borderBottomColor: '#0077B5'
         },
         headerTitleStyle: {
             fontSize: 24

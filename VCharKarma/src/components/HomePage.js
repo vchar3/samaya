@@ -8,31 +8,14 @@ import { fetchDataFromAPI, getUserLogin } from '../../redux/actions/actions';
 import GridView from 'react-native-super-grid';
 import BottomNavigation, { FullTab } from 'react-native-material-bottom-navigation';
 import FooterBar from '../common/FooterBar';
-import { BottomNavBar, AppHeader } from '../common/index';
+import { headerBar } from '../common/index';
 import {BottomTabBar} from '../navigators/AppNavigator';
 
 import OtherAccountPage from './OtherAccountPage';
 import SVGImage from '../common/SVGImage';
 
 class HomePage extends Component { 
-    static navigationOptions = ({navigation}) =>{
-        const {params = {}} = navigation.state;
-        return {
-        title: 'Welcome',
-        headerStyle: {
-            backgroundColor: '#0077B5',
-            borderBottomColor: '#fff',
-            
-        },
-        headerTintColor: "#ffff",
-        headerTitleStyle: {
-            fontSize: 24,
-            alignSelf: 'center',
-            textAlign: 'center',
-        },
-        headerRight: (<OtherAccountPage />)
-        }
-      };
+    static navigationOptions = () => (headerBar('Welcome'));
 
     state = { 
         userName: ''

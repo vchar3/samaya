@@ -1,7 +1,7 @@
 import React, {Component}  from 'react';
 import {Image, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight, TextInput, AsyncStorage, ScrollView } from 'react-native';
 import { CheckBox, Slider } from 'react-native-elements';
-import { Charts } from '../../../common/index';
+import { Charts, headerBar, Button, CardSection } from '../../../common/index';
 import moment from 'moment';
 import feelingChanges from './FeelingChanges';
 import {connect} from 'react-redux';
@@ -10,20 +10,8 @@ import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 import {randomColor} from 'randomcolor';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-import { Button, CardSection} from '../../../common/index';
-
 class FeelingPage extends Component { 
-    static navigationOptions = {
-        title: 'Feeling',
-        headerStyle: {
-            backgroundColor: '#7DBADF',
-            borderBottomColor: '#fff'
-        },
-        headerTitleStyle: {
-            fontSize: 24
-        },
-        headerTintColor: "#ffff"
-    };
+    static navigationOptions = () => (headerBar('Feeling'));
 
     state = {
         userId: '',
@@ -121,7 +109,7 @@ class FeelingPage extends Component {
                             (   
                                 <TouchableHighlight 
                                     onPress={() => this._buttonPressHandler(item.sliderValue, item.name)} >
-                                    <View style={[styles.containerBox, {backgroundColor: '#7DBADF'}]}> 
+                                    <View style={[styles.containerBox, {backgroundColor: '#0077B5'}]}> 
                                         <FontAwesome5 name={item.icon} size={50} color={'white'} style={{width: 50}}/> 
                                         <View style={{width: 200, marginLeft: 10}}>
                                             <Text style={styles.title}>{item.name}</Text>
@@ -155,7 +143,7 @@ class FeelingPage extends Component {
 
                     <CardSection>
                         <Button 
-                            style={{backgroundColor:'#7DBADF'}} 
+                            style={{backgroundColor:'#0077B5'}} 
                             onPress={this._buttonPressHandler.bind(this)}>
                             <Text style={{color: '#fff'}}>Save</Text>
                         </Button>
@@ -206,7 +194,7 @@ const styles = {
         fontSize: 24
     },
     timeStyle: {
-        color: '#7DBADF', 
+        color: '#0077B5', 
         fontSize: 16, 
         textAlign:'center', 
         fontWeight: 'bold',
@@ -218,7 +206,7 @@ const styles = {
         paddingTop: 15
     },
     sliderTextStyle: {
-        color: '#7DBADF', 
+        color: '#0077B5', 
         fontSize: 16, 
         textAlign:'center', 
         fontWeight: 'bold',

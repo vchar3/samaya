@@ -10,20 +10,10 @@ import Modal from 'react-native-modal';
 import moment from 'moment';
 import OtherAccountPage from '../../OtherAccountPage';
 import {randomColor} from 'randomcolor';
+import {headerBar} from '../../../common/index';
 
 class DailyVitalsPage extends Component { 
-    static navigationOptions = {
-        title: 'Daily Care',
-        headerStyle: {
-            backgroundColor: '#0077B5',
-            borderBottomColor: '#fff'
-        },
-        headerTitleStyle: {
-            fontSize: 24
-        },
-        headerTintColor: "#ffff",
-        headerRight: (<OtherAccountPage />)
-      };
+    static navigationOptions = () => (headerBar('Daily Care'));
 
     _buttonPressHandler(event) {
         this.props.navigation.navigate(event);
@@ -50,7 +40,7 @@ class DailyVitalsPage extends Component {
                             (   
                                 <TouchableHighlight 
                                     onPress={() => this._buttonPressHandler(item.routeName)} >
-                                    <View style={[styles.containerBox, {backgroundColor: '#7DBADF'}]}> 
+                                    <View style={[styles.containerBox, {backgroundColor: '#0077B5'}]}> 
                                         <FontAwesome name={item.icon} size={50} color={'white'} /> 
                                         <Text style={styles.title}>{item.name}</Text>  
                                         <Feather name='chevron-right' size={50} color={'white'} /> 

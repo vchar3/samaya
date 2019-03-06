@@ -1,27 +1,14 @@
 import React, {Component} from 'react';
 import {Image, Text, View, TouchableOpacity, TextInput, Dimensions, AsyncStorage, ScrollView } from 'react-native';
-import { ToggleSlider, Charts } from '../../../common/index';
+import { ToggleSlider, Charts, headerBar, Button, CardSection  } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { addBath } from '../../../../redux/actions/dailyVitalsAction';
 import { LineChart } from 'react-native-chart-kit';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 
-import { Button, CardSection} from '../../../common/index';
-
-
-class BathPage extends Component { 
-    static navigationOptions = {
-        title: 'Bath',
-        headerStyle: {
-            backgroundColor: '#7DBADF',
-            borderBottomColor: '#fff'
-        },
-        headerTitleStyle: {
-            fontSize: 24
-        },
-        headerTintColor: "#ffff"
-    };
+class BathPage extends Component {
+    static navigationOptions = () => (headerBar('Bath')); 
 
     state = {
         userId: '',
@@ -83,12 +70,12 @@ class BathPage extends Component {
 
                     <CardSection>
                         <Button 
-                            style={{backgroundColor:'#7DBADF'}} 
+                            style={{backgroundColor:'#0077B5'}} 
                             onPress={this._buttonPressHandler.bind(this)}>
                             <Text style={{color: '#fff'}}>Save</Text>
                         </Button>
                         <Button 
-                            style={{backgroundColor:'#7DBADF'}} 
+                            style={{backgroundColor:'#0077B5'}} 
                             onPress={this._buttonPressHandler.bind(this)}>
                             <Text style={{color: '#fff'}}>Save</Text>
                         </Button>
@@ -162,7 +149,7 @@ const styles = {
         borderColor: 'rgba(0, 0, 0, 0.1)',
     },
     timeStyle: {
-        color: '#7DBADF', 
+        color: '#0077B5', 
         fontSize: 16, 
         textAlign:'center', 
         padding:20
