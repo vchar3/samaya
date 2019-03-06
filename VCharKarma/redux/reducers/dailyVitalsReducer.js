@@ -1,4 +1,8 @@
-import { VITALS_SENDING, VITALS_SENDING_SUCCESS, VITALS_SENDING_FAILURE} from '../constants';
+import {
+    VITALS_SENDING,
+    VITALS_SENDING_SUCCESS,
+    VITALS_SENDING_FAILURE
+} from '../constants';
 
 const initialState = {
     data: [],
@@ -7,7 +11,7 @@ const initialState = {
 }
 
 export default function dailyVitalsReducer(state = initialState, action) {
-    switch(action.type) {
+    switch (action.type) {
         case VITALS_SENDING:
             return {
                 ...state,
@@ -26,7 +30,7 @@ export default function dailyVitalsReducer(state = initialState, action) {
                 isLoading: false,
                 error: action.error
             }
-        default: 
+        default:
             return state
     }
 }

@@ -1,4 +1,8 @@
-import { SCHEDULE_SENDING, SCHEDULE_SENDING_SUCCESS, SCHEDULE_SENDING_FAILURE} from '../constants';
+import {
+    SCHEDULE_SENDING,
+    SCHEDULE_SENDING_SUCCESS,
+    SCHEDULE_SENDING_FAILURE
+} from '../constants';
 
 const initialState = {
     data: [],
@@ -7,7 +11,7 @@ const initialState = {
 }
 
 export default function scheduleReducer(state = initialState, action) {
-    switch(action.type) {
+    switch (action.type) {
         case SCHEDULE_SENDING:
             return {
                 ...state,
@@ -26,9 +30,7 @@ export default function scheduleReducer(state = initialState, action) {
                 isLoading: false,
                 error: action.error
             }
-        default: 
+        default:
             return state
     }
 }
-
-
