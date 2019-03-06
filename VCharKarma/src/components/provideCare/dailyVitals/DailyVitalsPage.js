@@ -15,7 +15,7 @@ class DailyVitalsPage extends Component {
     static navigationOptions = {
         title: 'Daily Care',
         headerStyle: {
-            backgroundColor: '#7DBADF',
+            backgroundColor: '#0077B5',
             borderBottomColor: '#fff'
         },
         headerTitleStyle: {

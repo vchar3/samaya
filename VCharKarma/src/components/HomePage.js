@@ -20,7 +20,7 @@ class HomePage extends Component {
         return {
         title: 'Welcome',
         headerStyle: {
-            backgroundColor: '#78B6DD',
+            backgroundColor: '#0077B5',
             borderBottomColor: '#fff',
             
         },
@@ -128,14 +128,14 @@ const styles = {
         alignItems: 'center',
         borderRadius: 5,
         borderWidth: 1,
-        borderColor: '#78B6DD',
+        borderColor: '#0077B5',
         height: 130,
         width: 150,
         marginBottom: 20
     },
     itemName: {
         fontSize: 16,
-        color: '#78B6DD',
+        color: '#0077B5',
         fontWeight: '600',
     },
     buttonImage: {
