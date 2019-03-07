@@ -3,23 +3,10 @@ import {ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-nativ
 import { NavigationActions } from 'react-navigation';
 import { TextField } from 'react-native-material-textfield';
 
-import { Button, CardSection} from '../../common/index';
+import { Button, CardSection, headerBarWithOutAccount} from '../../common/index';
 
-class SuccessPage extends Component { 
-    static navigationOptions = {
-        title: 'Congratulations',
-        headerStyle: {
-            backgroundColor: '#78B6DD',
-            borderBottomColor: '#fff',
-            
-        },
-        headerTintColor: "#ffff",
-        headerTitleStyle: {
-            fontSize: 24,
-            alignSelf: 'center',
-            textAlign: 'center',
-        },
-      };
+class SuccessPage extends Component {
+    static navigationOptions = () => (headerBarWithOutAccount('New Account')); 
 
     _buttonPressHandler(event) {
         this.props.navigation.navigate('Login');
@@ -49,7 +36,7 @@ class SuccessPage extends Component {
 
                 <CardSection>
                     <Button 
-                        style={{backgroundColor:'#32CD32'}} 
+                        style={{backgroundColor:'#0077B5'}} 
                         onPress={this._buttonPressHandler.bind(this)}>
                             <Text style={{color: '#fff'}}>Contiune</Text>
                     </Button>

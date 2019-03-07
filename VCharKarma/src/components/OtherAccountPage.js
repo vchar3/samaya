@@ -16,13 +16,15 @@ class OtherAccountPage extends Component {
 
     constructor() {
         super();
-
-        AsyncStorage.getItem('userName').then((value) => {
+  
+        AsyncStorage.getItem('name').then((value) => {
             this.setState({
                 userName: value
             });
+        });
+        AsyncStorage.getItem('userName').then((value) => {
             this.props.getAccountList(value);
-        })      
+        });      
     }
 
     componentDidUpdate(prevProps) {

@@ -3,22 +3,41 @@ import { View, Text } from 'react-native';
 import OtherAccountPage from '../components/OtherAccountPage';
 
 const headerBar = (headerTitle) => {
-    return {           
-      title: headerTitle,
-      headerStyle: {
-          backgroundColor: '#0077B5',
-          borderBottomColor: '#fff',
-          
-      },
-      headerTintColor: "#ffff",
-      headerTitleStyle: {
-          fontSize: 24,
-          alignSelf: 'center',
-          textAlign: 'center',
-      },
-      headerRight: (<OtherAccountPage />)
+  return {           
+    title: headerTitle,
+    headerStyle: {
+        backgroundColor: '#0077B5',
+        borderBottomColor: '#fff',
+        
+    },
+    headerTintColor: "#ffff",
+    headerTitleStyle: {
+        fontSize: 24,
+        alignSelf: 'center',
+        textAlign: 'center',
+    },
+    headerRight: (<OtherAccountPage />)
+  }
+};
+
+const headerBarWithOutAccount = (headerTitle) => {
+  return {           
+    title: headerTitle,
+    headerStyle: {
+        backgroundColor: '#0077B5',
+        borderBottomColor: '#fff',
+        
+    },
+    headerTintColor: "#ffff",
+    headerTitleStyle: {
+        fontSize: 24,
+        alignSelf: 'center',
+        textAlign: 'center',
     }
   }
+};
+
+
 
 const styles = {
     container: {
@@ -39,4 +58,4 @@ const styles = {
     }
   };
 
-  export { headerBar };
+  export { headerBar, headerBarWithOutAccount };

@@ -38,7 +38,7 @@ class LoginPage extends Component {
         if(authenticationToken && authenticationToken !== prevProps.authenticationToken) {
             AsyncStorage.setItem('userToken', authenticationToken);
             AsyncStorage.setItem('userName', this.state.username);
-            //AsyncStorage.setItem('name', userDetailInfo.name);
+            AsyncStorage.setItem('name', userDetailInfo.name);
             AsyncStorage.setItem('userId', userDetailInfo.userid);
             this.props.navigation.navigate('HomeStack',{
                 userName: this.state.username
@@ -63,7 +63,7 @@ class LoginPage extends Component {
         const resizeMode = 'center';
         return (
             <View style={styles.container}> 
-                <View
+                {/* <View
                     style={{
                         position: 'absolute',
                         width: wp('100%'),
@@ -74,7 +74,7 @@ class LoginPage extends Component {
                         source={require('../../img/BackgroundScreen.png')}
                     />
 
-                </View>
+                </View> */}
                 <View style={styles.imageContainerStyle}>
                     <Image style={styles.imageStyle}
                         source={require('../../img/CareVen.png')}/>
@@ -98,6 +98,7 @@ class LoginPage extends Component {
                             placeholderTextColor="white"
                             style={styles.inputStyle}
                             onChangeText={ (username) => this.setState({ username })}
+                            selectionColor={'white'}
                         /> 
                     </View> 
                 </CardSection>
@@ -115,6 +116,7 @@ class LoginPage extends Component {
                             style={styles.inputStyle}
                             secureTextEntry= {true}
                             onChangeText={ (password) => this.setState({ password })}
+                            selectionColor={'white'}
                         />
                     </View>
                 
@@ -178,7 +180,7 @@ export default connect(mapStateToProps, mapDispatchToProps) (LoginPage);
 
 const styles = {
     container: {     
-        backgroundColor: '#fff',
+        backgroundColor: '#0077B5',
         flex: 1
       },
     textStyle: {
@@ -192,7 +194,8 @@ const styles = {
 
     },
     inputContainerStyle: {
-        flex: 1,flexDirection: 'row',  
+        flex: 1,
+        flexDirection: 'row',  
         borderBottomColor:'#fff', 
         borderBottomWidth:1,  
         paddingLeft: 15, 
@@ -226,6 +229,7 @@ const styles = {
         
     },
     errorTextStyle: {
+        textAlign:'center',
         fontSize:20, 
         color: 'red' 
     },
@@ -234,9 +238,5 @@ const styles = {
     },
     createAccountStyle: {
         backgroundColor:'#D0DFF1'
-    },
-    lineStyle: {
-        flexDirection:'row', 
-        flex: 1
-    },
+    }
   };

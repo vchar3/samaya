@@ -2,34 +2,21 @@ import React, {Component}  from 'react';
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { TextField } from 'react-native-material-textfield';
-import { Button, CardSection} from '../../common/index';
+import { Button, CardSection, headerBarWithOutAccount} from '../../common/index';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 
 
 class ProfilePage extends Component { 
-    static navigationOptions = {
-        title: 'Profile',
-        headerStyle: {
-            backgroundColor: '#78B6DD',
-            borderBottomColor: '#fff',
-            
-        },
-        headerTintColor: "#ffff",
-        headerTitleStyle: {
-            fontSize: 24,
-            alignSelf: 'center',
-            textAlign: 'center',
-        },
-      };
+    static navigationOptions = () => (headerBarWithOutAccount('New Account')); 
 
     state = { 
         isDateTimePickerVisible: false,
         firstName: '',
         lastName:'',
         dateOfBirth:'',
-        gender:'',
+        gender:'Male',
         phone:'',
         homePhone:'',
         error: '',
@@ -114,8 +101,8 @@ class ProfilePage extends Component {
     render() {
         let { firstName, lastName, dateOfBirth, gender, phone, homePhone} = this.state;
         var radio_props = [
-            {label: 'Male', value: 'M' },
-            {label: 'Female', value: 'F' }
+            {label: 'Male', value: 'Male' },
+            {label: 'Female', value: 'Female' }
           ];
         return (
             <View style={styles.container}>
@@ -130,9 +117,9 @@ class ProfilePage extends Component {
                         value={firstName}
                         error={this.state.errorFirstName}
                         errorColor={this.state.errorColor}
-                        textColor={'#78B6DD'}
-                        baseColor={'#78B6DD'}
-                        tintColor={'#78B6DD'}
+                        textColor={'#0077B5'}
+                        baseColor={'#0077B5'}
+                        tintColor={'#0077B5'}
                         onChangeText={ (firstName) => this.setState({ 
                             firstName:firstName,
                             errorFirstName: ''
@@ -144,9 +131,9 @@ class ProfilePage extends Component {
                         value={lastName}
                         error={this.state.errorLastName}
                         errorColor={this.state.errorColor}
-                        textColor={'#78B6DD'}
-                        baseColor={'#78B6DD'}
-                        tintColor={'#78B6DD'}
+                        textColor={'#0077B5'}
+                        baseColor={'#0077B5'}
+                        tintColor={'#0077B5'}
                         onChangeText={ (lastName) => this.setState({ 
                             lastName:lastName,
                             errorLastName: ''
@@ -158,9 +145,9 @@ class ProfilePage extends Component {
                         value={dateOfBirth}
                         error={this.state.errorDOB}
                         errorColor={this.state.errorColor}
-                        textColor={'#78B6DD'}
-                        baseColor={'#78B6DD'}
-                        tintColor={'#78B6DD'}
+                        textColor={'#0077B5'}
+                        baseColor={'#0077B5'}
+                        tintColor={'#0077B5'}
                         onChangeText={ (dateOfBirth) => this.setState({ 
                             dateOfBirth: dateOfBirth,
                             errorDOB:''
@@ -176,7 +163,7 @@ class ProfilePage extends Component {
                         onCancel={this._hideDateTimePicker}
                         titleIOS={'Date of Birth'}
                         mode={'date'}
-                        titleStyle= {{fontSize: 20, color: '#78B6DD'}}
+                        titleStyle= {{fontSize: 20, color: '#0077B5'}}
                     />
                     
                     <View style={{width: 340, alignItems: 'center', marginTop: 10}}>
@@ -185,7 +172,7 @@ class ProfilePage extends Component {
                             initial={0}
                             onPress={(value) => {this.setState({gender:value})}}
                             formHorizontal={true}
-                            labelStyle={{fontSize: 20, marginRight: 20, color: '#78B6DD'}}
+                            labelStyle={{fontSize: 20, marginRight: 20, color: '#0077B5'}}
                             buttonWrapStyle={{marginLeft: 50}}
 
                         />
@@ -197,9 +184,9 @@ class ProfilePage extends Component {
                         keyboardType= {'phone-pad'}
                         error={this.state.errorMobile}
                         errorColor={this.state.errorColor}
-                        textColor={'#78B6DD'}
-                        baseColor={'#78B6DD'}
-                        tintColor={'#78B6DD'}
+                        textColor={'#0077B5'}
+                        baseColor={'#0077B5'}
+                        tintColor={'#0077B5'}
                         onChangeText={ (phone) => this.setState({ 
                             phone:phone,
                             errorMobile: ''
@@ -210,9 +197,9 @@ class ProfilePage extends Component {
                         label='Home Phone'
                         value={homePhone}
                         keyboardType= {'phone-pad'}
-                        textColor={'#78B6DD'}
-                        baseColor={'#78B6DD'}
-                        tintColor={'#78B6DD'}
+                        textColor={'#0077B5'}
+                        baseColor={'#0077B5'}
+                        tintColor={'#0077B5'}
                         onChangeText={ (homePhone) => this.setState({ 
                             homePhone:homePhone,
                         }) }
@@ -221,7 +208,7 @@ class ProfilePage extends Component {
                 </View>
                 <CardSection>
                     <Button 
-                        style={{backgroundColor:'#32CD32'}} 
+                        style={{backgroundColor:'#0077B5'}} 
                         onPress={this._buttonPressHandler.bind(this)}>
                            <Text style={{color: '#fff'}}>Contiune</Text>
                     </Button>

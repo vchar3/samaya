@@ -2,34 +2,21 @@ import React, {Component}  from 'react';
 import {ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { TextField } from 'react-native-material-textfield';
-import { Button, CardSection} from '../../common/index';
+import { Button, CardSection, headerBarWithOutAccount} from '../../common/index';
 import {randomColor} from 'randomcolor';
 import {connect} from 'react-redux';
 import { CheckBox } from 'react-native-elements'
 import { createNewUser } from '../../../redux/actions/addUserAction';
 
-class HealthProfilePage extends Component { 
-    static navigationOptions = {
-        title: 'Health Profile',
-        headerStyle: {
-            backgroundColor: '#78B6DD',
-            borderBottomColor: '#fff',
-            
-        },
-        headerTintColor: "#ffff",
-        headerTitleStyle: {
-            fontSize: 24,
-            alignSelf: 'center',
-            textAlign: 'center',
-        },
-      };
+class HealthProfilePage extends Component {
+    static navigationOptions = () => (headerBarWithOutAccount('New Account')); 
 
     state = { 
         bloodType:'',
         allergies:'',
         height:'',
         weight:'',
-        buttonColor: '#32CD32',
+        buttonColor: '#8c8a8a',
         checked: false
     }
 
@@ -65,6 +52,24 @@ class HealthProfilePage extends Component {
         console.log('term and condition');
         this.props.navigation.navigate('PDFViwer');
     }
+
+    handleCheckBox() {
+        this.setState({
+            checked: !this.state.checked,
+            error: ''
+        })
+
+        let color ;
+        if(this.state.checked) { 
+            color = '#8c8a8a';
+        } else {
+            color = '#0077B5'
+        }
+
+        this.setState({
+            buttonColor: color
+        }) 
+    }
    
     render() {
         const { navigation } = this.props;
@@ -82,9 +87,9 @@ class HealthProfilePage extends Component {
                 <TextField
                     label='Blood Type'
                     value={bloodType}
-                    textColor={'#78B6DD'}
-                    baseColor={'#78B6DD'}
-                    tintColor={'#78B6DD'}
+                    textColor={'#0077B5'}
+                    baseColor={'#0077B5'}
+                    tintColor={'#0077B5'}
                     onChangeText={ (bloodType) => this.setState({ 
                         bloodType:bloodType,
                       }) }
@@ -93,9 +98,9 @@ class HealthProfilePage extends Component {
                 <TextField
                     label='Allergies'
                     value={allergies}
-                    textColor={'#78B6DD'}
-                    baseColor={'#78B6DD'}
-                    tintColor={'#78B6DD'}
+                    textColor={'#0077B5'}
+                    baseColor={'#0077B5'}
+                    tintColor={'#0077B5'}
                     onChangeText={ (allergies) => this.setState({ 
                         allergies:allergies,
                       }) }
@@ -104,9 +109,9 @@ class HealthProfilePage extends Component {
                 <TextField
                     label='Height'
                     value={height}
-                    textColor={'#78B6DD'}
-                    baseColor={'#78B6DD'}
-                    tintColor={'#78B6DD'}
+                    textColor={'#0077B5'}
+                    baseColor={'#0077B5'}
+                    tintColor={'#0077B5'}
                     onChangeText={ (height) => this.setState({ 
                         height:height,
                       }) }
@@ -115,9 +120,9 @@ class HealthProfilePage extends Component {
                 <TextField
                     label='Weight'
                     value={weight}
-                    textColor={'#78B6DD'}
-                    baseColor={'#78B6DD'}
-                    tintColor={'#78B6DD'}
+                    textColor={'#0077B5'}
+                    baseColor={'#0077B5'}
+                    tintColor={'#0077B5'}
                     onChangeText={ (weight) => this.setState({ 
                         weight:weight,
                       }) }
@@ -125,15 +130,11 @@ class HealthProfilePage extends Component {
 
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'flex-start', width: 300}}>
-                    <CheckBox 
-                    
+                    <CheckBox            
                     containerStyle={{backgroundColor: '#ffff', borderRadius: 0, borderWidth: 0, padding: 0}}
                     checked={this.state.checked}
                     size= {30}
-                    onPress={() => this.setState({
-                        checked: !this.state.checked,
-                        error: ''
-                    })}
+                    onPress={() => this.handleCheckBox()}
                     />
                     <View >
                        <Text style={{fontSize: 20}}>I have read and agree to the </Text> 
