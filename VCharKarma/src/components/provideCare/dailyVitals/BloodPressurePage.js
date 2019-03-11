@@ -6,6 +6,8 @@ import moment from 'moment';
 import {connect} from 'react-redux';
 import { addBloodPressure } from '../../../../redux/actions/dailyVitalsAction';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
+import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 class BloodPressurePage extends Component { 
     static navigationOptions = () => (headerBar('Blood Pressure'));
@@ -30,7 +32,8 @@ class BloodPressurePage extends Component {
             bpmMinimumValue: 40,
             bpmMaximumValue: 240,
             bpmStep: 1
-        }
+        },
+        isShowMore: false
     }
 
     constructor() {
@@ -81,41 +84,81 @@ class BloodPressurePage extends Component {
         }
     }
 
+    _showHideChart() {
+        this.setState({
+            isShowMore : !this.state.isShowMore
+        })
+    }
+
     render() {
         let items = [
             { name: 'SYS', icon: 'grin-hearts', sliderMin: this.state.sys.minimumValue, sliderMax: this.state.sys.maximumValue, sliderValue: this.state.sysValue },
             { name: 'DIA', icon: 'grin-hearts', sliderMin: this.state.dia.diaMinimumValue, sliderMax: this.state.dia.diaMaximumValue, sliderValue: this.state.diaValue }, 
             { name: 'BPM', icon: 'grin-hearts', sliderMin: this.state.bpm.bpmMinimumValue, sliderMax: this.state.bpm.bpmMaximumValue, sliderValue: this.state.bpmValue },  
           ];
-        return ( 
-            <View style={styles.modalContent}> 
-                <Text style={styles.timeStyle}> 
-                    Today is {moment(new Date()).format("MMM DD, YYYY")}
-                </Text>   
-                <ScrollView>
-                    {items.map((item) => 
-                        <View style={styles.sliderContain}>
-                            <Text style={styles.sliderChangeValue}>{item.sliderValue}</Text>
-                            <Slider
-                                style= {styles.sliderStyle}
-                                thumbTintColor= {'#0077B5'}
-                                minimumTrackTintColor= {'#0077B5'}
-                                maximumTrackTintColor= {'#d7e8ef'}
-                                value= {item.sliderValue}
-                                minimumValue= {item.sliderMin}
-                                maximumValue= {item.sliderMax}
-                                step= {1}
-                                onValueChange= {(changeValue) => this._updateHandler(changeValue, item.name)} 
-                            />
-                            <Text style={styles.sliderTitle}>{item.name} </Text>   
-                        </View>
-                    )}
+        return (
+            <Card style={styles.cardStyle} >
+                <CardContent> 
+            {/* <View style={styles.modalContent}>  */}
+                    <Text style={styles.timeStyle}> 
+                        Today is {moment(new Date()).format("MMM DD, YYYY")}
+                    </Text>   
+                    <ScrollView>
+                        {items.map((item) => 
+                            <View style={styles.sliderContain}>
+                                <Text style={styles.sliderChangeValue}>{item.sliderValue}</Text>
+                                <Slider
+                                    style= {styles.sliderStyle}
+                                    thumbTintColor= {'#0077B5'}
+                                    minimumTrackTintColor= {'#0077B5'}
+                                    maximumTrackTintColor= {'#d7e8ef'}
+                                    value= {item.sliderValue}
+                                    minimumValue= {item.sliderMin}
+                                    maximumValue= {item.sliderMax}
+                                    step= {1}
+                                    onValueChange= {(changeValue) => this._updateHandler(changeValue, item.name)} 
+                                />
+                                <Text style={styles.sliderTitle}>{item.name} </Text>   
+                            </View>
+                        )}
 
-                    <AutoGrowTextArea 
-                        self= {this}
+                        <AutoGrowTextArea 
+                            self= {this}
+                        />
+                    </ScrollView>
+                </CardContent>
+                <CardAction 
+                    separator={true} 
+                    inColumn={false}
+                    style={styles.cardActionStyle}
+                    >
+                    <CardButton
+                        onPress={() => this._buttonPressHandler()}
+                        title="Save"
+                        color="#FFFF"
+                        style={{backgroundColor: '#0077B5', borderRadius: 5, fontSize: 16}}
                     />
+                    <TouchableOpacity onPress={() => this._showHideChart()}>
+                        {
+                            this.state.isShowMore ?
+                            <FontAwesome name={'chevron-up'} size={30} color={'#0077B5'} /> 
+                            :
+                            <FontAwesome name={'chevron-down'} size={30} color={'#0077B5'} /> 
+                        }
+                        
+                    </TouchableOpacity>
 
-                    <CardSection>
+                </CardAction>
+                <View style={{width: '100%'}}>
+                    {
+                        this.state.isShowMore ?
+                            <Charts 
+                                uri= {'graphs'}
+                            />
+                        : null
+                    }
+                </View>
+                    {/* <CardSection>
                         <Button 
                             style={{backgroundColor:'#0077B5'}} 
                             onPress={this._buttonPressHandler.bind(this)}>
@@ -125,10 +168,10 @@ class BloodPressurePage extends Component {
 
                     <Charts 
                         uri= {'graphs'}
-                    />
-                </ScrollView>
-            </View>
-        
+                    /> */}
+                {/* </ScrollView>
+            </View> */}
+            </Card>
         );
     }
 };
@@ -149,7 +192,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps) (BloodPressurePage);
 
 const styles = {
-    modalContent: {
+    cardStyle: {
         flex: 1,
         backgroundColor: 'white'
     },
@@ -197,5 +240,11 @@ const styles = {
         fontSize: 16, 
         textAlign:'center', 
         padding:20
+    },
+    cardActionStyle: {
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        paddingLeft: 50, 
+        paddingRight: 50
     }
 };

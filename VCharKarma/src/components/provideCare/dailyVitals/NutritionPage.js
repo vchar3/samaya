@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {Text, View, TextInput, AsyncStorage, ScrollView } from 'react-native';
+import {Text, View, TextInput, AsyncStorage, ScrollView, TouchableOpacity} from 'react-native';
 import { ToggleSlider, Charts, Button, CardSection, headerBar } from '../../../common/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { addNutrition } from '../../../../redux/actions/dailyVitalsAction';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
+import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 class NutritionPage extends Component {
     static navigationOptions = () => (headerBar('Nutrition')); 
@@ -15,7 +17,8 @@ class NutritionPage extends Component {
         isBreakfastTaken: false,
         isLunchTaken: false,
         isDinnerTaken: false,
-        isAssistanceNeeded: false
+        isAssistanceNeeded: false,
+        isShowMore: false
     }
 
     constructor() {
@@ -40,10 +43,18 @@ class NutritionPage extends Component {
         this.props.postNutrition(data);
         this.props.navigation.goBack();
     }
+
+    _showHideChart() {
+        this.setState({
+            isShowMore : !this.state.isShowMore
+        })
+    }
     
     render() {
         return (
-            <View style={styles.container}>
+            <Card style={styles.cardStyle} >
+                <CardContent> 
+            {/* <View style={styles.container}> */}
                 <Text style={styles.timeStyle}> 
                     Today is {moment(new Date()).format("MMM DD, YYYY")}
                 </Text>
@@ -96,8 +107,40 @@ class NutritionPage extends Component {
                     <AutoGrowTextArea 
                         self= {this}
                     />
-                    
-                    <CardSection>
+                </ScrollView> 
+                </CardContent>
+                <CardAction 
+                    separator={true} 
+                    inColumn={false}
+                    style={styles.cardActionStyle}
+                    >
+                    <CardButton
+                        onPress={() => this._buttonPressHandler()}
+                        title="Save"
+                        color="#FFFF"
+                        style={{backgroundColor: '#0077B5', borderRadius: 5, fontSize: 16}}
+                    />
+                    <TouchableOpacity onPress={() => this._showHideChart()}>
+                        {
+                            this.state.isShowMore ?
+                            <FontAwesome name={'chevron-up'} size={30} color={'#0077B5'} /> 
+                            :
+                            <FontAwesome name={'chevron-down'} size={30} color={'#0077B5'} /> 
+                        }
+                        
+                    </TouchableOpacity>
+
+                </CardAction>
+                <View style={{width: '100%'}}>
+                    {
+                        this.state.isShowMore ?
+                            <Charts 
+                                uri= {'graphs'}
+                            />
+                        : null
+                    }
+                </View>  
+                    {/* <CardSection>
                         <Button 
                             style={{backgroundColor:'#0077B5'}} 
                             onPress={this._buttonPressHandler.bind(this)}>
@@ -108,7 +151,8 @@ class NutritionPage extends Component {
                         uri= {'graphs'}
                     />
                 </ScrollView>
-            </View>
+            </View> */}
+            </Card>
         );
     }
 };
@@ -160,5 +204,11 @@ const styles = {
         fontSize: 16, 
         textAlign:'center', 
         padding:20
+    },
+    cardActionStyle: {
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        paddingLeft: 50, 
+        paddingRight: 50
     }
 }

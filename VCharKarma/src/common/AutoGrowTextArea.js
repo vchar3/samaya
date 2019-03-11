@@ -11,7 +11,7 @@ const AutoGrowTextArea = ({ self }) => {
                         editable = {true}
                         numberOfLines = {4}
                         placeholder= {'Note'}
-                        placeholderTextColor= {"#7DBADF"}
+                        placeholderTextColor= {"#0077B5"}
                         onChangeText={(text) => self.setState({noteText: text})}
                     />
                 </View>
@@ -28,11 +28,11 @@ const styles = {
         marginTop:10,
         marginBottom:10, 
         width: 270,
-        color: '#7DBADF',
+        color: '#0077B5',
         fontSize: 16
     },
     noteContainerStyle: {
-        borderColor: '#7DBADF',
+        borderColor: '#0077B5',
         borderWidth: 1,
         borderRadius:5,
         minHeight:40,

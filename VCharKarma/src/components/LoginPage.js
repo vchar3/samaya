@@ -215,17 +215,15 @@ const styles = {
         color: '#fff',
     },
     imageStyle: {
-        width: wp('65%'),
-        height: hp('27%'), 
-        resizeMode:'cover',
-        marginLeft: 15,
-        marginRight: 15
+        width: wp('91%'),
+        height: hp('31%'),
+        marginTop: 12
     },
     imageContainerStyle: {
         justifyContent: 'center', 
         alignItems: 'center',
-        width: wp('100%'),
-        height: hp('30%')
+        // width: wp('100%'),
+        // height: hp('30%')
         
     },
     errorTextStyle: {

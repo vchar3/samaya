@@ -21,7 +21,7 @@ const ToggleSlider = ({ textLabel, isActive, toggleSwitchHandler, toggleLongPres
                         // onLabel={'On'}
                         // offLabel={'Off'}
                         //labelStyle={{color: 'black' }}
-                        buttonOnColor={'#7DBADF'}
+                        buttonOnColor={'#0077B5'}
                         buttonOffColor={'grey'}
                         sliderOnColor= {'white'}
                         sliderOffColor={ 'white'}
@@ -48,7 +48,7 @@ const styles = {
     },
     textStyle: {
         fontSize: 16,
-        color: '#7DBADF'
+        color: '#0077B5'
 
     },
     sliderContainer: { 

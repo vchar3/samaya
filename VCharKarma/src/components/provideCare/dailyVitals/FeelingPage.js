@@ -9,6 +9,8 @@ import { addFeeling } from '../../../../redux/actions/dailyVitalsAction';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
 import {randomColor} from 'randomcolor';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 class FeelingPage extends Component { 
     static navigationOptions = () => (headerBar('Feeling'));
@@ -25,6 +27,7 @@ class FeelingPage extends Component {
         fatiguedValue: 0,
         tiredValue: 0,
         sickValue: 0,
+        isShowMore: false
     }
 
     constructor() {
@@ -90,6 +93,12 @@ class FeelingPage extends Component {
 
         }
     }
+
+    _showHideChart() {
+        this.setState({
+            isShowMore : !this.state.isShowMore
+        })
+    }
     
     render() {
         let items = [
@@ -99,7 +108,9 @@ class FeelingPage extends Component {
             { name: 'Sick', icon: 'sad-cry', sliderValue: this.state.sickValue, showSlider: this.state.isSick  }
           ];
         return (
-            <View style={styles.modalContent}> 
+            <Card style={styles.cardStyle} >
+                <CardContent> 
+            {/* <View style={styles.modalContent}>  */}
                 <Text style={styles.timeStyle}> 
                     Today is {moment(new Date()).format("MMM DD, YYYY")}
                 </Text>
@@ -140,8 +151,40 @@ class FeelingPage extends Component {
                     <AutoGrowTextArea 
                         self= {this}
                     />
+                </ScrollView>
+                </CardContent>
+                <CardAction 
+                    separator={true} 
+                    inColumn={false}
+                    style={styles.cardActionStyle}
+                    >
+                    <CardButton
+                        onPress={() => this._buttonPressHandler()}
+                        title="Save"
+                        color="#FFFF"
+                        style={{backgroundColor: '#0077B5', borderRadius: 5, fontSize: 16}}
+                    />
+                    <TouchableOpacity onPress={() => this._showHideChart()}>
+                        {
+                            this.state.isShowMore ?
+                            <FontAwesome name={'chevron-up'} size={30} color={'#0077B5'} /> 
+                            :
+                            <FontAwesome name={'chevron-down'} size={30} color={'#0077B5'} /> 
+                        }
+                        
+                    </TouchableOpacity>
 
-                    <CardSection>
+                </CardAction>
+                <View style={{width: '100%'}}>
+                    {
+                        this.state.isShowMore ?
+                            <Charts 
+                                uri= {'graphs'}
+                            />
+                        : null
+                    }
+                </View>
+                    {/* <CardSection>
                         <Button 
                             style={{backgroundColor:'#0077B5'}} 
                             onPress={this._buttonPressHandler.bind(this)}>
@@ -152,7 +195,9 @@ class FeelingPage extends Component {
                         uri= {'graphs'}
                     />
                 </ScrollView>
-            </View>
+            </View> */}
+            </Card>
+        
         );
     }
 };
@@ -231,4 +276,10 @@ const styles = {
         fontWeight:'bold',
         fontSize:22
     },
+    cardActionStyle: {
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        paddingLeft: 50, 
+        paddingRight: 50
+    }
 };

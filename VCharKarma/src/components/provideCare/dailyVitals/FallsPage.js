@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import { addFall } from '../../../../redux/actions/dailyVitalsAction';
 import { BarChart, Grid, LineChart, XAxis } from 'react-native-svg-charts';
 import {AutoGrowTextArea} from '../../../common/AutoGrowTextArea';
+import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 class FallsPage extends Component { 
     static navigationOptions = () => (headerBar('Walks & Falls'));
@@ -14,7 +16,8 @@ class FallsPage extends Component {
         userId: '',
         noteText: '', 
         isFalls: false,
-        number: 0
+        number: 0,
+        isShowMore: false
 
     }
 
@@ -38,12 +41,20 @@ class FallsPage extends Component {
         this.props.postFall(data);
         this.props.navigation.goBack();
     }
+
+    _showHideChart() {
+        this.setState({
+            isShowMore : !this.state.isShowMore
+        })
+    }
     
     render() {
         const fill = 'rgb(134, 65, 244)'
         const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
         return (
-            <View style={styles.container}>
+            <Card style={styles.cardStyle} >
+                <CardContent> 
+            {/* <View style={styles.container}> */}
                 <Text style={styles.timeStyle}> 
                     Today is {moment(new Date()).format("MMM DD, YYYY")}
                 </Text> 
@@ -75,9 +86,41 @@ class FallsPage extends Component {
                     <AutoGrowTextArea 
                         self= {this}
                     />
+                </ScrollView>
+                </CardContent>
+                <CardAction 
+                    separator={true} 
+                    inColumn={false}
+                    style={styles.cardActionStyle}
+                    >
+                    <CardButton
+                        onPress={() => this._buttonPressHandler()}
+                        title="Save"
+                        color="#FFFF"
+                        style={{backgroundColor: '#0077B5', borderRadius: 5, fontSize: 16}}
+                    />
+                    <TouchableOpacity onPress={() => this._showHideChart()}>
+                        {
+                            this.state.isShowMore ?
+                            <FontAwesome name={'chevron-up'} size={30} color={'#0077B5'} /> 
+                            :
+                            <FontAwesome name={'chevron-down'} size={30} color={'#0077B5'} /> 
+                        }
+                        
+                    </TouchableOpacity>
 
+                </CardAction>
+                <View style={{width: '100%'}}>
+                    {
+                        this.state.isShowMore ?
+                            <Charts 
+                                uri= {'graphs'}
+                            />
+                        : null
+                    }
+                </View>
 
-                    <CardSection>
+                    {/* <CardSection>
                         <Button 
                             style={{backgroundColor:'#0077B5'}} 
                             onPress={this._buttonPressHandler.bind(this)}>
@@ -86,7 +129,7 @@ class FallsPage extends Component {
                     </CardSection>
                     <Charts 
                         uri= {'graphs'}
-                    />
+                    /> */}
 
                     {/* <BarChart
                         style={{ height: 200, width: 300  }}
@@ -117,8 +160,9 @@ class FallsPage extends Component {
                         />
                         </View>
                     </ScrollView> */}
-                </ScrollView>
-            </View>
+                {/* </ScrollView>
+            </View> */}
+            </Card>
         );
     }
 }; 
@@ -165,5 +209,11 @@ const styles = {
         fontSize: 16, 
         textAlign:'center', 
         padding:20
+    },
+    cardActionStyle: {
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        paddingLeft: 50, 
+        paddingRight: 50
     }
 }
